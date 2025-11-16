@@ -36,5 +36,7 @@ views:
       - trait
       - sets
       - статус
+      - координаты
+      - телефон
     columnSize:
       note.trait: 219
