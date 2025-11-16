@@ -1,0 +1,249 @@
+{
+  "main": {
+    "id": "a7684af790370698",
+    "type": "split",
+    "children": [
+      {
+        "id": "17e27ac204304fd1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d80365ddeb97bffa",
+            "type": "leaf",
+            "state": {
+              "type": "bases",
+              "state": {
+                "file": "ктулху.base",
+                "viewName": "персоны"
+              },
+              "icon": "lucide-table",
+              "title": "ктулху"
+            }
+          },
+          {
+            "id": "427252c9117e2b44",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3.3 – возвращение в мир яви.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "3.3 – возвращение в мир яви"
+            }
+          },
+          {
+            "id": "4be5ff5bc8a4f4ae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "словарь/хтонь/азатот.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "азатот"
+            }
+          },
+          {
+            "id": "13d148b4f45cff16",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "словарь/персоны/погибшие/апайо.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "апайо"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "55578286e6300542",
+    "type": "split",
+    "children": [
+      {
+        "id": "82c4f5bd57b9e511",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7987533db87ed609",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "52e7978775666436",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "47a6e7a35227c0f5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "49f5256ec8c886cc",
+    "type": "split",
+    "children": [
+      {
+        "id": "ffdb61f88ab4620c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "95bf7b56d37b057c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "ктулху.base",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for ктулху"
+            }
+          },
+          {
+            "id": "80e5b5c3b2bfcf57",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "журналы/джонатан коул/26.11.25.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 26.11.25"
+            }
+          },
+          {
+            "id": "f917fb304ae01c91",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-ghost",
+              "title": "tag"
+            }
+          },
+          {
+            "id": "4983e0e78abb7041",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "журналы/джонатан коул/26.11.25.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 26.11.25"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "random-note:Open random note": false,
+      "audio-recorder:Start/stop recording": false,
+      "switcher:Open quick switcher": false,
+      "canvas:Create new canvas": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "calendarium:Open Calendarium": false
+    }
+  },
+  "active": "13d148b4f45cff16",
+  "lastOpenFiles": [
+    "3.3 – возвращение в мир яви.md",
+    "словарь/хтонь/азатот.md",
+    "ктулху.base",
+    "словарь/персоны/персонажи игроков/блэк ненси.md",
+    "словарь/персоны/бирсфорт анжела.md",
+    "вопросы.md",
+    "словарь/персоны/кюзон ален.md",
+    "книги.md",
+    "словарь/предметы/пирамидка бюро.md",
+    "словарь/предметы/фарфоровый шар ву-тзяня.md",
+    "существа, неназванные.md",
+    "контакты.md",
+    "инвентарь.md",
+    "журналы/джонатан коул/26.12.18.md",
+    "полка/лор.md",
+    "словарь/хтонь/ксот.md",
+    "словарь/хтонь/старцы.md",
+    "журналы/эрик лофер/26.12.16.md",
+    "словарь/хтонь/шаны.md",
+    "журналы/эрик лофер/26.12.13.md",
+    "журналы/файерфлай/26.01.22.md",
+    "словарь/заклинания/универсальная защита.md",
+    "документы/письмо 02 {файерфлай}.md",
+    "словарь/правоохранительные органы.md",
+    "журналы/джонатан коул/26.12.16.md",
+    "словарь/салемские ведьмы.md",
+    "журналы/эмбер/&01 – шаны.md",
+    "документы/документ, дело оборотня.jpg",
+    "phoenix logo.jpg",
+    "Untitled",
+    "инвентарь/книги, свитки, документы",
+    "словарь/предметы"
+  ]
+}

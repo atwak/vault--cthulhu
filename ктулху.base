@@ -1,0 +1,40 @@
+views:
+  - type: table
+    name: все записи
+  - type: table
+    name: организация ~ стол
+    filters:
+      and:
+        - sets.contains("стол")
+  - type: table
+    name: предметы
+    filters:
+      and:
+        - "!носитель.isEmpty()"
+    order:
+      - file.name
+      - носитель
+      - сводка
+      - найдено
+      - статус
+    sort:
+      - property: file.name
+        direction: ASC
+      - property: статус
+        direction: ASC
+    columnSize:
+      note.носитель: 208
+      note.сводка: 242
+      note.найдено: 161
+  - type: table
+    name: персоны
+    filters:
+      and:
+        - file.folder.startsWith("словарь/персоны")
+    order:
+      - file.name
+      - trait
+      - sets
+      - статус
+    columnSize:
+      note.trait: 219
