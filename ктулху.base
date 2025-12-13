@@ -10,7 +10,7 @@ views:
     name: предметы
     filters:
       and:
-        - "!носитель.isEmpty()"
+        - категория == "предмет"
     order:
       - file.name
       - носитель
@@ -40,3 +40,28 @@ views:
       - телефон
     columnSize:
       note.trait: 219
+  - type: table
+    name: организация ~ седмица
+    filters:
+      and:
+        - sets.contains("седмица")
+  - type: table
+    name: заклинания
+    filters:
+      and:
+        - категория == "заклинание"
+    order:
+      - file.name
+      - носитель
+      - сводка
+      - найдено
+      - статус
+    sort:
+      - property: file.name
+        direction: ASC
+      - property: статус
+        direction: ASC
+    columnSize:
+      note.носитель: 208
+      note.сводка: 242
+      note.найдено: 161
