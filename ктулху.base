@@ -33,13 +33,13 @@ views:
         - file.folder.startsWith("словарь/персоны")
     order:
       - file.name
-      - trait
+      - аспект
       - sets
       - статус
       - координаты
       - телефон
     columnSize:
-      note.trait: 219
+      note.аспект: 201
   - type: table
     name: организация ~ седмица
     filters:
