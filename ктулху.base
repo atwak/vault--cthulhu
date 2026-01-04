@@ -2,11 +2,6 @@ views:
   - type: table
     name: все записи
   - type: table
-    name: организация ~ стол
-    filters:
-      and:
-        - sets.contains("стол")
-  - type: table
     name: предметы
     filters:
       and:
@@ -41,11 +36,6 @@ views:
     columnSize:
       note.аспект: 201
   - type: table
-    name: организация ~ седмица
-    filters:
-      and:
-        - sets.contains("седмица")
-  - type: table
     name: заклинания
     filters:
       and:
@@ -65,3 +55,14 @@ views:
       note.носитель: 208
       note.сводка: 242
       note.найдено: 161
+  - type: table
+    name: группы
+    filters:
+      and:
+        - "!sets.isEmpty()"
+    order:
+      - file.name
+      - sets
+    sort:
+      - property: sets
+        direction: ASC
