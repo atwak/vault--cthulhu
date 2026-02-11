@@ -1,7 +1,7 @@
 ---
 автор: хорт
 ---
-## Разные фрагменты
+## разные фрагменты
 
 Sad'Eh'bon uktub
 
@@ -123,7 +123,7 @@ Na-rbiogdu bash sah'Alar rakaz r'qadh so-r'dur thahu, qe heur hev dedh-kharmarez
 
 Не должно думать, что человек есть либо старейший, либо последний властелин Земли, и что жизнь есть только то, что ему ведомо.
 
-## Дхаруб кошки
+## дхаруб кошки
 
 > “Дхаруб” - это такой жанр, философский текст, в котором сокрыто больше, чем кажется, и который предлагается для медитации и осмысления.
 
@@ -159,7 +159,7 @@ Rqe d’ver seb-khub'el thaafl rig krhidoh'oel.
 
 И он ушел, оставив за собой пустую крепость.
 
-## Парадокс всадника
+## парадокс всадника
 
 Ut-vgeru: nog'markazvir bagdre ub-gvur nda uskod'al kharumvir magh-rakaz ub-nbegawi khatedi ursed. Kharum na-asul'od, d’bahd rugh'oel. Kharumvir ngez-drethe naskodwi. Na-naskod'od kharumvir naghish dhabarwi. Ogdeb: sad'kharumvir ba'nyog so-ba'zkash kure gvured thahu. Ogdeb-nha: kur'uth hev bealeb - eded kharum-asularedi, na-kharum-asularedi uthed.
 
@@ -183,7 +183,7 @@ Bashe valh? R’bahd yadheb udhar?
 
 Сколько всего людей? Будет ли успешно Дело?
 
-## Переведи:
+## переведи:
 
 1) “Sad'ptah thaafl”  
 2) "Amhvir uktube ursed".
@@ -207,7 +207,7 @@ Bashe valh? R’bahd yadheb udhar?
 
 Опционально: опиши, что ещё можешь рассказать о языке.
 
-## Вспомогательная информация
+## вспомогательная информация
 
 Фонетический минимум для верного прочтения: 
 
