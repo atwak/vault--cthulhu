@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "26.12.30"
             }
+          },
+          {
+            "id": "89fa66b4abe56c15",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "вопросы.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "вопросы"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -94,13 +109,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "журналы/коул джонатан/26.12.30.md",
+                "file": "вопросы.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 26.12.30"
+              "title": "Outline of вопросы"
             }
           },
           {
@@ -178,13 +193,16 @@
       "bases:Create new base": false,
       "big-calendar:Big Calendar": false,
       "obsidian-kanban:Create new board": false,
-      "calendarium:Open Calendarium": false
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "92057d33ce645659",
+  "active": "89fa66b4abe56c15",
   "lastOpenFiles": [
-    "журналы/коул джонатан/26.12.31.md",
+    "e/excalibrain.md",
+    "вопросы.md",
+    "e",
     "журналы/коул джонатан/26.12.30.md",
+    "журналы/коул джонатан/26.12.31.md",
     "журналы/файерфлай/26.12.31.md",
     "журналы/файерфлай/26.12.30.md",
     "журналы/файерфлай/26.12.29.md",
@@ -209,14 +227,11 @@
     "словарь/хтонь/умр ат тавил.md",
     "словарь/заклинания/камни оповещения.md",
     "журналы/лофер эрик/26.11.27.md",
-    "журналы/коул джонатан/26.12.27.md",
-    "журналы/коул джонатан/26.12.28.md",
     "документы/документ, дело оборотня.jpg",
     "ктулху.base",
     "документы/phoenix logo.jpg",
     "~$l the kings men.doc",
     "Untitled.canvas",
-    "Untitled",
     "инвентарь/книги, свитки, документы",
     "словарь/предметы"
   ]
