@@ -66,3 +66,8 @@ views:
     sort:
       - property: sets
         direction: ASC
+  - type: table
+    name: группа – стол
+    filters:
+      and:
+        - sets.contains("стол")
