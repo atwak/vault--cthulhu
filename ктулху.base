@@ -42,17 +42,15 @@ views:
         - категория == "заклинание"
     order:
       - file.name
+      - aliases
       - носитель
+      - мета
       - сводка
       - найдено
-      - статус
-    sort:
-      - property: file.name
-        direction: ASC
-      - property: статус
-        direction: ASC
+    sort: []
     columnSize:
       note.носитель: 208
+      note.мета: 129
       note.сводка: 242
       note.найдено: 161
   - type: table
