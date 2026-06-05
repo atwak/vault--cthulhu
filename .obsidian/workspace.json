@@ -8,76 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "62c0bbbb93fb71d9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "real 26.04.17.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "real 26.04.17"
-            }
-          },
-          {
-            "id": "4e2509fa483bce55",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "журналы/лофер эрик/27.01.05.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "27.01.05"
-            }
-          },
-          {
-            "id": "164d537e4adcfbda",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "журналы/лофер эрик/27.01.05.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "27.01.05"
-            }
-          },
-          {
-            "id": "ed29fb7b2f670b54",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "журналы/лофер эрик/27.01.05.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "27.01.05"
-            }
-          },
-          {
-            "id": "bb703324d949640f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "гримуар ~ запретные узлы.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "гримуар ~ запретные узлы"
-            }
-          },
-          {
             "id": "868cf5818830a309",
             "type": "leaf",
             "state": {
@@ -92,35 +22,41 @@
             }
           },
           {
-            "id": "f97572a91bfc6a1f",
+            "id": "e4034a715e531af6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "тетраномикон.md",
+                "file": "конкатенация.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "тетраномикон"
-            }
-          },
-          {
-            "id": "a9ef749cce6f9685",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "речь.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "речь"
+              "title": "конкатенация"
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 1
+      },
+      {
+        "id": "4b62699360c68056",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2d0a5f28c1cc0eed",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "документы/пьеса, амарна.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "пьеса, амарна"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -193,13 +129,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "речь.md",
+                "file": "конкатенация.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of речь"
+              "title": "Outline of конкатенация"
             }
           },
           {
@@ -281,36 +217,36 @@
       "calendarium:Open Calendarium": false
     }
   },
-  "active": "a9ef749cce6f9685",
+  "active": "7987533db87ed609",
   "lastOpenFiles": [
+    "документы/пьеса, амарна.md",
+    "документы/амарна, выдержки де-санжа.md",
+    "документы/аят о башне.md",
+    "документы/двери при башне амарны.md",
+    "документы/дхаруб кошки.md",
+    "документы/египетский ритуал.md",
+    "конкатенация.md",
+    "документы/загадка эйбона.md",
+    "документы/записки хогана.md",
+    "документы/камнетес и смерть.md",
+    "документы/парадокс всадника.md",
+    "документы/песнь тлинкитов.md",
+    "документы/письма из кернгота.md",
+    "документы/письмо 02 {файерфлай}.md",
+    "документы/письмо ванды штальбаум.md",
+    "документы/фрагменты мудрости пустыни.md",
+    "Untitled.md",
+    "словарь/хтонь/ньярлатхотеп.md",
+    "словарь/заклинания/семь свечей.md",
+    "документы/аят о дереве.md",
+    "журналы/лофер эрик/27.01.05.md",
+    "real 26.04.17.md",
+    "речь.md",
     "учить.md",
     "словарь/предметы/тетраномикон.md",
-    "речь.md",
     "ктулху.base",
     "контакты.md",
-    "книги.md",
-    "инвентарь.md",
-    "вопросы.md",
-    "блокнот.md",
-    "словарь/предметы/гримуар ~ запретные узлы.md",
-    "real 26.04.17.md",
-    "bits and pieces.md",
-    "bestselling books.md",
-    "документы/фрагменты мудрости пустыни.md",
-    "документы/файрфлай, чей-то дневник.md",
-    "документы/тетради зисл.md",
-    "документы/пьеса, амарна.md",
-    "документы/письмо ванды штальбаум.md",
-    "документы/письмо 02 {файерфлай}.md",
-    "документы/письма из кернгота.md",
-    "документы/песнь тлинкитов.md",
-    "документы/парадокс всадника.md",
-    "документы/камнетес и смерть.md",
-    "документы/записки хогана.md",
-    "документы/boston v4.md",
-    "документы/дхаруб кошки.md",
     "документы/документ, дело оборотня.jpg",
-    "журналы/мэри энн/n09 – угроза.md",
     "амарна.txt",
     "документы/phoenix logo.jpg",
     "e",
