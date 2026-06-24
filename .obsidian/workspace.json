@@ -125,12 +125,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "todo & notes/27.01.07.md",
+                "file": "документы/конкатенация.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "27.01.07"
+              "title": "конкатенация"
             }
           }
         ],
@@ -207,13 +207,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "todo & notes/27.01.07.md",
+                "file": "документы/конкатенация.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 27.01.07"
+              "title": "Outline of конкатенация"
             }
           },
           {
@@ -297,13 +297,13 @@
   },
   "active": "ada69af7add84e00",
   "lastOpenFiles": [
+    "todo & notes/27.01.07.md",
     "документы/конкатенация.md",
     "блокнот.md",
     "вопросы.md",
     "журналы/лофер эрик/27.01.01.md",
     "журналы/лофер эрик/26.12.31.md",
     "todo & notes/27.01.04.md",
-    "todo & notes/27.01.07.md",
     "Untitled.md",
     "bits and pieces.md",
     "амплификаторы.md",
