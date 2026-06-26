@@ -125,12 +125,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "документы/конкатенация.md",
+                "file": "журналы/лофер эрик/26.12.23.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "конкатенация"
+              "title": "26.12.23"
             }
           }
         ],
@@ -207,13 +207,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "документы/конкатенация.md",
+                "file": "журналы/лофер эрик/26.12.23.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of конкатенация"
+              "title": "Outline of 26.12.23"
             }
           },
           {
@@ -297,9 +297,9 @@
   },
   "active": "ada69af7add84e00",
   "lastOpenFiles": [
-    "todo & notes/27.01.07.md",
-    "документы/конкатенация.md",
     "блокнот.md",
+    "документы/конкатенация.md",
+    "todo & notes/27.01.07.md",
     "вопросы.md",
     "журналы/лофер эрик/27.01.01.md",
     "журналы/лофер эрик/26.12.31.md",

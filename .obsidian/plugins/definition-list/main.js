@@ -130,21 +130,21 @@ var definitionListPlugin = import_view.ViewPlugin.fromClass(class {
 var DefinitionListPlugin = class extends import_obsidian.Plugin {
   constructor() {
     super(...arguments);
-    // Post-processor for handling definition lists in reading mode
+    • Post-processor for handling definition lists in reading mode
     this.definitionListPostProcessor = (element) => {
       const activeView = this.app.workspace.getActiveViewOfType(import_obsidian.MarkdownView);
       if (!activeView || activeView.getMode() === "source")
         return;
       function isNotTerm(content) {
-        return content.match(/^#+\s/) !== null || // Heading
-        content.match(/^\s*(-|\d+\.)\s/) !== null || // List item
-        content.startsWith(">") || // Blockquote
-        content.startsWith("<img") || // Image
-        content.match(/^(-{3,}|\*{3,}|_{3,})/) !== null || // Horizontal rule
-        content.startsWith("[^") || // Footnote
-        content.includes('class="footnote-backref footnote-link"') || // Footnote backref
-        content.startsWith("|") || // Table
-        content.startsWith("$$") || // Math block
+        return content.match(/^#+\s/) !== null || • Heading
+        content.match(/^\s*(-|\d+\.)\s/) !== null || • List item
+        content.startsWith(">") || • Blockquote
+        content.startsWith("<img") || • Image
+        content.match(/^(-{3,}|\*{3,}|_{3,})/) !== null || • Horizontal rule
+        content.startsWith("[^") || • Footnote
+        content.includes('class="footnote-backref footnote-link"') || • Footnote backref
+        content.startsWith("|") || • Table
+        content.startsWith("$$") || • Math block
         content.startsWith("^");
       }
       console.log("Post processor running");

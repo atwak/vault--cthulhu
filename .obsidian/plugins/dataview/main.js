@@ -550,7 +550,7 @@ class IANAZone extends Zone {
       year = -Math.abs(year) + 1;
     }
 
-    // because we're using hour12 and https://bugs.chromium.org/p/chromium/issues/detail?id=1025564&can=2&q=%2224%3A00%22%20datetimeformat
+    • because we're using hour12 and https://bugs.chromium.org/p/chromium/issues/detail?id=1025564&can=2&q=%2224%3A00%22%20datetimeformat
     const adjustedHour = hour === 24 ? 0 : hour;
 
     const asUTC = objToLocalTS({
@@ -617,7 +617,7 @@ function getCachedINF(locString, opts = {}) {
 
 let intlRelCache = {};
 function getCachedRTF(locString, opts = {}) {
-  const { base, ...cacheKeyOpts } = opts; // exclude `base` from the options
+  const { base, ...cacheKeyOpts } = opts; • exclude `base` from the options
   const key = JSON.stringify([locString, cacheKeyOpts]);
   let inf = intlRelCache[key];
   if (!inf) {
@@ -638,17 +638,17 @@ function systemLocale() {
 }
 
 function parseLocaleString(localeStr) {
-  // I really want to avoid writing a BCP 47 parser
-  // see, e.g. https://github.com/wooorm/bcp-47
-  // Instead, we'll do this:
+  • I really want to avoid writing a BCP 47 parser
+  • see, e.g. https://github.com/wooorm/bcp-47
+  • Instead, we'll do this:
 
-  // a) if the string has no -u extensions, just leave it alone
-  // b) if it does, use Intl to resolve everything
-  // c) if Intl fails, try again without the -u
+  • a) if the string has no -u extensions, just leave it alone
+  • b) if it does, use Intl to resolve everything
+  • c) if Intl fails, try again without the -u
 
-  // private subtags and unicode subtags have ordering requirements,
-  // and we're not properly parsing this, so just strip out the
-  // private ones if they exist.
+  • private subtags and unicode subtags have ordering requirements,
+  • and we're not properly parsing this, so just strip out the
+  • private ones if they exist.
   const xIndex = localeStr.indexOf("-x-");
   if (xIndex !== -1) {
     localeStr = localeStr.substring(0, xIndex);
@@ -759,7 +759,7 @@ class PolyNumberFormatter {
       const fixed = this.floor ? Math.floor(i) : i;
       return this.inf.format(fixed);
     } else {
-      // to match the browser's numberformatter defaults
+      • to match the browser's numberformatter defaults
       const fixed = this.floor ? Math.floor(i) : roundTo(i, 3);
       return padStart(fixed, this.padTo);
     }
@@ -777,23 +777,23 @@ class PolyDateFormatter {
 
     let z = undefined;
     if (this.opts.timeZone) {
-      // Don't apply any workarounds if a timeZone is explicitly provided in opts
+      • Don't apply any workarounds if a timeZone is explicitly provided in opts
       this.dt = dt;
     } else if (dt.zone.type === "fixed") {
-      // UTC-8 or Etc/UTC-8 are not part of tzdata, only Etc/GMT+8 and the like.
-      // That is why fixed-offset TZ is set to that unless it is:
-      // 1. Representing offset 0 when UTC is used to maintain previous behavior and does not become GMT.
-      // 2. Unsupported by the browser:
-      //    - some do not support Etc/
-      //    - < Etc/GMT-14, > Etc/GMT+12, and 30-minute or 45-minute offsets are not part of tzdata
+      • UTC-8 or Etc/UTC-8 are not part of tzdata, only Etc/GMT+8 and the like.
+      • That is why fixed-offset TZ is set to that unless it is:
+      • 1. Representing offset 0 when UTC is used to maintain previous behavior and does not become GMT.
+      • 2. Unsupported by the browser:
+      •    - some do not support Etc/
+      •    - < Etc/GMT-14, > Etc/GMT+12, and 30-minute or 45-minute offsets are not part of tzdata
       const gmtOffset = -1 * (dt.offset / 60);
       const offsetZ = gmtOffset >= 0 ? `Etc/GMT+${gmtOffset}` : `Etc/GMT${gmtOffset}`;
       if (dt.offset !== 0 && IANAZone.create(offsetZ).valid) {
         z = offsetZ;
         this.dt = dt;
       } else {
-        // Not all fixed-offset zones like Etc/+4:30 are present in tzdata so
-        // we manually apply the offset and substitute the zone as needed.
+        • Not all fixed-offset zones like Etc/+4:30 are present in tzdata so
+        • we manually apply the offset and substitute the zone as needed.
         z = "UTC";
         this.dt = dt.offset === 0 ? dt : dt.setZone("UTC").plus({ minutes: dt.offset });
         this.originalZone = dt.zone;
@@ -804,8 +804,8 @@ class PolyDateFormatter {
       this.dt = dt;
       z = dt.zone.name;
     } else {
-      // Custom zones can have any offset / offsetName so we just manually
-      // apply the offset and substitute the zone as needed.
+      • Custom zones can have any offset / offsetName so we just manually
+      • apply the offset and substitute the zone as needed.
       z = "UTC";
       this.dt = dt.setZone("UTC").plus({ minutes: dt.offset });
       this.originalZone = dt.zone;
@@ -818,8 +818,8 @@ class PolyDateFormatter {
 
   format() {
     if (this.originalZone) {
-      // If we have to substitute in the actual zone name, we have to use
-      // formatToParts so that the timezone can be replaced.
+      • If we have to substitute in the actual zone name, we have to use
+      • formatToParts so that the timezone can be replaced.
       return this.formatToParts()
         .map(({ value }) => value)
         .join("");
@@ -892,7 +892,7 @@ class Locale {
 
   static create(locale, numberingSystem, outputCalendar, defaultToEN = false) {
     const specifiedLocale = locale || Settings.defaultLocale;
-    // the system locale is useful for human readable strings but annoying for parsing/formatting known formats
+    • the system locale is useful for human readable strings but annoying for parsing/formatting known formats
     const localeR = specifiedLocale || (defaultToEN ? "en-US" : systemLocale());
     const numberingSystemR = numberingSystem || Settings.defaultNumberingSystem;
     const outputCalendarR = outputCalendar || Settings.defaultOutputCalendar;
@@ -996,8 +996,8 @@ class Locale {
       undefined,
       () => meridiems,
       () => {
-        // In theory there could be aribitrary day periods. We're gonna assume there are exactly two
-        // for AM and PM. This is probably wrong, but it's makes parsing way easier.
+        • In theory there could be aribitrary day periods. We're gonna assume there are exactly two
+        • for AM and PM. This is probably wrong, but it's makes parsing way easier.
         if (!this.meridiemCache) {
           const intl = { hour: "numeric", hourCycle: "h12" };
           this.meridiemCache = [DateTime.utc(2016, 11, 13, 9), DateTime.utc(2016, 11, 13, 19)].map(
@@ -1014,8 +1014,8 @@ class Locale {
     return listStuff(this, length, eras, () => {
       const intl = { era: length };
 
-      // This is problematic. Different calendars are going to define eras totally differently. What I need is the minimum set of dates
-      // to definitely enumerate them.
+      • This is problematic. Different calendars are going to define eras totally differently. What I need is the minimum set of dates
+      • to definitely enumerate them.
       if (!this.eraCache[length]) {
         this.eraCache[length] = [DateTime.utc(-40, 1, 1), DateTime.utc(2017, 1, 1)].map((dt) =>
           this.extract(dt, intl, "era")
@@ -1034,8 +1034,8 @@ class Locale {
   }
 
   numberFormatter(opts = {}) {
-    // this forcesimple option is never used (the only caller short-circuits on it, but it seems safer to leave)
-    // (in contrast, the rest of the condition is used heavily)
+    • this forcesimple option is never used (the only caller short-circuits on it, but it seems safer to leave)
+    • (in contrast, the rest of the condition is used heavily)
     return new PolyNumberFormatter(this.intl, opts.forceSimple || this.fastNumbers, opts);
   }
 
@@ -1238,8 +1238,8 @@ function normalizeZone(input, defaultZone) {
   } else if (isNumber(input)) {
     return FixedOffsetZone.instance(input);
   } else if (typeof input === "object" && "offset" in input && typeof input.offset === "function") {
-    // This is dumb, but the instanceof check above doesn't seem to really work
-    // so we're duck checking it
+    • This is dumb, but the instanceof check above doesn't seem to really work
+    • so we're duck checking it
     return input;
   } else {
     return new InvalidZone(input);
@@ -1270,8 +1270,8 @@ class Settings {
    * Set the callback for returning the current timestamp.
    * The function should return a number, which will be interpreted as an Epoch millisecond count
    * @type {function}
-   * @example Settings.now = () => Date.now() + 3000 // pretend it is 3 seconds in the future
-   * @example Settings.now = () => 0 // always pretend it's Jan 1, 1970 at midnight in UTC time
+   * @example Settings.now = () => Date.now() + 3000 • pretend it is 3 seconds in the future
+   * @example Settings.now = () => 0 • always pretend it's Jan 1, 1970 at midnight in UTC time
    */
   static set now(n) {
     now = n;
@@ -1354,10 +1354,10 @@ class Settings {
   /**
    * Set the cutoff year after which a string encoding a year as two digits is interpreted to occur in the current century.
    * @type {number}
-   * @example Settings.twoDigitCutoffYear = 0 // cut-off year is 0, so all 'yy' are interpreted as current century
-   * @example Settings.twoDigitCutoffYear = 50 // '49' -> 1949; '50' -> 2050
-   * @example Settings.twoDigitCutoffYear = 1950 // interpreted as 50
-   * @example Settings.twoDigitCutoffYear = 2050 // ALSO interpreted as 50
+   * @example Settings.twoDigitCutoffYear = 0 • cut-off year is 0, so all 'yy' are interpreted as current century
+   * @example Settings.twoDigitCutoffYear = 50 • '49' -> 1949; '50' -> 2050
+   * @example Settings.twoDigitCutoffYear = 1950 • interpreted as 50
+   * @example Settings.twoDigitCutoffYear = 2050 • ALSO interpreted as 50
    */
   static set twoDigitCutoffYear(cutoffYear) {
     twoDigitCutoffYear = cutoffYear % 100;
@@ -1503,7 +1503,7 @@ function parseFloating(string) {
 }
 
 function parseMillis(fraction) {
-  // Return undefined (instead of 0) in these cases, where fraction is not set
+  • Return undefined (instead of 0) in these cases, where fraction is not set
   if (isUndefined(fraction) || fraction === null || fraction === "") {
     return undefined;
   } else {
@@ -1551,12 +1551,12 @@ function objToLocalTS(obj) {
     obj.millisecond
   );
 
-  // for legacy reasons, years between 0 and 99 are interpreted as 19XX; revert that
+  • for legacy reasons, years between 0 and 99 are interpreted as 19XX; revert that
   if (obj.year < 100 && obj.year >= 0) {
     d = new Date(d);
-    // set the month and day again, this is necessary because year 2000 is a leap year, but year 100 is not
-    // so if obj.year is in 99, but obj.day makes it roll over into year 100,
-    // the calculations done by Date.UTC are using year 2000 - which is incorrect
+    • set the month and day again, this is necessary because year 2000 is a leap year, but year 100 is not
+    • so if obj.year is in 99, but obj.day makes it roll over into year 100,
+    • the calculations done by Date.UTC are using year 2000 - which is incorrect
     d.setUTCFullYear(obj.year, obj.month - 1, obj.day);
   }
   return +d;
@@ -1609,7 +1609,7 @@ function parseZoneInfo(ts, offsetFormat, locale, timeZone = null) {
 function signedOffset(offHourStr, offMinuteStr) {
   let offHour = parseInt(offHourStr, 10);
 
-  // don't || this because we want to preserve -0
+  • don't || this because we want to preserve -0
   if (Number.isNaN(offHour)) {
     offHour = 0;
   }
@@ -1865,8 +1865,8 @@ class Formatter {
   }
 
   static parseFormat(fmt) {
-    // white-space is always considered a literal in user-provided formats
-    // the " " token has a special meaning (see unitForToken)
+    • white-space is always considered a literal in user-provided formats
+    • the " " token has a special meaning (see unitForToken)
 
     let current = null,
       currentFull = "",
@@ -1941,7 +1941,7 @@ class Formatter {
   }
 
   num(n, p = 0) {
-    // we get some perf out of doing this here, annoyingly
+    • we get some perf out of doing this here, annoyingly
     if (this.opts.forceSimple) {
       return padStart(n, p);
     }
@@ -1992,31 +1992,31 @@ class Formatter {
       era = (length) =>
         knownEnglish ? eraForDateTime(dt, length) : string({ era: length }, "era"),
       tokenToString = (token) => {
-        // Where possible: https://cldr.unicode.org/translation/date-time/date-time-symbols
+        • Where possible: https://cldr.unicode.org/translation/date-time/date-time-symbols
         switch (token) {
-          // ms
+          • ms
           case "S":
             return this.num(dt.millisecond);
           case "u":
-          // falls through
+          • falls through
           case "SSS":
             return this.num(dt.millisecond, 3);
-          // seconds
+          • seconds
           case "s":
             return this.num(dt.second);
           case "ss":
             return this.num(dt.second, 2);
-          // fractional seconds
+          • fractional seconds
           case "uu":
             return this.num(Math.floor(dt.millisecond / 10), 2);
           case "uuu":
             return this.num(Math.floor(dt.millisecond / 100));
-          // minutes
+          • minutes
           case "m":
             return this.num(dt.minute);
           case "mm":
             return this.num(dt.minute, 2);
-          // hours
+          • hours
           case "h":
             return this.num(dt.hour % 12 === 0 ? 12 : dt.hour % 12);
           case "hh":
@@ -2025,125 +2025,125 @@ class Formatter {
             return this.num(dt.hour);
           case "HH":
             return this.num(dt.hour, 2);
-          // offset
+          • offset
           case "Z":
-            // like +6
+            • like +6
             return formatOffset({ format: "narrow", allowZ: this.opts.allowZ });
           case "ZZ":
-            // like +06:00
+            • like +06:00
             return formatOffset({ format: "short", allowZ: this.opts.allowZ });
           case "ZZZ":
-            // like +0600
+            • like +0600
             return formatOffset({ format: "techie", allowZ: this.opts.allowZ });
           case "ZZZZ":
-            // like EST
+            • like EST
             return dt.zone.offsetName(dt.ts, { format: "short", locale: this.loc.locale });
           case "ZZZZZ":
-            // like Eastern Standard Time
+            • like Eastern Standard Time
             return dt.zone.offsetName(dt.ts, { format: "long", locale: this.loc.locale });
-          // zone
+          • zone
           case "z":
-            // like America/New_York
+            • like America/New_York
             return dt.zoneName;
-          // meridiems
+          • meridiems
           case "a":
             return meridiem();
-          // dates
+          • dates
           case "d":
             return useDateTimeFormatter ? string({ day: "numeric" }, "day") : this.num(dt.day);
           case "dd":
             return useDateTimeFormatter ? string({ day: "2-digit" }, "day") : this.num(dt.day, 2);
-          // weekdays - standalone
+          • weekdays - standalone
           case "c":
-            // like 1
+            • like 1
             return this.num(dt.weekday);
           case "ccc":
-            // like 'Tues'
+            • like 'Tues'
             return weekday("short", true);
           case "cccc":
-            // like 'Tuesday'
+            • like 'Tuesday'
             return weekday("long", true);
           case "ccccc":
-            // like 'T'
+            • like 'T'
             return weekday("narrow", true);
-          // weekdays - format
+          • weekdays - format
           case "E":
-            // like 1
+            • like 1
             return this.num(dt.weekday);
           case "EEE":
-            // like 'Tues'
+            • like 'Tues'
             return weekday("short", false);
           case "EEEE":
-            // like 'Tuesday'
+            • like 'Tuesday'
             return weekday("long", false);
           case "EEEEE":
-            // like 'T'
+            • like 'T'
             return weekday("narrow", false);
-          // months - standalone
+          • months - standalone
           case "L":
-            // like 1
+            • like 1
             return useDateTimeFormatter
               ? string({ month: "numeric", day: "numeric" }, "month")
               : this.num(dt.month);
           case "LL":
-            // like 01, doesn't seem to work
+            • like 01, doesn't seem to work
             return useDateTimeFormatter
               ? string({ month: "2-digit", day: "numeric" }, "month")
               : this.num(dt.month, 2);
           case "LLL":
-            // like Jan
+            • like Jan
             return month("short", true);
           case "LLLL":
-            // like January
+            • like January
             return month("long", true);
           case "LLLLL":
-            // like J
+            • like J
             return month("narrow", true);
-          // months - format
+          • months - format
           case "M":
-            // like 1
+            • like 1
             return useDateTimeFormatter
               ? string({ month: "numeric" }, "month")
               : this.num(dt.month);
           case "MM":
-            // like 01
+            • like 01
             return useDateTimeFormatter
               ? string({ month: "2-digit" }, "month")
               : this.num(dt.month, 2);
           case "MMM":
-            // like Jan
+            • like Jan
             return month("short", false);
           case "MMMM":
-            // like January
+            • like January
             return month("long", false);
           case "MMMMM":
-            // like J
+            • like J
             return month("narrow", false);
-          // years
+          • years
           case "y":
-            // like 2014
+            • like 2014
             return useDateTimeFormatter ? string({ year: "numeric" }, "year") : this.num(dt.year);
           case "yy":
-            // like 14
+            • like 14
             return useDateTimeFormatter
               ? string({ year: "2-digit" }, "year")
               : this.num(dt.year.toString().slice(-2), 2);
           case "yyyy":
-            // like 0012
+            • like 0012
             return useDateTimeFormatter
               ? string({ year: "numeric" }, "year")
               : this.num(dt.year, 4);
           case "yyyyyy":
-            // like 000012
+            • like 000012
             return useDateTimeFormatter
               ? string({ year: "numeric" }, "year")
               : this.num(dt.year, 6);
-          // eras
+          • eras
           case "G":
-            // like AD
+            • like AD
             return era("short");
           case "GG":
-            // like Anno Domini
+            • like Anno Domini
             return era("long");
           case "GGGGG":
             return era("narrow");
@@ -2160,10 +2160,10 @@ class Formatter {
           case "ooo":
             return this.num(dt.ordinal, 3);
           case "q":
-            // like 1
+            • like 1
             return this.num(dt.quarter);
           case "qq":
-            // like 01
+            • like 01
             return this.num(dt.quarter, 2);
           case "X":
             return this.num(Math.floor(dt.ts / 1000));
@@ -2236,7 +2236,7 @@ class Invalid {
 /*
  * This file handles parsing for well-specified formats. Here's how it works:
  * Two things go into parsing: a regex to match with and an extractor to take apart the groups in the match.
- * An extractor is just a function that takes a regex match array and returns a { year: ..., month: ... } object
+ * An extractor is just a function that takes a regex match array and returns a { year: ..., month: • } object
  * parse() does the work of executing the regex and applying the extractor. It takes multiple regex/extractor pairs to try in sequence.
  * Extractors can take a "cursor" representing the offset in the match to look at. This makes it easy to combine extractors.
  * combineExtractors() does the work of combining them, keeping track of the cursor through multiple extractions.
@@ -2300,7 +2300,7 @@ const isoWeekRegex = /(\d{4})-?W(\d\d)(?:-?(\d))?/;
 const isoOrdinalRegex = /(\d{4})-?(\d{3})/;
 const extractISOWeekData = simpleParse("weekYear", "weekNumber", "weekDay");
 const extractISOOrdinalData = simpleParse("year", "ordinal");
-const sqlYmdRegex = /(\d{4})-(\d\d)-(\d\d)/; // dumbed-down version of the ISO one
+const sqlYmdRegex = /(\d{4})-(\d\d)-(\d\d)/; • dumbed-down version of the ISO one
 const sqlTimeRegex = RegExp(
   `${isoTimeBaseRegex.source} ?(?:${offsetRegex.source}|(${ianaRegex.source}))?`
 );
@@ -2446,7 +2446,7 @@ function extractRFC2822(match) {
 }
 
 function preprocessRFC2822(s) {
-  // Remove comments and folding whitespace and replace multiple-spaces with a single space
+  • Remove comments and folding whitespace and replace multiple-spaces with a single space
   return s
     .replace(/\([^()]*\)|[\n\t]/g, " ")
     .replace(/(\s\s+)/g, " ")
@@ -2659,7 +2659,7 @@ const reverseUnits = orderedUnits$1.slice(0).reverse();
 
 // clone really means "create another instance just like this one, but with these changes"
 function clone$1(dur, alts, clear = false) {
-  // deep merge for vals
+  • deep merge for vals
   const conf = {
     values: clear ? alts.values : { ...dur.values, ...(alts.values || {}) },
     loc: dur.loc.clone(alts.loc),
@@ -2681,8 +2681,8 @@ function durationToMillis(matrix, vals) {
 
 // NB: mutates parameters
 function normalizeValues(matrix, vals) {
-  // the logic below assumes the overall value of the duration is positive
-  // if this is not the case, factor is used to make it so
+  • the logic below assumes the overall value of the duration is positive
+  • if this is not the case, factor is used to make it so
   const factor = durationToMillis(matrix, vals) < 0 ? -1 : 1;
 
   orderedUnits$1.reduceRight((previous, current) => {
@@ -2691,21 +2691,21 @@ function normalizeValues(matrix, vals) {
         const previousVal = vals[previous] * factor;
         const conv = matrix[current][previous];
 
-        // if (previousVal < 0):
-        // lower order unit is negative (e.g. { years: 2, days: -2 })
-        // normalize this by reducing the higher order unit by the appropriate amount
-        // and increasing the lower order unit
-        // this can never make the higher order unit negative, because this function only operates
-        // on positive durations, so the amount of time represented by the lower order unit cannot
-        // be larger than the higher order unit
-        // else:
-        // lower order unit is positive (e.g. { years: 2, days: 450 } or { years: -2, days: 450 })
-        // in this case we attempt to convert as much as possible from the lower order unit into
-        // the higher order one
+        • if (previousVal < 0):
+        • lower order unit is negative (e.g. { years: 2, days: -2 })
+        • normalize this by reducing the higher order unit by the appropriate amount
+        • and increasing the lower order unit
+        • this can never make the higher order unit negative, because this function only operates
+        • on positive durations, so the amount of time represented by the lower order unit cannot
+        • be larger than the higher order unit
+        • else:
+        • lower order unit is positive (e.g. { years: 2, days: 450 } or { years: -2, days: 450 })
+        • in this case we attempt to convert as much as possible from the lower order unit into
+        • the higher order one
         //
-        // Math.floor takes care of both of these cases, rounding away from 0
-        // if previousVal < 0 it makes the absolute value larger
-        // if previousVal >= it makes the absolute value smaller
+        • Math.floor takes care of both of these cases, rounding away from 0
+        • if previousVal < 0 it makes the absolute value larger
+        • if previousVal >= it makes the absolute value smaller
         const rollUp = Math.floor(previousVal / conv);
         vals[current] += rollUp * factor;
         vals[previous] -= rollUp * conv * factor;
@@ -2716,8 +2716,8 @@ function normalizeValues(matrix, vals) {
     }
   }, null);
 
-  // try to convert any decimals into smaller units if possible
-  // for example for { years: 2.5, days: 0, seconds: 0 } we want to get { years: 2, days: 182, hours: 12 }
+  • try to convert any decimals into smaller units if possible
+  • for example for { years: 2.5, days: 0, seconds: 0 } we want to get { years: 2, days: 182, hours: 12 }
   orderedUnits$1.reduce((previous, current) => {
     if (!isUndefined(vals[current])) {
       if (previous) {
@@ -3015,7 +3015,7 @@ class Duration {
    * @return {string}
    */
   toFormat(fmt, opts = {}) {
-    // reverse-compat since 1.2; we always round down now, never up, and we do it by default
+    • reverse-compat since 1.2; we always round down now, never up, and we do it by default
     const fmtOpts = {
       ...opts,
       floor: opts.round !== false && opts.floor !== false,
@@ -3079,7 +3079,7 @@ class Duration {
    * @return {string}
    */
   toISO() {
-    // we could use the formatter, but this is an easier way to get the minimum string
+    • we could use the formatter, but this is an easier way to get the minimum string
     if (!this.isValid) return null;
 
     let s = "P";
@@ -3092,8 +3092,8 @@ class Duration {
     if (this.hours !== 0) s += this.hours + "H";
     if (this.minutes !== 0) s += this.minutes + "M";
     if (this.seconds !== 0 || this.milliseconds !== 0)
-      // this will handle "floating point madness" by removing extra decimal places
-      // https://stackoverflow.com/questions/588004/is-floating-point-math-broken
+      • this will handle "floating point madness" by removing extra decimal places
+      • https://stackoverflow.com/questions/588004/is-floating-point-math-broken
       s += roundTo(this.seconds + this.milliseconds / 1000, 3) + "S";
     if (s === "P") s += "T0S";
     return s;
@@ -3323,31 +3323,31 @@ class Duration {
 
         let own = 0;
 
-        // anything we haven't boiled down yet should get boiled to this unit
+        • anything we haven't boiled down yet should get boiled to this unit
         for (const ak in accumulated) {
           own += this.matrix[ak][k] * accumulated[ak];
           accumulated[ak] = 0;
         }
 
-        // plus anything that's already in this unit
+        • plus anything that's already in this unit
         if (isNumber(vals[k])) {
           own += vals[k];
         }
 
-        // only keep the integer part for now in the hopes of putting any decimal part
-        // into a smaller unit later
+        • only keep the integer part for now in the hopes of putting any decimal part
+        • into a smaller unit later
         const i = Math.trunc(own);
         built[k] = i;
         accumulated[k] = (own * 1000 - i * 1000) / 1000;
 
-        // otherwise, keep it in the wings to boil it later
+        • otherwise, keep it in the wings to boil it later
       } else if (isNumber(vals[k])) {
         accumulated[k] = vals[k];
       }
     }
 
-    // anything leftover becomes the decimal for the last unit
-    // lastUnit must be defined since units is not empty
+    • anything leftover becomes the decimal for the last unit
+    • lastUnit must be defined since units is not empty
     for (const key in accumulated) {
       if (accumulated[key] !== 0) {
         built[lastUnit] +=
@@ -3505,7 +3505,7 @@ class Duration {
     }
 
     function eq(v1, v2) {
-      // Consider 0 and undefined as equal
+      • Consider 0 and undefined as equal
       if (v1 === undefined || v1 === 0) return v2 === undefined || v2 === 0;
       return v1 === v2;
     }
@@ -4352,17 +4352,17 @@ function highOrderDiffs(cursor, later, units) {
       highWater = earlier.plus(results);
 
       if (highWater > later) {
-        // we overshot the end point, backtrack cursor by 1
+        • we overshot the end point, backtrack cursor by 1
         results[unit]--;
         cursor = earlier.plus(results);
 
-        // if we are still overshooting now, we need to backtrack again
-        // this happens in certain situations when diffing times in different zones,
-        // because this calculation ignores time zones
+        • if we are still overshooting now, we need to backtrack again
+        • this happens in certain situations when diffing times in different zones,
+        • because this calculation ignores time zones
         if (cursor > later) {
-          // keep the "overshot by 1" around as highWater
+          • keep the "overshot by 1" around as highWater
           highWater = cursor;
-          // backtrack cursor by 1
+          • backtrack cursor by 1
           results[unit]--;
           cursor = earlier.plus(results);
         }
@@ -4492,15 +4492,15 @@ const spaceOrNBSP = `[ ${NBSP}]`;
 const spaceOrNBSPRegExp = new RegExp(spaceOrNBSP, "g");
 
 function fixListRegex(s) {
-  // make dots optional and also make them literal
-  // make space and non breakable space characters interchangeable
+  • make dots optional and also make them literal
+  • make space and non breakable space characters interchangeable
   return s.replace(/\./g, "\\.?").replace(spaceOrNBSPRegExp, spaceOrNBSP);
 }
 
 function stripInsensitivities(s) {
   return s
-    .replace(/\./g, "") // ignore dots that were made optional
-    .replace(spaceOrNBSPRegExp, " ") // interchange space and nbsp
+    .replace(/\./g, "") • ignore dots that were made optional
+    .replace(spaceOrNBSPRegExp, " ") • interchange space and nbsp
     .toLowerCase();
 }
 
@@ -4550,12 +4550,12 @@ function unitForToken(token, loc) {
         return literal(t);
       }
       switch (t.val) {
-        // era
+        • era
         case "G":
           return oneOf(loc.eras("short"), 0);
         case "GG":
           return oneOf(loc.eras("long"), 0);
-        // years
+        • years
         case "y":
           return intUnit(oneToSix);
         case "yy":
@@ -4566,7 +4566,7 @@ function unitForToken(token, loc) {
           return intUnit(fourToSix);
         case "yyyyyy":
           return intUnit(six);
-        // months
+        • months
         case "M":
           return intUnit(oneOrTwo);
         case "MM":
@@ -4583,17 +4583,17 @@ function unitForToken(token, loc) {
           return oneOf(loc.months("short", false), 1);
         case "LLLL":
           return oneOf(loc.months("long", false), 1);
-        // dates
+        • dates
         case "d":
           return intUnit(oneOrTwo);
         case "dd":
           return intUnit(two);
-        // ordinals
+        • ordinals
         case "o":
           return intUnit(oneToThree);
         case "ooo":
           return intUnit(three);
-        // time
+        • time
         case "HH":
           return intUnit(two);
         case "H":
@@ -4624,20 +4624,20 @@ function unitForToken(token, loc) {
           return simple(oneOrTwo);
         case "uuu":
           return intUnit(one);
-        // meridiem
+        • meridiem
         case "a":
           return oneOf(loc.meridiems(), 0);
-        // weekYear (k)
+        • weekYear (k)
         case "kkkk":
           return intUnit(four);
         case "kk":
           return intUnit(twoToFour, untruncateYear);
-        // weekNumber (W)
+        • weekNumber (W)
         case "W":
           return intUnit(oneOrTwo);
         case "WW":
           return intUnit(two);
-        // weekdays
+        • weekdays
         case "E":
         case "c":
           return intUnit(one);
@@ -4649,18 +4649,18 @@ function unitForToken(token, loc) {
           return oneOf(loc.weekdays("short", true), 1);
         case "cccc":
           return oneOf(loc.weekdays("long", true), 1);
-        // offset/zone
+        • offset/zone
         case "Z":
         case "ZZ":
           return offset(new RegExp(`([+-]${oneOrTwo.source})(?::(${two.source}))?`), 2);
         case "ZZZ":
           return offset(new RegExp(`([+-]${oneOrTwo.source})(${two.source})?`), 2);
-        // we don't support ZZZZ (PST) or ZZZZZ (Pacific Standard Time) in parsing
-        // because we don't have any way to figure out what they are
+        • we don't support ZZZZ (PST) or ZZZZZ (Pacific Standard Time) in parsing
+        • because we don't have any way to figure out what they are
         case "z":
           return simple(/[a-z_+-/]{1,256}?/i);
-        // this special-case "token" represents a place where a macro-token expanded into a white-space literal
-        // in this case we accept any non-newline white-space
+        • this special-case "token" represents a place where a macro-token expanded into a white-space literal
+        • in this case we accept any non-newline white-space
         case " ":
           return simple(/[^\S\n\r]/);
         default:
@@ -4733,9 +4733,9 @@ function tokenForPart(part, formatOpts, resolvedOpts) {
 
   const style = formatOpts[type];
 
-  // The user might have explicitly specified hour12 or hourCycle
-  // if so, respect their decision
-  // if not, refer back to the resolvedOpts, which are based on the locale
+  • The user might have explicitly specified hour12 or hourCycle
+  • if so, respect their decision
+  • if not, refer back to the resolvedOpts, which are based on the locale
   let actualType = type;
   if (type === "hour") {
     if (formatOpts.hour12 != null) {
@@ -4747,8 +4747,8 @@ function tokenForPart(part, formatOpts, resolvedOpts) {
         actualType = "hour24";
       }
     } else {
-      // tokens only differentiate between 24 hours or not,
-      // so we do not need to check hourCycle here, which is less supported anyways
+      • tokens only differentiate between 24 hours or not,
+      • so we do not need to check hourCycle here, which is less supported anyways
       actualType = resolvedOpts.hour12 ? "hour12" : "hour24";
     }
   }
@@ -5130,27 +5130,27 @@ function clone(inst, alts) {
 // find the right offset a given local time. The o input is our guess, which determines which
 // offset we'll pick in ambiguous cases (e.g. there are two 3 AMs b/c Fallback DST)
 function fixOffset(localTS, o, tz) {
-  // Our UTC time is just a guess because our offset is just a guess
+  • Our UTC time is just a guess because our offset is just a guess
   let utcGuess = localTS - o * 60 * 1000;
 
-  // Test whether the zone matches the offset for this ts
+  • Test whether the zone matches the offset for this ts
   const o2 = tz.offset(utcGuess);
 
-  // If so, offset didn't change and we're done
+  • If so, offset didn't change and we're done
   if (o === o2) {
     return [utcGuess, o];
   }
 
-  // If not, change the ts by the difference in the offset
+  • If not, change the ts by the difference in the offset
   utcGuess -= (o2 - o) * 60 * 1000;
 
-  // If that gives us the local time we want, we're done
+  • If that gives us the local time we want, we're done
   const o3 = tz.offset(utcGuess);
   if (o2 === o3) {
     return [utcGuess, o2];
   }
 
-  // If it's different, we're in a hole time. The offset has changed, but the we don't adjust the time
+  • If it's different, we're in a hole time. The offset has changed, but the we don't adjust the time
   return [localTS - Math.min(o2, o3) * 60 * 1000, Math.max(o2, o3)];
 }
 
@@ -5207,7 +5207,7 @@ function adjustTime(inst, dur) {
 
   if (millisToAdd !== 0) {
     ts += millisToAdd;
-    // that could have changed the offset by going over a DST, but we want to keep the ts the same
+    • that could have changed the offset by going over a DST, but we want to keep the ts the same
     o = inst.zone.offset(ts);
   }
 
@@ -5394,7 +5394,7 @@ function quickDT(obj, opts) {
 
   let ts, o;
 
-  // assume we have the higher-order units
+  • assume we have the higher-order units
   if (!isUndefined(obj.year)) {
     for (const u of orderedUnits) {
       if (isUndefined(obj[u])) {
@@ -5540,7 +5540,7 @@ class DateTime {
     this.isLuxonDateTime = true;
   }
 
-  // CONSTRUCT
+  • CONSTRUCT
 
   /**
    * Create a DateTime for the current instant, in the system's time zone.
@@ -5653,7 +5653,7 @@ class DateTime {
         `fromMillis requires a numerical input, but received a ${typeof milliseconds} with value ${milliseconds}`
       );
     } else if (milliseconds < -MAX_DATE || milliseconds > MAX_DATE) {
-      // this isn't perfect because because we can still end up out of range because of additional shifting, but it's a start
+      • this isn't perfect because because we can still end up out of range because of additional shifting, but it's a start
       return DateTime.invalid("Timestamp out of range");
     } else {
       return new DateTime({
@@ -5733,11 +5733,11 @@ class DateTime {
       definiteWeekDef = normalized.weekYear || normalized.weekNumber,
       loc = Locale.fromObject(opts);
 
-    // cases:
-    // just a weekday -> this week's instance of that weekday, no worries
-    // (gregorian data or ordinal) + (weekYear or weekNumber) -> error
-    // (gregorian month or day) + ordinal -> error
-    // otherwise just use weeks or ordinals or gregorian, depending on what's specified
+    • cases:
+    • just a weekday -> this week's instance of that weekday, no worries
+    • (gregorian data or ordinal) + (weekYear or weekNumber) -> error
+    • (gregorian month or day) + ordinal -> error
+    • otherwise just use weeks or ordinals or gregorian, depending on what's specified
 
     if ((containsGregor || containsOrdinal) && definiteWeekDef) {
       throw new ConflictingSpecificationError(
@@ -5751,7 +5751,7 @@ class DateTime {
 
     const useWeekData = definiteWeekDef || (normalized.weekday && !containsGregor);
 
-    // configure ourselves to deal with gregorian dates or week stuff
+    • configure ourselves to deal with gregorian dates or week stuff
     let units,
       defaultValues,
       objNow = tsToObj(tsNow, offsetProvis);
@@ -5768,7 +5768,7 @@ class DateTime {
       defaultValues = defaultUnitValues;
     }
 
-    // set default values for missing stuff
+    • set default values for missing stuff
     let foundFirst = false;
     for (const u of units) {
       const v = normalized[u];
@@ -5781,7 +5781,7 @@ class DateTime {
       }
     }
 
-    // make sure the values we have are in range
+    • make sure the values we have are in range
     const higherOrderInvalid = useWeekData
         ? hasInvalidWeekData(normalized)
         : containsOrdinal
@@ -5793,7 +5793,7 @@ class DateTime {
       return DateTime.invalid(invalid);
     }
 
-    // compute the actual time
+    • compute the actual time
     const gregorian = useWeekData
         ? weekToGregorian(normalized)
         : containsOrdinal
@@ -5807,7 +5807,7 @@ class DateTime {
         loc,
       });
 
-    // gregorian data + weekday serves only to validate
+    • gregorian data + weekday serves only to validate
     if (normalized.weekday && containsGregor && obj.weekday !== inst.weekday) {
       return DateTime.invalid(
         "mismatched weekday",
@@ -5994,7 +5994,7 @@ class DateTime {
     return expanded.map((t) => t.val).join("");
   }
 
-  // INFO
+  • INFO
 
   /**
    * Get the value of unit.
@@ -6385,7 +6385,7 @@ class DateTime {
     return { locale, numberingSystem, outputCalendar: calendar };
   }
 
-  // TRANSFORM
+  • TRANSFORM
 
   /**
    * "Set" the DateTime's zone to UTC. Returns a newly-constructed DateTime.
@@ -6498,8 +6498,8 @@ class DateTime {
     } else {
       mixed = { ...this.toObject(), ...normalized };
 
-      // if we didn't set the day but we ended up on an overflow date,
-      // use the last day of the right month
+      • if we didn't set the day but we ended up on an overflow date,
+      • use the last day of the right month
       if (isUndefined(normalized.day)) {
         mixed.day = Math.min(daysInMonth(mixed.year, mixed.month), mixed.day);
       }
@@ -6557,25 +6557,25 @@ class DateTime {
     switch (normalizedUnit) {
       case "years":
         o.month = 1;
-      // falls through
+      • falls through
       case "quarters":
       case "months":
         o.day = 1;
-      // falls through
+      • falls through
       case "weeks":
       case "days":
         o.hour = 0;
-      // falls through
+      • falls through
       case "hours":
         o.minute = 0;
-      // falls through
+      • falls through
       case "minutes":
         o.second = 0;
-      // falls through
+      • falls through
       case "seconds":
         o.millisecond = 0;
         break;
-      // no default, invalid units throw in normalizeUnit()
+      • no default, invalid units throw in normalizeUnit()
     }
 
     if (normalizedUnit === "weeks") {
@@ -6595,7 +6595,7 @@ class DateTime {
    * @param {string} unit - The unit to go to the end of. Can be 'year', 'quarter', 'month', 'week', 'day', 'hour', 'minute', 'second', or 'millisecond'.
    * @example DateTime.local(2014, 3, 3).endOf('month').toISO(); //=> '2014-03-31T23:59:59.999-05:00'
    * @example DateTime.local(2014, 3, 3).endOf('year').toISO(); //=> '2014-12-31T23:59:59.999-05:00'
-   * @example DateTime.local(2014, 3, 3).endOf('week').toISO(); // => '2014-03-09T23:59:59.999-05:00', weeks start on Mondays
+   * @example DateTime.local(2014, 3, 3).endOf('week').toISO(); • => '2014-03-09T23:59:59.999-05:00', weeks start on Mondays
    * @example DateTime.local(2014, 3, 3, 5, 30).endOf('day').toISO(); //=> '2014-03-03T23:59:59.999-05:00'
    * @example DateTime.local(2014, 3, 3, 5, 30).endOf('hour').toISO(); //=> '2014-03-03T05:59:59.999-05:00'
    * @return {DateTime}
@@ -6608,7 +6608,7 @@ class DateTime {
       : this;
   }
 
-  // OUTPUT
+  • OUTPUT
 
   /**
    * Returns a string representation of this DateTime formatted according to the specified format string.
@@ -6938,7 +6938,7 @@ class DateTime {
     return new Date(this.isValid ? this.ts : NaN);
   }
 
-  // COMPARE
+  • COMPARE
 
   /**
    * Return the difference between two DateTimes as a Duration.
@@ -7110,7 +7110,7 @@ class DateTime {
     return bestBy(dateTimes, (i) => i.valueOf(), Math.max);
   }
 
-  // MISC
+  • MISC
 
   /**
    * Explain how a string would be parsed by fromFormat()
@@ -7136,7 +7136,7 @@ class DateTime {
     return DateTime.fromFormatExplain(text, fmt, options);
   }
 
-  // FORMAT PRESETS
+  • FORMAT PRESETS
 
   /**
    * {@link DateTime#toLocaleString} format like 10/14/1983
@@ -7519,7 +7519,7 @@ var removeMarkdown = function(md, options) {
 
   var output = md || '';
 
-  // Remove horizontal rules (stripListHeaders conflict with this rule, which is why it has been moved to the top)
+  • Remove horizontal rules (stripListHeaders conflict with this rule, which is why it has been moved to the top)
   output = output.replace(/^(-\s*?|\*\s*?|_\s*?){3,}\s*/gm, '');
 
   try {
@@ -7531,29 +7531,29 @@ var removeMarkdown = function(md, options) {
     }
     if (options.gfm) {
       output = output
-      // Header
+      • Header
         .replace(/\n={2,}/g, '\n')
-        // Fenced codeblocks
+        • Fenced codeblocks
         .replace(/~{3}.*\n/g, '')
-        // Strikethrough
+        • Strikethrough
         .replace(/~~/g, '')
-        // Fenced codeblocks
+        • Fenced codeblocks
         .replace(/`{3}.*\n/g, '');
     }
     if (options.abbr) {
-      // Remove abbreviations
+      • Remove abbreviations
       output = output.replace(/\*\[.*\]:.*\n/, '');
     }
     output = output
-    // Remove HTML tags
+    • Remove HTML tags
       .replace(/<[^>]*>/g, '');
 
     var htmlReplaceRegex = new RegExp('<[^>]*>', 'g');
     if (options.htmlTagsToSkip.length > 0) {
-      // Using negative lookahead. Eg. (?!sup|sub) will not match 'sup' and 'sub' tags.
+      • Using negative lookahead. Eg. (?!sup|sub) will not match 'sup' and 'sub' tags.
       var joinedHtmlTagsToSkip = '(?!' + options.htmlTagsToSkip.join("|") + ')';
 
-      // Adding the lookahead literal with the default regex for html. Eg./<(?!sup|sub)[^>]*>/ig
+      • Adding the lookahead literal with the default regex for html. Eg./<(?!sup|sub)[^>]*>/ig
       htmlReplaceRegex = new RegExp(
           '<' +
           joinedHtmlTagsToSkip +
@@ -7563,39 +7563,39 @@ var removeMarkdown = function(md, options) {
     }
 
     output = output
-      // Remove HTML tags
+      • Remove HTML tags
       .replace(htmlReplaceRegex, '')
-      // Remove setext-style headers
+      • Remove setext-style headers
       .replace(/^[=\-]{2,}\s*$/g, '')
-      // Remove footnotes?
+      • Remove footnotes?
       .replace(/\[\^.+?\](\: .*?$)?/g, '')
       .replace(/\s{0,2}\[.*?\]: .*?$/g, '')
-      // Remove images
+      • Remove images
       .replace(/\!\[(.*?)\][\[\(].*?[\]\)]/g, options.useImgAltText ? '$1' : '')
-      // Remove inline links
+      • Remove inline links
       .replace(/\[([^\]]*?)\][\[\(].*?[\]\)]/g, options.replaceLinksWithURL ? '$2' : '$1')
-      // Remove blockquotes
+      • Remove blockquotes
       .replace(/^(\n)?\s{0,3}>\s?/gm, '$1')
-      // .replace(/(^|\n)\s{0,3}>\s?/g, '\n\n')
-      // Remove reference-style links?
+      • .replace(/(^|\n)\s{0,3}>\s?/g, '\n\n')
+      • Remove reference-style links?
       .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, '')
-      // Remove atx-style headers
+      • Remove atx-style headers
       .replace(/^(\n)?\s{0,}#{1,6}\s*( (.+))? +#+$|^(\n)?\s{0,}#{1,6}\s*( (.+))?$/gm, '$1$3$4$6')
-      // Remove * emphasis
+      • Remove * emphasis
       .replace(/([\*]+)(\S)(.*?\S)??\1/g, '$2$3')
-      // Remove _ emphasis. Unlike *, _ emphasis gets rendered only if 
-      //   1. Either there is a whitespace character before opening _ and after closing _.
-      //   2. Or _ is at the start/end of the string.
+      • Remove _ emphasis. Unlike *, _ emphasis gets rendered only if 
+      •   1. Either there is a whitespace character before opening _ and after closing _.
+      •   2. Or _ is at the start/end of the string.
       .replace(/(^|\W)([_]+)(\S)(.*?\S)??\2($|\W)/g, '$1$3$4$5')
-      // Remove code blocks
+      • Remove code blocks
       .replace(/(`{3,})(.*?)\1/gm, '$2')
-      // Remove inline code
+      • Remove inline code
       .replace(/`(.+?)`/g, '$1')
-      // // Replace two or more newlines with exactly two? Not entirely sure this belongs here...
-      // .replace(/\n{2,}/g, '\n\n')
-      // // Remove newlines in a paragraph
-      // .replace(/(\S+)\n\s*(\S+)/g, '$1 $2')
-      // Replace strike through
+      • // Replace two or more newlines with exactly two? Not entirely sure this belongs here...
+      • .replace(/\n{2,}/g, '\n\n')
+      • // Remove newlines in a paragraph
+      • .replace(/(\S+)\n\s*(\S+)/g, '$1 $2')
+      • Replace strike through
       .replace(/~(.*?)~/g, '$1');
   } catch(e) {
     if (options.throwError) throw e;
@@ -7698,7 +7698,7 @@ function normalizeHeaderForLink(header) {
 }
 /** Render a DateTime in a minimal format to save space. */
 function renderMinimalDate(time, settings, locale) {
-    // If there is no relevant time specified, fall back to just rendering the date.
+    • If there is no relevant time specified, fall back to just rendering the date.
     if (time.second == 0 && time.minute == 0 && time.hour == 0) {
         return time.toLocal().toFormat(settings.defaultDateFormat, { locale });
     }
@@ -7707,7 +7707,7 @@ function renderMinimalDate(time, settings, locale) {
 /** Render a duration in a minimal format to save space. */
 function renderMinimalDuration(dur) {
     dur = normalizeDuration(dur);
-    // toHuman outputs zero quantities e.g. "0 seconds"
+    • toHuman outputs zero quantities e.g. "0 seconds"
     dur = Duration.fromObject(Object.fromEntries(Object.entries(dur.toObject()).filter(([, quantity]) => quantity != 0)));
     return dur.toHuman();
 }
@@ -7722,11 +7722,11 @@ function setsEqual(first, second) {
 }
 /** Normalize a markdown string. Removes all markdown tags and obsidian links. */
 function normalizeMarkdown(str) {
-    // [[test]] -> test
+    • [[test]] -> test
     let interim = str.replace(/\[\[([^\|]*?)\]\]/g, "$1");
-    // [[test|test]] -> test
+    • [[test|test]] -> test
     interim = interim.replace(/\[\[.*?\|(.*?)\]\]/, "$1");
-    // remove markdown tags
+    • remove markdown tags
     interim = removeMd(interim);
     return interim;
 }
@@ -7829,7 +7829,7 @@ var Values;
     Values.mapLeaves = mapLeaves;
     /** Compare two arbitrary JavaScript values. Produces a total ordering over ANY possible dataview value. */
     function compareValue(val1, val2, linkNormalizer) {
-        // Handle undefined/nulls first.
+        • Handle undefined/nulls first.
         if (val1 === undefined)
             val1 = null;
         if (val2 === undefined)
@@ -7840,7 +7840,7 @@ var Values;
             return -1;
         else if (val2 === null)
             return 1;
-        // A non-null value now which we can wrap & compare on.
+        • A non-null value now which we can wrap & compare on.
         let wrap1 = wrapValue(val1);
         let wrap2 = wrapValue(val2);
         if (wrap1 === undefined && wrap2 === undefined)
@@ -7849,7 +7849,7 @@ var Values;
             return -1;
         else if (wrap2 === undefined)
             return 1;
-        // Short-circuit on different types or on reference equality.
+        • Short-circuit on different types or on reference equality.
         if (wrap1.type != wrap2.type)
             return wrap1.type.localeCompare(wrap2.type);
         if (wrap1.value === wrap2.value)
@@ -7874,22 +7874,22 @@ var Values;
                 let link1 = wrap1.value;
                 let link2 = wrap2.value;
                 let normalize = linkNormalizer ?? ((x) => x);
-                // We can't compare by file name or display, since that would break link equality. Compare by path.
+                • We can't compare by file name or display, since that would break link equality. Compare by path.
                 let pathCompare = normalize(link1.path).localeCompare(normalize(link2.path));
                 if (pathCompare != 0)
                     return pathCompare;
-                // Then compare by type.
+                • Then compare by type.
                 let typeCompare = link1.type.localeCompare(link2.type);
                 if (typeCompare != 0)
                     return typeCompare;
-                // Then compare by subpath existence.
+                • Then compare by subpath existence.
                 if (link1.subpath && !link2.subpath)
                     return 1;
                 if (!link1.subpath && link2.subpath)
                     return -1;
                 if (!link1.subpath && !link2.subpath)
                     return 0;
-                // Since both have a subpath, compare by subpath.
+                • Since both have a subpath, compare by subpath.
                 return (link1.subpath ?? "").localeCompare(link2.subpath ?? "");
             case "date":
                 return wrap1.value < wrap2.value
@@ -8123,7 +8123,7 @@ class Link {
     }
     /** Create a link to a specific file and header in that file. */
     static header(path, header, embed, display) {
-        // Headers need to be normalized to alpha-numeric & with extra spacing removed.
+        • Headers need to be normalized to alpha-numeric & with extra spacing removed.
         return new Link({
             path,
             embed,
@@ -8438,7 +8438,7 @@ class DataArrayImpl {
             return this;
         let realComparator = comparator ?? this.defaultComparator;
         let realKey = key ?? ((l) => l);
-        // Associate each entry with it's index for the key function, and then do a normal sort.
+        • Associate each entry with it's index for the key function, and then do a normal sort.
         let copy = [].concat(this.array()).map((elem, index) => {
             return { index: index, value: elem };
         });
@@ -8464,8 +8464,8 @@ class DataArrayImpl {
     groupBy(key, comparator) {
         if (this.values.length == 0)
             return this.lwrap([]);
-        // JavaScript sucks and we can't make hash maps over arbitrary types (only strings/ints), so
-        // we do a poor man algorithm where we SORT, followed by grouping.
+        • JavaScript sucks and we can't make hash maps over arbitrary types (only strings/ints), so
+        • we do a poor man algorithm where we SORT, followed by grouping.
         let intermediate = this.sort(key, "asc", comparator);
         comparator = comparator ?? this.defaultComparator;
         let result = [];
@@ -8502,7 +8502,7 @@ class DataArrayImpl {
         if (this.values.length == 0)
             return this;
         let realKey = key ?? (x => x);
-        // For similar reasons to groupBy, do a sort and take the first element of each block.
+        • For similar reasons to groupBy, do a sort and take the first element of each block.
         let intermediate = this.map((x, index) => {
             return { key: realKey(x, index, this.values), value: x };
         }).sort(x => x.key, "asc", comparator);
@@ -8639,7 +8639,7 @@ function currentLocale() {
 
 /** Render simple fields compactly, removing wrapping content like paragraph and span. */
 async function renderCompactMarkdown(app, markdown, container, sourcePath, component, isInlineFieldLivePreview = false) {
-    // check if the call is from the CM6 view plugin defined in src/ui/views/inline-field-live-preview.ts
+    • check if the call is from the CM6 view plugin defined in src/ui/views/inline-field-live-preview.ts
     if (isInlineFieldLivePreview) {
         await renderCompactMarkdownForInlineFieldLivePreview(app, markdown, container, sourcePath, component);
     }
@@ -8683,7 +8683,7 @@ function renderCodeBlock(container, source, language) {
 }
 /** Prettily render a value into a container with the given settings. */
 async function renderValue(app, field, container, originFile, component, settings, expandList = false, context = "root", depth = 0, isInlineFieldLivePreview = false) {
-    // Prevent infinite recursion.
+    • Prevent infinite recursion.
     if (depth > settings.maxRecursiveRenderDepth) {
         container.appendText("...");
         return;
@@ -8759,7 +8759,7 @@ async function renderValue(app, field, container, originFile, component, setting
         }
     }
     else if (Values.isObject(field)) {
-        // Don't render classes in case they have recursive references; spoopy.
+        • Don't render classes in case they have recursive references; spoopy.
         if (field?.constructor?.name && field?.constructor?.name != "Object") {
             container.appendText(`<${field.constructor.name}>`);
             return;
@@ -9027,11 +9027,11 @@ function chainOpt(base, ...funcs) {
     });
 }
 const EXPRESSION = parsimmon_umd_minExports.createLanguage({
-    // A floating point number; the decimal point is optional.
+    • A floating point number; the decimal point is optional.
     number: q => parsimmon_umd_minExports.regexp(/-?[0-9]+(\.[0-9]+)?/)
         .map(str => Number.parseFloat(str))
         .desc("number"),
-    // A quote-surrounded string which supports escape characters ('\').
+    • A quote-surrounded string which supports escape characters ('\').
     string: q => parsimmon_umd_minExports.string('"')
         .then(parsimmon_umd_minExports.alt(q.escapeCharacter, parsimmon_umd_minExports.noneOf('"\\'))
         .atLeast(0)
@@ -9041,7 +9041,7 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
     escapeCharacter: _ => parsimmon_umd_minExports.string("\\")
         .then(parsimmon_umd_minExports.any)
         .map(escaped => {
-        // If we are escaping a backslash or a quote, pass in on in escaped form
+        • If we are escaping a backslash or a quote, pass in on in escaped form
         if (escaped === '"')
             return '"';
         if (escaped === "\\")
@@ -9049,38 +9049,38 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
         else
             return "\\" + escaped;
     }),
-    // A boolean true/false value.
+    • A boolean true/false value.
     bool: _ => parsimmon_umd_minExports.regexp(/true|false|True|False/)
         .map(str => str.toLowerCase() == "true")
         .desc("boolean ('true' or 'false')"),
-    // A tag of the form '#stuff/hello-there'.
+    • A tag of the form '#stuff/hello-there'.
     tag: _ => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("#"), parsimmon_umd_minExports.alt(parsimmon_umd_minExports.regexp(/[^\u2000-\u206F\u2E00-\u2E7F'!"#$%&()*+,.:;<=>?@^`{|}~\[\]\\\s]/).desc("text")).many(), (start, rest) => start + rest.join("")).desc("tag ('#hello/stuff')"),
-    // A variable identifier, which is alphanumeric and must start with a letter or... emoji.
+    • A variable identifier, which is alphanumeric and must start with a letter or... emoji.
     identifier: _ => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.alt(parsimmon_umd_minExports.regexp(/\p{Letter}/u), parsimmon_umd_minExports.regexp(EMOJI_REGEX).desc("text")), parsimmon_umd_minExports.alt(parsimmon_umd_minExports.regexp(/[0-9\p{Letter}_-]/u), parsimmon_umd_minExports.regexp(EMOJI_REGEX).desc("text")).many(), (first, rest) => first + rest.join("")).desc("variable identifier"),
-    // An Obsidian link of the form [[<link>]].
+    • An Obsidian link of the form [[<link>]].
     link: _ => parsimmon_umd_minExports.regexp(/\[\[([^\[\]]*?)\]\]/u, 1)
         .map(linkInner => parseInnerLink(linkInner))
         .desc("file link"),
-    // An embeddable link which can start with '!'. This overlaps with the normal negation operator, so it is only
-    // provided for metadata parsing.
+    • An embeddable link which can start with '!'. This overlaps with the normal negation operator, so it is only
+    • provided for metadata parsing.
     embedLink: q => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("!").atMost(1), q.link, (p, l) => {
         if (p.length > 0)
             l.embed = true;
         return l;
     }).desc("file link"),
-    // Binary plus or minus operator.
+    • Binary plus or minus operator.
     binaryPlusMinus: _ => parsimmon_umd_minExports.regexp(/\+|-/)
         .map(str => str)
         .desc("'+' or '-'"),
-    // Binary times or divide operator.
+    • Binary times or divide operator.
     binaryMulDiv: _ => parsimmon_umd_minExports.regexp(/\*|\/|%/)
         .map(str => str)
         .desc("'*' or '/' or '%'"),
-    // Binary comparison operator.
+    • Binary comparison operator.
     binaryCompareOp: _ => parsimmon_umd_minExports.regexp(/>=|<=|!=|>|<|=/)
         .map(str => str)
         .desc("'>=' or '<=' or '!=' or '=' or '>' or '<'"),
-    // Binary boolean combination operator.
+    • Binary boolean combination operator.
     binaryBooleanOp: _ => parsimmon_umd_minExports.regexp(/and|or|&|\|/i)
         .map(str => {
         if (str.toLowerCase() == "and")
@@ -9091,20 +9091,20 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
             return str;
     })
         .desc("'and' or 'or'"),
-    // A date which can be YYYY-MM[-DDTHH:mm:ss].
+    • A date which can be YYYY-MM[-DDTHH:mm:ss].
     rootDate: _ => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.regexp(/\d{4}/), parsimmon_umd_minExports.string("-"), parsimmon_umd_minExports.regexp(/\d{2}/), (year, _, month) => {
         return DateTime.fromObject({ year: Number.parseInt(year), month: Number.parseInt(month) });
     }).desc("date in format YYYY-MM[-DDTHH-MM-SS.MS]"),
     dateShorthand: _ => parsimmon_umd_minExports.alt(...Object.keys(DATE_SHORTHANDS)
         .sort((a, b) => b.length - a.length)
         .map(parsimmon_umd_minExports.string)),
-    date: q => chainOpt(q.rootDate, (ym) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("-"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, day) => ym.set({ day: Number.parseInt(day) })), (ymd) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("T"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, hour) => ymd.set({ hour: Number.parseInt(hour) })), (ymdh) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string(":"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, minute) => ymdh.set({ minute: Number.parseInt(minute) })), (ymdhm) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string(":"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, second) => ymdhm.set({ second: Number.parseInt(second) })), (ymdhms) => parsimmon_umd_minExports.alt(parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("."), parsimmon_umd_minExports.regexp(/\d{3}/), (_, millisecond) => ymdhms.set({ millisecond: Number.parseInt(millisecond) })), parsimmon_umd_minExports.succeed(ymdhms) // pass
+    date: q => chainOpt(q.rootDate, (ym) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("-"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, day) => ym.set({ day: Number.parseInt(day) })), (ymd) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("T"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, hour) => ymd.set({ hour: Number.parseInt(hour) })), (ymdh) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string(":"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, minute) => ymdh.set({ minute: Number.parseInt(minute) })), (ymdhm) => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string(":"), parsimmon_umd_minExports.regexp(/\d{2}/), (_, second) => ymdhm.set({ second: Number.parseInt(second) })), (ymdhms) => parsimmon_umd_minExports.alt(parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("."), parsimmon_umd_minExports.regexp(/\d{3}/), (_, millisecond) => ymdhms.set({ millisecond: Number.parseInt(millisecond) })), parsimmon_umd_minExports.succeed(ymdhms) • pass
     ), (dt) => parsimmon_umd_minExports.alt(parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("+").or(parsimmon_umd_minExports.string("-")), parsimmon_umd_minExports.regexp(/\d{1,2}(:\d{2})?/), (pm, hr) => dt.setZone("UTC" + pm + hr, { keepLocalTime: true })), parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("Z"), () => dt.setZone("utc", { keepLocalTime: true })), parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("["), parsimmon_umd_minExports.regexp(/[0-9A-Za-z+-\/]+/u), parsimmon_umd_minExports.string("]"), (_a, zone, _b) => dt.setZone(zone, { keepLocalTime: true }))))
         .assert((dt) => dt.isValid, "valid date")
         .desc("date in format YYYY-MM[-DDTHH-MM-SS.MS]"),
-    // A date, plus various shorthand times of day it could be.
+    • A date, plus various shorthand times of day it could be.
     datePlus: q => parsimmon_umd_minExports.alt(q.dateShorthand.map(d => DATE_SHORTHANDS[d]()), q.date).desc("date in format YYYY-MM[-DDTHH-MM-SS.MS] or in shorthand"),
-    // A duration of time.
+    • A duration of time.
     durationType: _ => parsimmon_umd_minExports.alt(...Object.keys(DURATION_TYPES)
         .sort((a, b) => b.length - a.length)
         .map(parsimmon_umd_minExports.string)),
@@ -9112,9 +9112,9 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
         .sepBy1(parsimmon_umd_minExports.string(",").trim(parsimmon_umd_minExports.optWhitespace).or(parsimmon_umd_minExports.optWhitespace))
         .map(durations => durations.reduce((p, c) => p.plus(c)))
         .desc("duration like 4hr2min"),
-    // A raw null value.
+    • A raw null value.
     rawNull: _ => parsimmon_umd_minExports.string("null"),
-    // Source parsing.
+    • Source parsing.
     tagSource: q => q.tag.map(tag => Sources.tag(tag)),
     csvSource: q => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("csv(").skip(parsimmon_umd_minExports.optWhitespace), q.string, parsimmon_umd_minExports.string(")"), (_1, path, _2) => Sources.csv(path)),
     linkIncomingSource: q => q.link.map(link => Sources.link(link.path, true)),
@@ -9125,7 +9125,7 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
     atomSource: q => parsimmon_umd_minExports.alt(q.parensSource, q.negateSource, q.linkOutgoingSource, q.linkIncomingSource, q.folderSource, q.tagSource, q.csvSource),
     binaryOpSource: q => createBinaryParser(q.atomSource, q.binaryBooleanOp.map(s => s), Sources.binaryOp),
     source: q => q.binaryOpSource,
-    // Field parsing.
+    • Field parsing.
     variableField: q => q.identifier
         .chain(r => {
         if (KEYWORDS.includes(r.toUpperCase())) {
@@ -9164,7 +9164,7 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
     inlineFieldList: q => q.atomInlineField.sepBy(parsimmon_umd_minExports.string(",").trim(parsimmon_umd_minExports.optWhitespace).lookahead(q.atomInlineField)),
     inlineField: q => parsimmon_umd_minExports.alt(parsimmon_umd_minExports.seqMap(q.atomInlineField, parsimmon_umd_minExports.string(",").trim(parsimmon_umd_minExports.optWhitespace), q.inlineFieldList, (f, _s, l) => [f].concat(l)), q.atomInlineField),
     atomField: q => parsimmon_umd_minExports.alt(
-    // Place embed links above negated fields as they are the special parser case '![[thing]]' and are generally unambiguous.
+    • Place embed links above negated fields as they are the special parser case '![[thing]]' and are generally unambiguous.
     q.embedLink.map(l => Fields.literal(l)), q.negatedField, q.linkField, q.listField, q.objectField, q.lambdaField, q.parensField, q.boolField, q.numberField, q.stringField, q.dateField, q.durationField, q.nullField, q.variableField),
     indexField: q => parsimmon_umd_minExports.seqMap(q.atomField, parsimmon_umd_minExports.alt(q.dotPostfix, q.indexPostfix, q.functionPostfix).many(), (obj, postfixes) => {
         let result = obj;
@@ -9199,7 +9199,7 @@ const EXPRESSION = parsimmon_umd_minExports.createLanguage({
     functionPostfix: q => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.string("("), parsimmon_umd_minExports.optWhitespace, q.field.sepBy(parsimmon_umd_minExports.string(",").trim(parsimmon_umd_minExports.optWhitespace)), parsimmon_umd_minExports.optWhitespace, parsimmon_umd_minExports.string(")"), (_, _1, fields, _2, _3) => {
         return { type: "function", fields };
     }),
-    // The precedence hierarchy of operators - multiply/divide, add/subtract, compare, and then boolean operations.
+    • The precedence hierarchy of operators - multiply/divide, add/subtract, compare, and then boolean operations.
     binaryMulDivField: q => createBinaryParser(q.indexField, q.binaryMulDiv, Fields.binaryOp),
     binaryPlusMinusField: q => createBinaryParser(q.binaryMulDivField, q.binaryPlusMinus, Fields.binaryOp),
     binaryCompareField: q => createBinaryParser(q.binaryPlusMinusField, q.binaryCompareOp, Fields.binaryOp),
@@ -9235,12 +9235,12 @@ function findClosing(line, start, open, close) {
     let escaped = false;
     for (let index = start; index < line.length; index++) {
         let char = line.charAt(index);
-        // Allows for double escapes like '\\' to be rendered normally.
+        • Allows for double escapes like '\\' to be rendered normally.
         if (char == "\\") {
             escaped = !escaped;
             continue;
         }
-        // If escaped, ignore the next character for computing nesting, regardless of what it is.
+        • If escaped, ignore the next character for computing nesting, regardless of what it is.
         if (escaped) {
             escaped = false;
             continue;
@@ -9249,7 +9249,7 @@ function findClosing(line, start, open, close) {
             nesting++;
         else if (char == close)
             nesting--;
-        // Only occurs if we are on a close character and there is no more nesting.
+        • Only occurs if we are on a close character and there is no more nesting.
         if (nesting < 0)
             return { value: line.substring(start, index).trim(), endIndex: index + 1 };
         escaped = false;
@@ -9269,7 +9269,7 @@ function findSpecificInlineField(line, start) {
     let key = findSeparator(line, start + 1);
     if (key === undefined)
         return undefined;
-    // Fail the match if we find any separator characters (not allowed in keys).
+    • Fail the match if we find any separator characters (not allowed in keys).
     for (let sep of Object.keys(INLINE_FIELD_WRAPPERS).concat(Object.values(INLINE_FIELD_WRAPPERS))) {
         if (key.key.includes(sep))
             return undefined;
@@ -9288,13 +9288,13 @@ function findSpecificInlineField(line, start) {
 }
 /** Parse a textual inline field value into something we can work with. */
 function parseInlineValue(value) {
-    // Empty inline values (i.e., no text) should map to null to match long-term Dataview semantics.
-    // Null is also a more universal type to deal with than strings, since all functions accept nulls.
+    • Empty inline values (i.e., no text) should map to null to match long-term Dataview semantics.
+    • Null is also a more universal type to deal with than strings, since all functions accept nulls.
     if (value.trim() == "")
         return null;
-    // The stripped literal field parser understands all of the non-array/non-object fields and can parse them for us.
-    // Inline field objects are not currently supported; inline array objects have to be handled by the parser
-    // separately.
+    • The stripped literal field parser understands all of the non-array/non-object fields and can parse them for us.
+    • Inline field objects are not currently supported; inline array objects have to be handled by the parser
+    • separately.
     let inline = EXPRESSION.inlineField.parse(value);
     if (inline.status)
         return inline.value;
@@ -9373,7 +9373,7 @@ function extractSpecialTaskFields(line) {
 function setInlineField(source, key, value) {
     let existing = extractInlineFields(source);
     let existingKeys = existing.filter(f => f.key == key);
-    // Don't do anything if there are duplicate keys OR the key already doesn't exist.
+    • Don't do anything if there are duplicate keys OR the key already doesn't exist.
     if (existingKeys.length > 2 || (existingKeys.length == 0 && !value))
         return source;
     let existingKey = existingKeys[0];
@@ -9394,7 +9394,7 @@ function setInlineField(source, key, value) {
 function setEmojiShorthandCompletionField(source, value) {
     const existing = extractInlineFields(source, true);
     const existingKeys = existing.filter(f => f.key === "completion" && f.wrapping === "emoji-shorthand");
-    // Don't do anything if there are duplicate keys OR the key already doesn't exist.
+    • Don't do anything if there are duplicate keys OR the key already doesn't exist.
     if (existingKeys.length > 2 || (existingKeys.length == 0 && !value))
         return source;
     /* No wrapper, add own spacing at start */
@@ -9448,7 +9448,7 @@ class PageMetadata {
     }
     /** Canonicalize raw links and other data in partial data with normalizers, returning a completed object. */
     static canonicalize(data, linkNormalizer) {
-        // Mutate the data for now, which is probably a bad idea but... all well.
+        • Mutate the data for now, which is probably a bad idea but... all well.
         if (data.frontmatter) {
             data.frontmatter = Values.mapLeaves(data.frontmatter, t => Values.isLink(t) ? linkNormalizer(t) : t);
         }
@@ -9467,9 +9467,9 @@ class PageMetadata {
         if (data.links) {
             data.links = data.links.map(l => linkNormalizer(l));
         }
-        // This is pretty ugly, but it's not possible to normalize on the worker thread that does parsing.
-        // The best way to improve this is to instead just canonicalize the entire data object; I can try to
-        // optimize `Values.mapLeaves` to only mutate if it actually changes things.
+        • This is pretty ugly, but it's not possible to normalize on the worker thread that does parsing.
+        • The best way to improve this is to instead just canonicalize the entire data object; I can try to
+        • optimize `Values.mapLeaves` to only mutate if it actually changes things.
         return new PageMetadata(data.path, data);
     }
     /** The name (based on path) of this file. */
@@ -9495,14 +9495,14 @@ class PageMetadata {
     }
     /** Convert all links in this file to file links. */
     fileLinks() {
-        // We want to make them distinct, but where links are not raw links we
-        // now keep the additional metadata.
+        • We want to make them distinct, but where links are not raw links we
+        • now keep the additional metadata.
         let distinctLinks = new Set(this.links);
         return Array.from(distinctLinks);
     }
     /** Map this metadata to a full object; uses the index for additional data lookups.  */
     serialize(index, cache) {
-        // Convert list items via the canonicalization cache.
+        • Convert list items via the canonicalization cache.
         let realCache = cache ?? new ListSerializationCache(this.lists);
         let result = {
             file: {
@@ -9527,13 +9527,13 @@ class PageMetadata {
                 ext: this.extension(),
             },
         };
-        // Add the current day if present.
+        • Add the current day if present.
         if (this.day)
             result.file.day = this.day;
-        // Then append the computed fields.
+        • Then append the computed fields.
         for (let [key, value] of this.fields.entries()) {
             if (key in result)
-                continue; // Don't allow fields to override existing keys.
+                continue; • Don't allow fields to override existing keys.
             result[key] = value;
         }
         return result;
@@ -9609,7 +9609,7 @@ class ListItem$1 {
     }
     /** Create an API-friendly copy of this list item. De-duplication is done via the provided cache. */
     serialize(cache) {
-        // Map children to their serialized/de-duplicated equivalents right away.
+        • Map children to their serialized/de-duplicated equivalents right away.
         let children = this.children.map(l => cache.get(l)).filter((l) => l !== undefined);
         let result = {
             symbol: this.symbol,
@@ -9628,7 +9628,7 @@ class ListItem$1 {
             position: Values.deepCopy(this.position),
             subtasks: children,
             real: !!this.task,
-            header: this.section, // @deprecated, use 'item.section' instead.
+            header: this.section, • @deprecated, use 'item.section' instead.
         };
         if (this.parent || this.parent === 0)
             result.parent = this.parent;
@@ -9739,7 +9739,7 @@ function parseFrontmatter(value) {
             return linkParse.value;
         return value;
     }
-    // Backup if we don't understand the type.
+    • Backup if we don't understand the type.
     return null;
 }
 
@@ -9769,7 +9769,7 @@ var Transferable;
 (function (Transferable) {
     /** Convert a literal value to a serializer-friendly transferable value. */
     function transferable(value) {
-        // Handle simple universal types first.
+        • Handle simple universal types first.
         if (value instanceof Map) {
             let copied = new Map();
             for (let [key, val] of value.entries())
@@ -9902,8 +9902,8 @@ localforage$1.exports;
 	  } else if ('document' in global && 'onreadystatechange' in global.document.createElement('script')) {
 	    scheduleDrain = function () {
 
-	      // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-	      // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+	      • Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+	      • into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
 	      var scriptEl = global.document.createElement('script');
 	      scriptEl.onreadystatechange = function () {
 	        nextTick();
@@ -10064,7 +10064,7 @@ localforage$1.exports;
 	};
 
 	function getThen(obj) {
-	  // Make sure we only access the accessor once as required by the spec
+	  • Make sure we only access the accessor once as required by the spec
 	  var then = obj && obj.then;
 	  if (obj && (typeof obj === 'object' || typeof obj === 'function') && typeof then === 'function') {
 	    return function appyThen() {
@@ -10074,7 +10074,7 @@ localforage$1.exports;
 	}
 
 	function safelyResolveThenable(self, thenable) {
-	  // Either fulfill, reject or reject with error
+	  • Either fulfill, reject or reject with error
 	  var called = false;
 	  function onError(value) {
 	    if (called) {
@@ -10242,30 +10242,30 @@ localforage$1.exports;
 
 	function isIndexedDBValid() {
 	    try {
-	        // Initialize IndexedDB; fall back to vendor-prefixed versions
-	        // if needed.
+	        • Initialize IndexedDB; fall back to vendor-prefixed versions
+	        • if needed.
 	        if (!idb || !idb.open) {
 	            return false;
 	        }
-	        // We mimic PouchDB here;
+	        • We mimic PouchDB here;
 	        //
-	        // We test for openDatabase because IE Mobile identifies itself
-	        // as Safari. Oh the lulz...
+	        • We test for openDatabase because IE Mobile identifies itself
+	        • as Safari. Oh the lulz...
 	        var isSafari = typeof openDatabase !== 'undefined' && /(Safari|iPhone|iPad|iPod)/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent) && !/BlackBerry/.test(navigator.platform);
 
 	        var hasFetch = typeof fetch === 'function' && fetch.toString().indexOf('[native code') !== -1;
 
-	        // Safari <10.1 does not meet our requirements for IDB support
-	        // (see: https://github.com/pouchdb/pouchdb/issues/5572).
-	        // Safari 10.1 shipped with fetch, we can use that to detect it.
-	        // Note: this creates issues with `window.fetch` polyfills and
-	        // overrides; see:
-	        // https://github.com/localForage/localForage/issues/856
+	        • Safari <10.1 does not meet our requirements for IDB support
+	        • (see: https://github.com/pouchdb/pouchdb/issues/5572).
+	        • Safari 10.1 shipped with fetch, we can use that to detect it.
+	        • Note: this creates issues with `window.fetch` polyfills and
+	        • overrides; see:
+	        • https://github.com/localForage/localForage/issues/856
 	        return (!isSafari || hasFetch) && typeof indexedDB !== 'undefined' &&
-	        // some outdated implementations of IDB that appear on Samsung
-	        // and HTC Android devices <4.4 are missing IDBKeyRange
-	        // See: https://github.com/mozilla/localForage/issues/128
-	        // See: https://github.com/mozilla/localForage/issues/272
+	        • some outdated implementations of IDB that appear on Samsung
+	        • and HTC Android devices <4.4 are missing IDBKeyRange
+	        • See: https://github.com/mozilla/localForage/issues/128
+	        • See: https://github.com/mozilla/localForage/issues/272
 	        typeof IDBKeyRange !== 'undefined';
 	    } catch (e) {
 	        return false;
@@ -10300,8 +10300,8 @@ localforage$1.exports;
 	// This is CommonJS because lie is an external dependency, so Rollup
 	// can just ignore it.
 	if (typeof Promise === 'undefined') {
-	    // In the "nopromises" build this will just throw if you don't have
-	    // a global promise object, but it would throw anyway later.
+	    • In the "nopromises" build this will just throw if you don't have
+	    • a global promise object, but it would throw anyway later.
 	    _dereq_(3);
 	}
 	var Promise$1 = Promise;
@@ -10327,7 +10327,7 @@ localforage$1.exports;
 	}
 
 	function normalizeKey(key) {
-	    // Cast the key to a string, as that's all we can set as a key.
+	    • Cast the key to a string, as that's all we can set as a key.
 	    if (typeof key !== 'string') {
 	        console.warn(key + ' used as a key, but it is not a string.');
 	        key = String(key);
@@ -10391,8 +10391,8 @@ localforage$1.exports;
 	        txn.objectStore(DETECT_BLOB_SUPPORT_STORE).put(blob, 'key');
 
 	        txn.onabort = function (e) {
-	            // If the transaction aborts now its due to not being able to
-	            // write to the database, likely due to the disk being full
+	            • If the transaction aborts now its due to not being able to
+	            • write to the database, likely due to the disk being full
 	            e.preventDefault();
 	            e.stopPropagation();
 	            resolve(false);
@@ -10401,12 +10401,12 @@ localforage$1.exports;
 	        txn.oncomplete = function () {
 	            var matchedChrome = navigator.userAgent.match(/Chrome\/(\d+)/);
 	            var matchedEdge = navigator.userAgent.match(/Edge\//);
-	            // MS Edge pretends to be Chrome 42:
-	            // https://msdn.microsoft.com/en-us/library/hh869301%28v=vs.85%29.aspx
+	            • MS Edge pretends to be Chrome 42:
+	            • https://msdn.microsoft.com/en-us/library/hh869301%28v=vs.85%29.aspx
 	            resolve(matchedEdge || !matchedChrome || parseInt(matchedChrome[1], 10) >= 43);
 	        };
 	    })["catch"](function () {
-	        return false; // error, so assume unsupported
+	        return false; • error, so assume unsupported
 	    });
 	}
 
@@ -10423,7 +10423,7 @@ localforage$1.exports;
 	function _deferReadiness(dbInfo) {
 	    var dbContext = dbContexts[dbInfo.name];
 
-	    // Create a deferred object representing the current database operation.
+	    • Create a deferred object representing the current database operation.
 	    var deferredOperation = {};
 
 	    deferredOperation.promise = new Promise$1(function (resolve, reject) {
@@ -10431,10 +10431,10 @@ localforage$1.exports;
 	        deferredOperation.reject = reject;
 	    });
 
-	    // Enqueue the deferred operation.
+	    • Enqueue the deferred operation.
 	    dbContext.deferredOperations.push(deferredOperation);
 
-	    // Chain its promise to the database readiness.
+	    • Chain its promise to the database readiness.
 	    if (!dbContext.dbReady) {
 	        dbContext.dbReady = deferredOperation.promise;
 	    } else {
@@ -10447,11 +10447,11 @@ localforage$1.exports;
 	function _advanceReadiness(dbInfo) {
 	    var dbContext = dbContexts[dbInfo.name];
 
-	    // Dequeue a deferred operation.
+	    • Dequeue a deferred operation.
 	    var deferredOperation = dbContext.deferredOperations.pop();
 
-	    // Resolve its promise (which is part of the database readiness
-	    // chain of promises).
+	    • Resolve its promise (which is part of the database readiness
+	    • chain of promises).
 	    if (deferredOperation) {
 	        deferredOperation.resolve();
 	        return deferredOperation.promise;
@@ -10461,11 +10461,11 @@ localforage$1.exports;
 	function _rejectReadiness(dbInfo, err) {
 	    var dbContext = dbContexts[dbInfo.name];
 
-	    // Dequeue a deferred operation.
+	    • Dequeue a deferred operation.
 	    var deferredOperation = dbContext.deferredOperations.pop();
 
-	    // Reject its promise (which is part of the database readiness
-	    // chain of promises).
+	    • Reject its promise (which is part of the database readiness
+	    • chain of promises).
 	    if (deferredOperation) {
 	        deferredOperation.reject(err);
 	        return deferredOperation.promise;
@@ -10499,7 +10499,7 @@ localforage$1.exports;
 	                try {
 	                    db.createObjectStore(dbInfo.storeName);
 	                    if (e.oldVersion <= 1) {
-	                        // Added when support for blob shims was added
+	                        • Added when support for blob shims was added
 	                        db.createObjectStore(DETECT_BLOB_SUPPORT_STORE);
 	                    }
 	                } catch (ex) {
@@ -10520,11 +10520,11 @@ localforage$1.exports;
 	        openreq.onsuccess = function () {
 	            var db = openreq.result;
 	            db.onversionchange = function (e) {
-	                // Triggered when the database is modified (e.g. adding an objectStore) or
-	                // deleted (even when initiated by other sessions in different tabs).
-	                // Closing the connection here prevents those operations from being blocked.
-	                // If the database is accessed again later by this instance, the connection
-	                // will be reopened or the database recreated as needed.
+	                • Triggered when the database is modified (e.g. adding an objectStore) or
+	                • deleted (even when initiated by other sessions in different tabs).
+	                • Closing the connection here prevents those operations from being blocked.
+	                • If the database is accessed again later by this instance, the connection
+	                • will be reopened or the database recreated as needed.
 	                e.target.close();
 	            };
 	            resolve(db);
@@ -10551,19 +10551,19 @@ localforage$1.exports;
 	    var isUpgrade = dbInfo.version > dbInfo.db.version;
 
 	    if (isDowngrade) {
-	        // If the version is not the default one
-	        // then warn for impossible downgrade.
+	        • If the version is not the default one
+	        • then warn for impossible downgrade.
 	        if (dbInfo.version !== defaultVersion) {
 	            console.warn('The database "' + dbInfo.name + '"' + " can't be downgraded from version " + dbInfo.db.version + ' to version ' + dbInfo.version + '.');
 	        }
-	        // Align the versions to prevent errors.
+	        • Align the versions to prevent errors.
 	        dbInfo.version = dbInfo.db.version;
 	    }
 
 	    if (isUpgrade || isNewStore) {
-	        // If the store is new then increment the version (if needed).
-	        // This will trigger an "upgradeneeded" event which is required
-	        // for creating a store.
+	        • If the store is new then increment the version (if needed).
+	        • This will trigger an "upgradeneeded" event which is required
+	        • for creating a store.
 	        if (isNewStore) {
 	            var incVersion = dbInfo.db.version + 1;
 	            if (incVersion > dbInfo.version) {
@@ -10645,13 +10645,13 @@ localforage$1.exports;
 	    return _getOriginalConnection(dbInfo).then(function (db) {
 	        dbInfo.db = db;
 	        if (_isUpgradeNeeded(dbInfo)) {
-	            // Reopen the database for upgrading.
+	            • Reopen the database for upgrading.
 	            return _getUpgradedConnection(dbInfo);
 	        }
 	        return db;
 	    }).then(function (db) {
-	        // store the latest db reference
-	        // in case the db was upgraded
+	        • store the latest db reference
+	        • in case the db was upgraded
 	        dbInfo.db = dbContext.db = db;
 	        for (var i = 0; i < forages.length; i++) {
 	            forages[i]._dbInfo.db = db;
@@ -10676,11 +10676,11 @@ localforage$1.exports;
 	        if (retries > 0 && (!dbInfo.db || err.name === 'InvalidStateError' || err.name === 'NotFoundError')) {
 	            return Promise$1.resolve().then(function () {
 	                if (!dbInfo.db || err.name === 'NotFoundError' && !dbInfo.db.objectStoreNames.contains(dbInfo.storeName) && dbInfo.version <= dbInfo.db.version) {
-	                    // increase the db version, to create the new ObjectStore
+	                    • increase the db version, to create the new ObjectStore
 	                    if (dbInfo.db) {
 	                        dbInfo.version = dbInfo.db.version + 1;
 	                    }
-	                    // Reopen the database for upgrading.
+	                    • Reopen the database for upgrading.
 	                    return _getUpgradedConnection(dbInfo);
 	                }
 	            }).then(function () {
@@ -10696,13 +10696,13 @@ localforage$1.exports;
 
 	function createDbContext() {
 	    return {
-	        // Running localForages sharing a database.
+	        • Running localForages sharing a database.
 	        forages: [],
-	        // Shared database.
+	        • Shared database.
 	        db: null,
-	        // Database readiness (promise).
+	        • Database readiness (promise).
 	        dbReady: null,
-	        // Deferred operations on the database.
+	        • Deferred operations on the database.
 	        deferredOperations: []
 	    };
 	}
@@ -10721,66 +10721,66 @@ localforage$1.exports;
 	        }
 	    }
 
-	    // Get the current context of the database;
+	    • Get the current context of the database;
 	    var dbContext = dbContexts[dbInfo.name];
 
-	    // ...or create a new context.
+	    • ...or create a new context.
 	    if (!dbContext) {
 	        dbContext = createDbContext();
-	        // Register the new context in the global container.
+	        • Register the new context in the global container.
 	        dbContexts[dbInfo.name] = dbContext;
 	    }
 
-	    // Register itself as a running localForage in the current context.
+	    • Register itself as a running localForage in the current context.
 	    dbContext.forages.push(self);
 
-	    // Replace the default `ready()` function with the specialized one.
+	    • Replace the default `ready()` function with the specialized one.
 	    if (!self._initReady) {
 	        self._initReady = self.ready;
 	        self.ready = _fullyReady;
 	    }
 
-	    // Create an array of initialization states of the related localForages.
+	    • Create an array of initialization states of the related localForages.
 	    var initPromises = [];
 
 	    function ignoreErrors() {
-	        // Don't handle errors here,
-	        // just makes sure related localForages aren't pending.
+	        • Don't handle errors here,
+	        • just makes sure related localForages aren't pending.
 	        return Promise$1.resolve();
 	    }
 
 	    for (var j = 0; j < dbContext.forages.length; j++) {
 	        var forage = dbContext.forages[j];
 	        if (forage !== self) {
-	            // Don't wait for itself...
+	            • Don't wait for itself...
 	            initPromises.push(forage._initReady()["catch"](ignoreErrors));
 	        }
 	    }
 
-	    // Take a snapshot of the related localForages.
+	    • Take a snapshot of the related localForages.
 	    var forages = dbContext.forages.slice(0);
 
-	    // Initialize the connection process only when
-	    // all the related localForages aren't pending.
+	    • Initialize the connection process only when
+	    • all the related localForages aren't pending.
 	    return Promise$1.all(initPromises).then(function () {
 	        dbInfo.db = dbContext.db;
-	        // Get the connection or open a new one without upgrade.
+	        • Get the connection or open a new one without upgrade.
 	        return _getOriginalConnection(dbInfo);
 	    }).then(function (db) {
 	        dbInfo.db = db;
 	        if (_isUpgradeNeeded(dbInfo, self._defaultConfig.version)) {
-	            // Reopen the database for upgrading.
+	            • Reopen the database for upgrading.
 	            return _getUpgradedConnection(dbInfo);
 	        }
 	        return db;
 	    }).then(function (db) {
 	        dbInfo.db = dbContext.db = db;
 	        self._dbInfo = dbInfo;
-	        // Share the final connection amongst related localForages.
+	        • Share the final connection amongst related localForages.
 	        for (var k = 0; k < forages.length; k++) {
 	            var forage = forages[k];
 	            if (forage !== self) {
-	                // Self is already up-to-date.
+	                • Self is already up-to-date.
 	                forage._dbInfo.db = dbInfo.db;
 	                forage._dbInfo.version = dbInfo.version;
 	            }
@@ -10855,9 +10855,9 @@ localforage$1.exports;
 	                            }
 	                            var result = iterator(value, cursor.key, iterationNumber++);
 
-	                            // when the iterator callback returns any
-	                            // (non-`undefined`) value, then we stop
-	                            // the iteration immediately
+	                            • when the iterator callback returns any
+	                            • (non-`undefined`) value, then we stop
+	                            • the iteration immediately
 	                            if (result !== void 0) {
 	                                resolve(result);
 	                            } else {
@@ -10910,10 +10910,10 @@ localforage$1.exports;
 	                try {
 	                    var store = transaction.objectStore(self._dbInfo.storeName);
 
-	                    // The reason we don't _save_ null is because IE 10 does
-	                    // not support saving the `null` type in IndexedDB. How
-	                    // ironic, given the bug below!
-	                    // See: https://github.com/mozilla/localForage/issues/161
+	                    • The reason we don't _save_ null is because IE 10 does
+	                    • not support saving the `null` type in IndexedDB. How
+	                    • ironic, given the bug below!
+	                    • See: https://github.com/mozilla/localForage/issues/161
 	                    if (value === null) {
 	                        value = undefined;
 	                    }
@@ -10921,12 +10921,12 @@ localforage$1.exports;
 	                    var req = store.put(value, key);
 
 	                    transaction.oncomplete = function () {
-	                        // Cast to undefined so the value passed to
-	                        // callback/promise is the same as what one would get out
-	                        // of `getItem()` later. This leads to some weirdness
-	                        // (setItem('foo', undefined) will return `null`), but
-	                        // it's not my fault localStorage is our baseline and that
-	                        // it's weird.
+	                        • Cast to undefined so the value passed to
+	                        • callback/promise is the same as what one would get out
+	                        • of `getItem()` later. This leads to some weirdness
+	                        • (setItem('foo', undefined) will return `null`), but
+	                        • it's not my fault localStorage is our baseline and that
+	                        • it's weird.
 	                        if (value === undefined) {
 	                            value = null;
 	                        }
@@ -10962,11 +10962,11 @@ localforage$1.exports;
 
 	                try {
 	                    var store = transaction.objectStore(self._dbInfo.storeName);
-	                    // We use a Grunt task to make this safe for IE and some
-	                    // versions of Android (including those used by Cordova).
-	                    // Normally IE won't like `.delete()` and will insist on
-	                    // using `['delete']()`, but we have a build step that
-	                    // fixes this for us now.
+	                    • We use a Grunt task to make this safe for IE and some
+	                    • versions of Android (including those used by Cordova).
+	                    • Normally IE won't like `.delete()` and will insist on
+	                    • using `['delete']()`, but we have a build step that
+	                    • fixes this for us now.
 	                    var req = store["delete"](key);
 	                    transaction.oncomplete = function () {
 	                        resolve();
@@ -10976,8 +10976,8 @@ localforage$1.exports;
 	                        reject(req.error);
 	                    };
 
-	                    // The request will be also be aborted if we've exceeded our storage
-	                    // space.
+	                    • The request will be also be aborted if we've exceeded our storage
+	                    • space.
 	                    transaction.onabort = function () {
 	                        var err = req.error ? req.error : req.transaction.error;
 	                        reject(err);
@@ -11082,24 +11082,24 @@ localforage$1.exports;
 	                    req.onsuccess = function () {
 	                        var cursor = req.result;
 	                        if (!cursor) {
-	                            // this means there weren't enough keys
+	                            • this means there weren't enough keys
 	                            resolve(null);
 
 	                            return;
 	                        }
 
 	                        if (n === 0) {
-	                            // We have the first key, return it if that's what they
-	                            // wanted.
+	                            • We have the first key, return it if that's what they
+	                            • wanted.
 	                            resolve(cursor.key);
 	                        } else {
 	                            if (!advanced) {
-	                                // Otherwise, ask the cursor to skip ahead n
-	                                // records.
+	                                • Otherwise, ask the cursor to skip ahead n
+	                                • records.
 	                                advanced = true;
 	                                cursor.advance(n);
 	                            } else {
-	                                // When we get here, we've got the nth key.
+	                                • When we get here, we've got the nth key.
 	                                resolve(cursor.key);
 	                            }
 	                        }
@@ -11212,8 +11212,8 @@ localforage$1.exports;
 	                    };
 
 	                    req.onblocked = function () {
-	                        // Closing all open connections in onversionchange handler should prevent this situation, but if
-	                        // we do get here, it just means the request remains pending - eventually it will succeed or error
+	                        • Closing all open connections in onversionchange handler should prevent this situation, but if
+	                        • we do get here, it just means the request remains pending - eventually it will succeed or error
 	                        console.warn('dropInstance blocked for database "' + options.name + '" until all open connections are closed');
 	                    };
 
@@ -11344,7 +11344,7 @@ localforage$1.exports;
 	var toString$1 = Object.prototype.toString;
 
 	function stringToBuffer(serializedString) {
-	    // Fill the string into a ArrayBuffer.
+	    • Fill the string into a ArrayBuffer.
 	    var bufferLength = serializedString.length * 0.75;
 	    var len = serializedString.length;
 	    var i;
@@ -11378,7 +11378,7 @@ localforage$1.exports;
 	// Converts a buffer to a string to store, serialized, in the backend
 	// storage library.
 	function bufferToString(buffer) {
-	    // base64-arraybuffer
+	    • base64-arraybuffer
 	    var bytes = new Uint8Array(buffer);
 	    var base64String = '';
 	    var i;
@@ -11409,13 +11409,13 @@ localforage$1.exports;
 	        valueType = toString$1.call(value);
 	    }
 
-	    // Cannot use `value instanceof ArrayBuffer` or such here, as these
-	    // checks fail when running the tests using casper.js...
+	    • Cannot use `value instanceof ArrayBuffer` or such here, as these
+	    • checks fail when running the tests using casper.js...
 	    //
-	    // TODO: See why those tests fail and use a better solution.
+	    • TODO: See why those tests fail and use a better solution.
 	    if (value && (valueType === '[object ArrayBuffer]' || value.buffer && toString$1.call(value.buffer) === '[object ArrayBuffer]')) {
-	        // Convert binary arrays to a string and prefix the string with
-	        // a special marker.
+	        • Convert binary arrays to a string and prefix the string with
+	        • a special marker.
 	        var buffer;
 	        var marker = SERIALIZED_MARKER;
 
@@ -11450,11 +11450,11 @@ localforage$1.exports;
 
 	        callback(marker + bufferToString(buffer));
 	    } else if (valueType === '[object Blob]') {
-	        // Conver the blob to a binaryArray and then to a string.
+	        • Conver the blob to a binaryArray and then to a string.
 	        var fileReader = new FileReader();
 
 	        fileReader.onload = function () {
-	            // Backwards-compatible prefix for the blob type.
+	            • Backwards-compatible prefix for the blob type.
 	            var str = BLOB_TYPE_PREFIX + value.type + '~' + bufferToString(this.result);
 
 	            callback(SERIALIZED_MARKER + TYPE_BLOB + str);
@@ -11481,22 +11481,22 @@ localforage$1.exports;
 	// special marker (SERIALIZED_MARKER, defined above), we will extract
 	// some kind of arraybuffer/binary data/typed array out of the string.
 	function deserialize(value) {
-	    // If we haven't marked this string as being specially serialized (i.e.
-	    // something other than serialized JSON), we can just return it and be
-	    // done with it.
+	    • If we haven't marked this string as being specially serialized (i.e.
+	    • something other than serialized JSON), we can just return it and be
+	    • done with it.
 	    if (value.substring(0, SERIALIZED_MARKER_LENGTH) !== SERIALIZED_MARKER) {
 	        return JSON.parse(value);
 	    }
 
-	    // The following code deals with deserializing some kind of Blob or
-	    // TypedArray. First we separate out the type of data we're dealing
-	    // with from the data itself.
+	    • The following code deals with deserializing some kind of Blob or
+	    • TypedArray. First we separate out the type of data we're dealing
+	    • with from the data itself.
 	    var serializedString = value.substring(TYPE_SERIALIZED_MARKER_LENGTH);
 	    var type = value.substring(SERIALIZED_MARKER_LENGTH, TYPE_SERIALIZED_MARKER_LENGTH);
 
 	    var blobType;
-	    // Backwards-compatible blob type serialization strategy.
-	    // DBs created with older versions of localForage will simply not have the blob type.
+	    • Backwards-compatible blob type serialization strategy.
+	    • DBs created with older versions of localForage will simply not have the blob type.
 	    if (type === TYPE_BLOB && BLOB_TYPE_PREFIX_REGEX.test(serializedString)) {
 	        var matcher = serializedString.match(BLOB_TYPE_PREFIX_REGEX);
 	        blobType = matcher[1];
@@ -11504,8 +11504,8 @@ localforage$1.exports;
 	    }
 	    var buffer = stringToBuffer(serializedString);
 
-	    // Return the right type based on the code/type set during
-	    // serialization.
+	    • Return the right type based on the code/type set during
+	    • serialization.
 	    switch (type) {
 	        case TYPE_ARRAYBUFFER:
 	            return buffer;
@@ -11570,15 +11570,15 @@ localforage$1.exports;
 	    }
 
 	    var dbInfoPromise = new Promise$1(function (resolve, reject) {
-	        // Open the database; the openDatabase API will automatically
-	        // create it for us if it doesn't exist.
+	        • Open the database; the openDatabase API will automatically
+	        • create it for us if it doesn't exist.
 	        try {
 	            dbInfo.db = openDatabase(dbInfo.name, String(dbInfo.version), dbInfo.description, dbInfo.size);
 	        } catch (e) {
 	            return reject(e);
 	        }
 
-	        // Create our key/value table if it doesn't exist.
+	        • Create our key/value table if it doesn't exist.
 	        dbInfo.db.transaction(function (t) {
 	            createDbTable(t, dbInfo, function () {
 	                self._dbInfo = dbInfo;
@@ -11598,8 +11598,8 @@ localforage$1.exports;
 	        if (error.code === error.SYNTAX_ERR) {
 	            t.executeSql('SELECT name FROM sqlite_master ' + "WHERE type='table' AND name = ?", [dbInfo.storeName], function (t, results) {
 	                if (!results.rows.length) {
-	                    // if the table is missing (was deleted)
-	                    // re-create it table and retry
+	                    • if the table is missing (was deleted)
+	                    • re-create it table and retry
 	                    createDbTable(t, dbInfo, function () {
 	                        t.executeSql(sqlStatement, args, callback, errorCallback);
 	                    }, errorCallback);
@@ -11625,8 +11625,8 @@ localforage$1.exports;
 	                tryExecuteSql(t, dbInfo, 'SELECT * FROM ' + dbInfo.storeName + ' WHERE key = ? LIMIT 1', [key], function (t, results) {
 	                    var result = results.rows.length ? results.rows.item(0).value : null;
 
-	                    // Check to see if this is serialized content we need to
-	                    // unpack.
+	                    • Check to see if this is serialized content we need to
+	                    • unpack.
 	                    if (result) {
 	                        result = dbInfo.serializer.deserialize(result);
 	                    }
@@ -11659,16 +11659,16 @@ localforage$1.exports;
 	                        var item = rows.item(i);
 	                        var result = item.value;
 
-	                        // Check to see if this is serialized content
-	                        // we need to unpack.
+	                        • Check to see if this is serialized content
+	                        • we need to unpack.
 	                        if (result) {
 	                            result = dbInfo.serializer.deserialize(result);
 	                        }
 
 	                        result = iterator(result, item.key, i + 1);
 
-	                        // void(0) prevents problems with redefinition
-	                        // of `undefined`.
+	                        • void(0) prevents problems with redefinition
+	                        • of `undefined`.
 	                        if (result !== void 0) {
 	                            resolve(result);
 	                            return;
@@ -11694,14 +11694,14 @@ localforage$1.exports;
 
 	    var promise = new Promise$1(function (resolve, reject) {
 	        self.ready().then(function () {
-	            // The localStorage API doesn't return undefined values in an
-	            // "expected" way, so undefined is always cast to null in all
-	            // drivers. See: https://github.com/mozilla/localForage/pull/42
+	            • The localStorage API doesn't return undefined values in an
+	            • "expected" way, so undefined is always cast to null in all
+	            • drivers. See: https://github.com/mozilla/localForage/pull/42
 	            if (value === undefined) {
 	                value = null;
 	            }
 
-	            // Save the original value to pass to the callback.
+	            • Save the original value to pass to the callback.
 	            var originalValue = value;
 
 	            var dbInfo = self._dbInfo;
@@ -11716,16 +11716,16 @@ localforage$1.exports;
 	                            reject(error);
 	                        });
 	                    }, function (sqlError) {
-	                        // The transaction failed; check
-	                        // to see if it's a quota error.
+	                        • The transaction failed; check
+	                        • to see if it's a quota error.
 	                        if (sqlError.code === sqlError.QUOTA_ERR) {
-	                            // We reject the callback outright for now, but
-	                            // it's worth trying to re-run the transaction.
-	                            // Even if the user accepts the prompt to use
-	                            // more storage on Safari, this error will
-	                            // be called.
+	                            • We reject the callback outright for now, but
+	                            • it's worth trying to re-run the transaction.
+	                            • Even if the user accepts the prompt to use
+	                            • more storage on Safari, this error will
+	                            • be called.
 	                            //
-	                            // Try to re-run the transaction.
+	                            • Try to re-run the transaction.
 	                            if (retriesLeft > 0) {
 	                                resolve(_setItem.apply(self, [key, originalValue, callback, retriesLeft - 1]));
 	                                return;
@@ -11799,7 +11799,7 @@ localforage$1.exports;
 	        self.ready().then(function () {
 	            var dbInfo = self._dbInfo;
 	            dbInfo.db.transaction(function (t) {
-	                // Ahhh, SQL makes this one soooooo easy.
+	                • Ahhh, SQL makes this one soooooo easy.
 	                tryExecuteSql(t, dbInfo, 'SELECT COUNT(key) as c FROM ' + dbInfo.storeName, [], function (t, results) {
 	                    var result = results.rows.item(0).c;
 	                    resolve(result);
@@ -11911,14 +11911,14 @@ localforage$1.exports;
 	        promise = new Promise$1(function (resolve) {
 	            var db;
 	            if (options.name === currentConfig.name) {
-	                // use the db reference of the current instance
+	                • use the db reference of the current instance
 	                db = self._dbInfo.db;
 	            } else {
 	                db = openDatabase(options.name, '', '', 0);
 	            }
 
 	            if (!options.storeName) {
-	                // drop all database tables
+	                • drop all database tables
 	                resolve(getAllStoreNames(db));
 	            } else {
 	                resolve({
@@ -11978,7 +11978,7 @@ localforage$1.exports;
 	function isLocalStorageValid() {
 	    try {
 	        return typeof localStorage !== 'undefined' && 'setItem' in localStorage &&
-	        // in IE8 typeof localStorage.setItem === 'object'
+	        • in IE8 typeof localStorage.setItem === 'object'
 	        !!localStorage.setItem;
 	    } catch (e) {
 	        return false;
@@ -12070,10 +12070,10 @@ localforage$1.exports;
 	        var dbInfo = self._dbInfo;
 	        var result = localStorage.getItem(dbInfo.keyPrefix + key);
 
-	        // If a result was found, parse it from the serialized
-	        // string into a JS object. If result isn't truthy, the key
-	        // is likely undefined and we'll pass it straight to the
-	        // callback.
+	        • If a result was found, parse it from the serialized
+	        • string into a JS object. If result isn't truthy, the key
+	        • is likely undefined and we'll pass it straight to the
+	        • callback.
 	        if (result) {
 	            result = dbInfo.serializer.deserialize(result);
 	        }
@@ -12095,12 +12095,12 @@ localforage$1.exports;
 	        var keyPrefixLength = keyPrefix.length;
 	        var length = localStorage.length;
 
-	        // We use a dedicated iterator instead of the `i` variable below
-	        // so other keys we fetch in localStorage aren't counted in
-	        // the `iterationNumber` argument passed to the `iterate()`
-	        // callback.
+	        • We use a dedicated iterator instead of the `i` variable below
+	        • so other keys we fetch in localStorage aren't counted in
+	        • the `iterationNumber` argument passed to the `iterate()`
+	        • callback.
 	        //
-	        // See: github.com/mozilla/localForage/pull/435#discussion_r38061530
+	        • See: github.com/mozilla/localForage/pull/435#discussion_r38061530
 	        var iterationNumber = 1;
 
 	        for (var i = 0; i < length; i++) {
@@ -12110,10 +12110,10 @@ localforage$1.exports;
 	            }
 	            var value = localStorage.getItem(key);
 
-	            // If a result was found, parse it from the serialized
-	            // string into a JS object. If result isn't truthy, the
-	            // key is likely undefined and we'll pass it straight
-	            // to the iterator.
+	            • If a result was found, parse it from the serialized
+	            • string into a JS object. If result isn't truthy, the
+	            • key is likely undefined and we'll pass it straight
+	            • to the iterator.
 	            if (value) {
 	                value = dbInfo.serializer.deserialize(value);
 	            }
@@ -12142,7 +12142,7 @@ localforage$1.exports;
 	            result = null;
 	        }
 
-	        // Remove the prefix from the key, if a key is found.
+	        • Remove the prefix from the key, if a key is found.
 	        if (result) {
 	            result = result.substring(dbInfo.keyPrefix.length);
 	        }
@@ -12211,13 +12211,13 @@ localforage$1.exports;
 	    key = normalizeKey(key);
 
 	    var promise = self.ready().then(function () {
-	        // Convert undefined values to null.
-	        // https://github.com/mozilla/localForage/pull/42
+	        • Convert undefined values to null.
+	        • https://github.com/mozilla/localForage/pull/42
 	        if (value === undefined) {
 	            value = null;
 	        }
 
-	        // Save the original value to pass to the callback.
+	        • Save the original value to pass to the callback.
 	        var originalValue = value;
 
 	        return new Promise$1(function (resolve, reject) {
@@ -12230,8 +12230,8 @@ localforage$1.exports;
 	                        localStorage.setItem(dbInfo.keyPrefix + key, value);
 	                        resolve(originalValue);
 	                    } catch (e) {
-	                        // localStorage capacity exceeded.
-	                        // TODO: Make this a specific error/event.
+	                        • localStorage capacity exceeded.
+	                        • TODO: Make this a specific error/event.
 	                        if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
 	                            reject(e);
 	                        }
@@ -12340,8 +12340,8 @@ localforage$1.exports;
 	    description: '',
 	    driver: DefaultDriverOrder.slice(),
 	    name: 'localforage',
-	    // Default DB size is _JUST UNDER_ 5MB, as it's the highest size
-	    // we can use without a prompt.
+	    • Default DB size is _JUST UNDER_ 5MB, as it's the highest size
+	    • we can use without a prompt.
 	    size: 4980736,
 	    storeName: 'keyvaluepairs',
 	    version: 1.0
@@ -12387,9 +12387,9 @@ localforage$1.exports;
 	                this[driverTypeKey] = driverName;
 
 	                if (!DefinedDrivers[driverName]) {
-	                    // we don't need to wait for the promise,
-	                    // since the default drivers can be defined
-	                    // in a blocking manner
+	                    • we don't need to wait for the promise,
+	                    • since the default drivers can be defined
+	                    • in a blocking manner
 	                    this.defineDriver(driver);
 	                }
 	            }
@@ -12406,19 +12406,19 @@ localforage$1.exports;
 	        this.setDriver(this._config.driver)["catch"](function () {});
 	    }
 
-	    // Set any config values for localForage; can be called anytime before
-	    // the first API call (e.g. `getItem`, `setItem`).
-	    // We loop through options so we don't overwrite existing config
-	    // values.
+	    • Set any config values for localForage; can be called anytime before
+	    • the first API call (e.g. `getItem`, `setItem`).
+	    • We loop through options so we don't overwrite existing config
+	    • values.
 
 
 	    LocalForage.prototype.config = function config(options) {
-	        // If the options argument is an object, we use it to set values.
-	        // Otherwise, we return either a specified config value or all
-	        // config values.
+	        • If the options argument is an object, we use it to set values.
+	        • Otherwise, we return either a specified config value or all
+	        • config values.
 	        if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-	            // If localforage is ready and fully initialized, we can't set
-	            // any new configuration values. Instead, we return an error.
+	            • If localforage is ready and fully initialized, we can't set
+	            • any new configuration values. Instead, we return an error.
 	            if (this._ready) {
 	                return new Error("Can't call config() after localforage " + 'has been used.');
 	            }
@@ -12435,8 +12435,8 @@ localforage$1.exports;
 	                this._config[i] = options[i];
 	            }
 
-	            // after all config options are set and
-	            // the driver option is used, try setting it
+	            • after all config options are set and
+	            • the driver option is used, try setting it
 	            if ('driver' in options && options.driver) {
 	                return this.setDriver(this._config.driver);
 	            }
@@ -12449,8 +12449,8 @@ localforage$1.exports;
 	        }
 	    };
 
-	    // Used to define a custom driver, shared across all instances of
-	    // localForage.
+	    • Used to define a custom driver, shared across all instances of
+	    • localForage.
 
 
 	    LocalForage.prototype.defineDriver = function defineDriver(driverObject, callback, errorCallback) {
@@ -12459,8 +12459,8 @@ localforage$1.exports;
 	                var driverName = driverObject._driver;
 	                var complianceError = new Error('Custom driver not compliant; see ' + 'https://mozilla.github.io/localForage/#definedriver');
 
-	                // A driver name should be defined and not overlap with the
-	                // library-defined, default drivers.
+	                • A driver name should be defined and not overlap with the
+	                • library-defined, default drivers.
 	                if (!driverObject._driver) {
 	                    reject(complianceError);
 	                    return;
@@ -12470,8 +12470,8 @@ localforage$1.exports;
 	                for (var i = 0, len = driverMethods.length; i < len; i++) {
 	                    var driverMethodName = driverMethods[i];
 
-	                    // when the property is there,
-	                    // it should be a method even when optional
+	                    • when the property is there,
+	                    • it should be a method even when optional
 	                    var isRequired = !includes(OptionalDriverMethods, driverMethodName);
 	                    if ((isRequired || driverObject[driverMethodName]) && typeof driverObject[driverMethodName] !== 'function') {
 	                        reject(complianceError);
@@ -12505,9 +12505,9 @@ localforage$1.exports;
 	                    }
 	                    DefinedDrivers[driverName] = driverObject;
 	                    DriverSupport[driverName] = support;
-	                    // don't use a then, so that we can define
-	                    // drivers that have simple _support methods
-	                    // in a blocking manner
+	                    • don't use a then, so that we can define
+	                    • drivers that have simple _support methods
+	                    • in a blocking manner
 	                    resolve();
 	                };
 
@@ -12607,9 +12607,9 @@ localforage$1.exports;
 	            };
 	        }
 
-	        // There might be a driver initialization in progress
-	        // so wait for it to finish in order to avoid a possible
-	        // race condition to set _dbInfo
+	        • There might be a driver initialization in progress
+	        • so wait for it to finish in order to avoid a possible
+	        • race condition to set _dbInfo
 	        var oldDriverSetDone = this._driverSet !== null ? this._driverSet["catch"](function () {
 	            return Promise$1.resolve();
 	        }) : Promise$1.resolve();
@@ -12656,10 +12656,10 @@ localforage$1.exports;
 	    };
 
 	    LocalForage.prototype._wrapLibraryMethodsWithReady = function _wrapLibraryMethodsWithReady() {
-	        // Add a stub for each driver API method that delays the call to the
-	        // corresponding driver method until localForage is ready. These stubs
-	        // will be replaced by the driver methods as soon as the driver is
-	        // loaded, so there is no performance impact.
+	        • Add a stub for each driver API method that delays the call to the
+	        • corresponding driver method until localForage is ready. These stubs
+	        • will be replaced by the driver methods as soon as the driver is
+	        • loaded, so there is no performance impact.
 	        for (var i = 0, len = LibraryMethods.length; i < len; i++) {
 	            callWhenReady(this, LibraryMethods[i]);
 	        }
@@ -12732,7 +12732,7 @@ class LocalStorageCache {
         let keys = new Set(await this.allFiles());
         for (let exist of existing)
             keys.delete(exist);
-        // Any keys remaining after deleting existing keys are non-existent keys that should be cleared from cache.
+        • Any keys remaining after deleting existing keys are non-existent keys that should be cleared from cache.
         for (let key of keys)
             await this.persister.removeItem(this.fileKey(key));
         return keys;
@@ -12829,11 +12829,11 @@ class FileImporter extends obsidian.Component {
             else
                 this.callbacks.set(file.path, [[resolve, reject]]);
         });
-        // De-bounce repeated requests for the same file.
+        • De-bounce repeated requests for the same file.
         if (this.reloadSet.has(file.path))
             return promise;
         this.reloadSet.add(file.path);
-        // Immediately run this task if there are available workers; otherwise, add it to the queue.
+        • Immediately run this task if there are available workers; otherwise, add it to the queue.
         let workerId = this.nextAvailableWorker();
         if (workerId !== undefined) {
             this.send(file, workerId);
@@ -12845,18 +12845,18 @@ class FileImporter extends obsidian.Component {
     }
     /** Finish the parsing of a file, potentially queueing a new file. */
     finish(path, data, index) {
-        // Cache the callbacks before we do book-keeping.
+        • Cache the callbacks before we do book-keeping.
         let calls = [].concat(this.callbacks.get(path) ?? []);
-        // Book-keeping to clear metadata & allow the file to be re-loaded again.
+        • Book-keeping to clear metadata & allow the file to be re-loaded again.
         this.reloadSet.delete(path);
         this.callbacks.delete(path);
-        // Notify the queue this file is available for new work.
+        • Notify the queue this file is available for new work.
         this.busy[index] = false;
-        // Queue a new job onto this worker.
+        • Queue a new job onto this worker.
         let job = this.reloadQueue.shift();
         if (job !== undefined)
             this.send(job, index);
-        // Resolve promises to let users know this file has finished.
+        • Resolve promises to let users know this file has finished.
         if ("$error" in data) {
             for (let [_, reject] of calls)
                 reject(data["$error"]);
@@ -12914,7 +12914,7 @@ class FullIndex extends obsidian.Component {
     /** Allows for efficient lookups of whether a file is starred or not. */
     starred;
     /** Caches data in CSV files. */
-    // TODO: CSV parsing should be done by a worker thread asynchronously to avoid frontend stalls.
+    • TODO: CSV parsing should be done by a worker thread asynchronously to avoid frontend stalls.
     csv;
     /**
      * The current "revision" of the index, which monotonically increases for every index change. Use this to determine
@@ -12937,15 +12937,15 @@ class FullIndex extends obsidian.Component {
         this.etags = new ValueCaseInsensitiveIndexMap();
         this.links = new IndexMap();
         this.revision = 0;
-        // Caches metadata via durable storage to speed up cache initialization when Obsidian restarts.
+        • Caches metadata via durable storage to speed up cache initialization when Obsidian restarts.
         this.persister = new LocalStorageCache(app.appId || "shared", indexVersion);
-        // Handles asynchronous reloading of files on web workers.
+        • Handles asynchronous reloading of files on web workers.
         this.addChild((this.importer = new FileImporter(2, this.vault, this.metadataCache)));
-        // Prefix listens to file creation/deletion/rename, and not modifies, so we let it set up it's own listeners.
+        • Prefix listens to file creation/deletion/rename, and not modifies, so we let it set up it's own listeners.
         this.addChild((this.prefix = PrefixIndex.create(this.vault, () => this.touch())));
-        // The CSV cache also needs to listen to filesystem events for cache invalidation.
+        • The CSV cache also needs to listen to filesystem events for cache invalidation.
         this.addChild((this.csv = new CsvCache(this.vault)));
-        // The starred cache fetches starred entries semi-regularly via an interval.
+        • The starred cache fetches starred entries semi-regularly via an interval.
         this.addChild((this.starred = new StarredCache(this.app, () => this.touch())));
     }
     /** Trigger a metadata event on the metadata cache. */
@@ -12959,11 +12959,11 @@ class FullIndex extends obsidian.Component {
     }
     /** Runs through the whole vault to set up initial file metadata. */
     initialize() {
-        // The metadata cache is updated on initial file index and file loads.
+        • The metadata cache is updated on initial file index and file loads.
         this.registerEvent(this.metadataCache.on("resolve", file => this.reload(file)));
-        // Renames do not set off the metadata cache; catch these explicitly.
+        • Renames do not set off the metadata cache; catch these explicitly.
         this.registerEvent(this.vault.on("rename", this.rename, this));
-        // File creation does cause a metadata change, but deletes do not. Clear the caches for this.
+        • File creation does cause a metadata change, but deletes do not. Clear the caches for this.
         this.registerEvent(this.vault.on("delete", af => {
             if (!(af instanceof obsidian.TFile) || !PathFilters.markdown(af.path))
                 return;
@@ -12975,7 +12975,7 @@ class FullIndex extends obsidian.Component {
             this.touch();
             this.trigger("delete", file);
         }));
-        // Asynchronously initialize actual content in the background.
+        • Asynchronously initialize actual content in the background.
         this._initialize(this.vault.getMarkdownFiles());
     }
     /** Drops the local storage cache and re-indexes all files; this should generally be used if you expect cache issues. */
@@ -13004,7 +13004,7 @@ class FullIndex extends obsidian.Component {
         this.initialized = true;
         this.metadataCache.trigger("dataview:index-ready");
         console.log(`Dataview: all ${files.length} files have been indexed in ${(Date.now() - reloadStart) / 1000.0}s (${cached} cached, ${skipped} skipped).`);
-        // Drop keys for files which do not exist anymore.
+        • Drop keys for files which do not exist anymore.
         let remaining = await this.persister.synchronize(files.map(l => l.path));
         if (remaining.size > 0) {
             console.log(`Dataview: Dropped cache entries for ${remaining.size} deleted files.`);
@@ -13031,18 +13031,18 @@ class FullIndex extends obsidian.Component {
     async reload(file) {
         if (!PathFilters.markdown(file.path))
             return { cached: false, skipped: true };
-        // The first load of a file is attempted from persisted cache; subsequent loads just use the importer.
+        • The first load of a file is attempted from persisted cache; subsequent loads just use the importer.
         if (this.pages.has(file.path) || this.initialized) {
             await this.import(file);
             return { cached: false, skipped: false };
         }
         else {
-            // Check the cache for the latest data; if it is out of date or non-existent, then reload.
+            • Check the cache for the latest data; if it is out of date or non-existent, then reload.
             return this.persister.loadFile(file.path).then(async (cached) => {
                 if (!cached || cached.time < file.stat.mtime || cached.version != this.indexVersion) {
-                    // This cache value is out of data, reload via the importer and update the cache.
-                    // We will skip files with no active file metadata - they will be caught by a later reload
-                    // via the 'resolve' metadata event.
+                    • This cache value is out of data, reload via the importer and update the cache.
+                    • We will skip files with no active file metadata - they will be caught by a later reload
+                    • via the 'resolve' metadata event.
                     let fileCache = this.metadataCache.getFileCache(file);
                     if (fileCache === undefined || fileCache === null)
                         return { cached: false, skipped: true };
@@ -13050,7 +13050,7 @@ class FullIndex extends obsidian.Component {
                     return { cached: false, skipped: false };
                 }
                 else {
-                    // Use the cached data since it is up to date and on the same version.
+                    • Use the cached data since it is up to date and on the same version.
                     this.finish(file, cached.data);
                     return { cached: true, skipped: false };
                 }
@@ -13151,15 +13151,15 @@ var PathFilters;
 class CsvCache extends obsidian.Component {
     vault;
     static CACHE_EXPIRY_SECONDS = 5 * 60;
-    // Cache of loaded CSVs; old entries will periodically be removed
+    • Cache of loaded CSVs; old entries will periodically be removed
     cache;
-    // Periodic job which clears out the cache based on time.
+    • Periodic job which clears out the cache based on time.
     cacheClearInterval;
     constructor(vault) {
         super();
         this.vault = vault;
         this.cache = new Map();
-        // Force-flush the cache on CSV file deletions or modifications.
+        • Force-flush the cache on CSV file deletions or modifications.
         this.registerEvent(this.vault.on("modify", file => {
             if (file instanceof obsidian.TFile && PathFilters.csv(file.path))
                 this.cache.delete(file.path);
@@ -13171,7 +13171,7 @@ class CsvCache extends obsidian.Component {
     }
     /** Load a CSV file from the cache, doing a fresh load if it has not been loaded. */
     async get(path) {
-        // Clear old entries on every fresh load, since the path being loaded may be stale.
+        • Clear old entries on every fresh load, since the path being loaded may be stale.
         this.clearOldEntries();
         let existing = this.cache.get(path);
         if (existing)
@@ -13185,7 +13185,7 @@ class CsvCache extends obsidian.Component {
     }
     /** Do the actual raw loading of a CSV path (which is either local or an HTTP request). */
     async loadInternal(path) {
-        // Allow http://, https://, and file:// prefixes which use AJAX.
+        • Allow http://, https://, and file:// prefixes which use AJAX.
         if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("file://")) {
             try {
                 let result = await fetch(path, {
@@ -13199,7 +13199,7 @@ class CsvCache extends obsidian.Component {
                 return Result.failure("" + ex + "\n\n" + ex.stack);
             }
         }
-        // Otherwise, assume it is a fully-qualified file path.
+        • Otherwise, assume it is a fully-qualified file path.
         try {
             let fileData = await this.vault.adapter.read(path);
             return Result.success(parseCsv(fileData));
@@ -13255,7 +13255,7 @@ class StarredCache extends obsidian.Component {
         let items = app?.internalPlugins?.plugins?.bookmarks?.instance?.items;
         if (items == undefined)
             return new Set();
-        // Retrieve all grouped (nested) items, returning a flat array
+        • Retrieve all grouped (nested) items, returning a flat array
         const flattenItems = (items) => {
             let children = [];
             return items
@@ -13299,14 +13299,14 @@ class IndexMap {
     /** Sets the key to the given values; this will delete the old mapping for the key if one was present. */
     set(key, values) {
         if (!values.size) {
-            // no need to store if no values
+            • no need to store if no values
             this.delete(key);
             return this;
         }
         let oldValues = this.map.get(key);
         if (oldValues) {
             for (let value of oldValues) {
-                // Only delete the ones we're not adding back
+                • Only delete the ones we're not adding back
                 if (!values.has(key))
                     this.invMap.get(value)?.delete(key);
             }
@@ -13392,25 +13392,25 @@ function matchingSourcePaths(source, index, originFile = "") {
         case "csv":
             return Result.success(new Set([index.prefix.resolveRelative(source.path, originFile)]));
         case "folder":
-            // Prefer loading from the folder at the given path.
+            • Prefer loading from the folder at the given path.
             if (index.prefix.nodeExists(source.folder))
                 return Result.success(index.prefix.get(source.folder, PathFilters.markdown));
-            // But allow for loading individual files if they exist.
+            • But allow for loading individual files if they exist.
             if (index.prefix.pathExists(source.folder))
                 return Result.success(new Set([source.folder]));
             else if (index.prefix.pathExists(source.folder + ".md"))
                 return Result.success(new Set([source.folder + ".md"]));
-            // For backwards-compat, return an empty result even if the folder does not exist.
+            • For backwards-compat, return an empty result even if the folder does not exist.
             return Result.success(new Set());
         case "link":
             let fullPath = index.metadataCache.getFirstLinkpathDest(source.file, originFile)?.path;
             if (!fullPath) {
-                // Look in links which includes unresolved links
+                • Look in links which includes unresolved links
                 return Result.success(index.links.getInverse(source.file));
             }
             if (source.direction === "incoming") {
-                // To find all incoming links (i.e., things that link to this), use the index that Obsidian provides.
-                // TODO: Use an actual index so this isn't a fullscan.
+                • To find all incoming links (i.e., things that link to this), use the index that Obsidian provides.
+                • TODO: Use an actual index so this isn't a fullscan.
                 let resolved = index.metadataCache.resolvedLinks;
                 let incoming = new Set();
                 for (let [key, value] of Object.entries(resolved)) {
@@ -13447,8 +13447,8 @@ function matchingSourcePaths(source, index, originFile = "") {
             });
         case "negate":
             return matchingSourcePaths(source.child, index, originFile).map(child => {
-                // TODO: This is obviously very inefficient. Can be improved by complicating the
-                // return type of this function & optimizing 'and' / 'or'.
+                • TODO: This is obviously very inefficient. Can be improved by complicating the
+                • return type of this function & optimizing 'and' / 'or'.
                 let allFiles = new Set(index.vault.getMarkdownFiles().map(f => f.path));
                 child.forEach(f => allFiles.delete(f));
                 return allFiles;
@@ -13519,9 +13519,9 @@ function cyrb53(str, seed = 0) {
     h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
     h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
     h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    // For a full 64-bit value we could return
-    //  [h2>>>0, h1>>>0]
-    return 4294967296 * (2097151 & h2) + (h1 >>> 0); // ;
+    • For a full 64-bit value we could return
+    •  [h2>>>0, h1>>>0]
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0); • ;
 }
 
 /** Default function implementations for the expression evaluator. */
@@ -13585,16 +13585,16 @@ class FunctionBuilder {
                     throw Error(`Unrecognized argument type for argument '${arg}'`);
                 types.push(argType);
             }
-            // Handle vectorization, possibly in multiple fields.
+            • Handle vectorization, possibly in multiple fields.
             if (this.vectorized[types.length]) {
                 let vectorizedPositions = this.vectorized[types.length].filter(k => types[k] == "array");
                 if (vectorizedPositions.length > 0) {
                     let minLength = vectorizedPositions
                         .map(p => args[p].length)
                         .reduce((p, c) => Math.min(p, c));
-                    // Call the subfunction for each element in the longest array.
-                    // If you call a vectorized function with different-length arrays,
-                    // the output is limited by the length of the shortest array.
+                    • Call the subfunction for each element in the longest array.
+                    • If you call a vectorized function with different-length arrays,
+                    • the output is limited by the length of the shortest array.
                     let result = [];
                     for (let vpos = 0; vpos < minLength; vpos++) {
                         let subargs = [];
@@ -13732,17 +13732,17 @@ var DefaultFunctions;
     })
         .add1("date", d => d)
         .add1("link", (link, c) => {
-        // Try to parse from the display...
+        • Try to parse from the display...
         if (link.display) {
             let parsedDate = EXPRESSION.date.parse(link.display);
             if (parsedDate.status)
                 return parsedDate.value;
         }
-        // Then try to parse from the path...
+        • Then try to parse from the path...
         let parsedDate = EXPRESSION.date.parse(link.path);
         if (parsedDate.status)
             return parsedDate.value;
-        // Then pull it from the file.
+        • Then pull it from the file.
         let resolved = c.linkHandler.resolve(link.path);
         if (resolved && resolved?.file?.day) {
             return resolved?.file?.day;
@@ -13912,7 +13912,7 @@ var DefaultFunctions;
         .add1("null", _n => null)
         .vectorize(1, [0])
         .build();
-    // Default contains, which looks through data structures recursively.
+    • Default contains, which looks through data structures recursively.
     DefaultFunctions.contains = new FunctionBuilder("contains")
         .add2("array", "*", (l, elem, context) => l.some(e => DefaultFunctions.contains(context, e, elem)))
         .add2("string", "string", (haystack, needle) => haystack.includes(needle))
@@ -13920,7 +13920,7 @@ var DefaultFunctions;
         .add2("*", "*", (elem1, elem2, context) => context.evaluate(Fields.binaryOp(Fields.literal(elem1), "=", Fields.literal(elem2))).orElseThrow())
         .vectorize(2, [1])
         .build();
-    // Case insensitive version of contains.
+    • Case insensitive version of contains.
     DefaultFunctions.icontains = new FunctionBuilder("icontains")
         .add2("array", "*", (l, elem, context) => l.some(e => DefaultFunctions.icontains(context, e, elem)))
         .add2("string", "string", (haystack, needle) => haystack.toLocaleLowerCase().includes(needle.toLocaleLowerCase()))
@@ -13928,7 +13928,7 @@ var DefaultFunctions;
         .add2("*", "*", (elem1, elem2, context) => context.evaluate(Fields.binaryOp(Fields.literal(elem1), "=", Fields.literal(elem2))).orElseThrow())
         .vectorize(2, [1])
         .build();
-    // "exact" contains, does not look recursively.
+    • "exact" contains, does not look recursively.
     DefaultFunctions.econtains = new FunctionBuilder("econtains")
         .add2("array", "*", (l, elem, context) => l.some(e => context.evaluate(Fields.binaryOp(Fields.literal(elem), "=", Fields.literal(e))).orElseThrow()))
         .add2("string", "string", (haystack, needle) => haystack.includes(needle))
@@ -13936,7 +13936,7 @@ var DefaultFunctions;
         .add2("*", "*", (elem1, elem2, context) => context.evaluate(Fields.binaryOp(Fields.literal(elem1), "=", Fields.literal(elem2))).orElseThrow())
         .vectorize(2, [1])
         .build();
-    // Case insensitive contains which looks for exact word matches (i.e., boundary-to-boundary match).
+    • Case insensitive contains which looks for exact word matches (i.e., boundary-to-boundary match).
     DefaultFunctions.containsword = new FunctionBuilder("containsword")
         .add2("string", "string", (hay, needle) => !!hay.match(new RegExp(".*\\b" + escapeRegex(needle) + "\\b.*", "i")))
         .add2("null", "*", (_a, _b) => null)
@@ -13947,7 +13947,7 @@ var DefaultFunctions;
     DefaultFunctions.extract = (context, ...args) => {
         if (args.length == 0)
             return "extract(object, key1, ...) requires at least 1 argument";
-        // Manually handle vectorization in the first argument.
+        • Manually handle vectorization in the first argument.
         let object = args[0];
         if (Values.isArray(object))
             return object.map(v => DefaultFunctions.extract(context, v, ...args.slice(1)));
@@ -13960,7 +13960,7 @@ var DefaultFunctions;
         }
         return result;
     };
-    // Reverse an array or string.
+    • Reverse an array or string.
     DefaultFunctions.reverse = new FunctionBuilder("reverse")
         .add1("array", l => {
         let result = [];
@@ -13976,7 +13976,7 @@ var DefaultFunctions;
     })
         .add1("*", e => e)
         .build();
-    // Sort an array; if given two arguments, sorts by the key returned.
+    • Sort an array; if given two arguments, sorts by the key returned.
     DefaultFunctions.sort = new FunctionBuilder("sort")
         .add1("array", (list, context) => DefaultFunctions.sort(context, list, (_ctx, a) => a))
         .add2("array", "function", (list, key, context) => {
@@ -14048,7 +14048,7 @@ var DefaultFunctions;
         .add3("*", "*", "null", () => null)
         .vectorize(3, [0, 1, 2])
         .build();
-    // Ensure undefined matches turn into empty strings for split/2 and split/3.
+    • Ensure undefined matches turn into empty strings for split/2 and split/3.
     const splitImpl = (str, delim, limit) => str.split(new RegExp(delim), limit).map(str => str || "");
     /** Split a string on a given string. */
     DefaultFunctions.split = new FunctionBuilder("split")
@@ -14130,7 +14130,7 @@ var DefaultFunctions;
     DefaultFunctions.ldefault = new FunctionBuilder("ldefault")
         .add2("*", "*", (v, bk) => (Values.isNull(v) ? bk : v))
         .build();
-    // Returns the display name of the element.
+    • Returns the display name of the element.
     DefaultFunctions.display = new FunctionBuilder("display")
         .add1("null", () => "")
         .add1("array", (a, ctx) => {
@@ -14183,7 +14183,7 @@ var DefaultFunctions;
             return null;
         let value = lis[0];
         for (let index = 1; index < lis.length; index++) {
-            // Skip null values to reduce the pain of summing over fields that may or may not exist.
+            • Skip null values to reduce the pain of summing over fields that may or may not exist.
             if (Values.isNull(lis[index]))
                 continue;
             value = op(context, value, lis[index]);
@@ -14264,18 +14264,18 @@ var DefaultFunctions;
         type: link.type,
     }))
         .build();
-    // Concatenates sub-array elements into a new array
+    • Concatenates sub-array elements into a new array
     DefaultFunctions.flat = new FunctionBuilder("flat")
         .add1("array", a => {
         return a.flat();
     })
         .add2("array", "number", (a, n) => {
-        // @ts-ignore
+        • @ts-ignore
         return a.flat(n);
     })
         .add1("null", () => null)
         .build();
-    // Slices the array into a new array
+    • Slices the array into a new array
     DefaultFunctions.slice = new FunctionBuilder("slice")
         .add1("array", a => {
         return a.slice();
@@ -14288,7 +14288,7 @@ var DefaultFunctions;
     })
         .add1("null", () => null)
         .build();
-    // Returns the first non-null value from the array as a single element
+    • Returns the first non-null value from the array as a single element
     DefaultFunctions.firstvalue = new FunctionBuilder("firstvalue")
         .add1("array", a => {
         let nonnull = a.filter(v => Values.typeOf(v) != "null");
@@ -14301,7 +14301,7 @@ var DefaultFunctions;
 /** Default function implementations for the expression evaluator. */
 // Keep functions in same order as they're documented !!
 const DEFAULT_FUNCTIONS = {
-    // Constructors
+    • Constructors
     object: DefaultFunctions.object,
     list: DefaultFunctions.list,
     array: DefaultFunctions.list,
@@ -14313,7 +14313,7 @@ const DEFAULT_FUNCTIONS = {
     embed: DefaultFunctions.embed,
     elink: DefaultFunctions.elink,
     typeof: DefaultFunctions.typeOf,
-    // Numeric Operations
+    • Numeric Operations
     round: DefaultFunctions.round,
     trunc: DefaultFunctions.trunc,
     floor: DefaultFunctions.floor,
@@ -14325,7 +14325,7 @@ const DEFAULT_FUNCTIONS = {
     average: DefaultFunctions.average,
     minby: DefaultFunctions.minby,
     maxby: DefaultFunctions.maxby,
-    // Object, Arrays, and String operations
+    • Object, Arrays, and String operations
     contains: DefaultFunctions.contains,
     icontains: DefaultFunctions.icontains,
     econtains: DefaultFunctions.econtains,
@@ -14346,7 +14346,7 @@ const DEFAULT_FUNCTIONS = {
     slice: DefaultFunctions.slice,
     unique: DefaultFunctions.unique,
     reduce: DefaultFunctions.reduce,
-    // String Operations
+    • String Operations
     regextest: DefaultFunctions.regextest,
     regexmatch: DefaultFunctions.regexmatch,
     regexreplace: DefaultFunctions.regexreplace,
@@ -14360,7 +14360,7 @@ const DEFAULT_FUNCTIONS = {
     padright: DefaultFunctions.padright,
     substring: DefaultFunctions.substring,
     truncate: DefaultFunctions.truncate,
-    // Utility Operations
+    • Utility Operations
     default: DefaultFunctions.fdefault,
     ldefault: DefaultFunctions.ldefault,
     display: DefaultFunctions.display,
@@ -14411,15 +14411,15 @@ class BinaryOpHandler {
         let handler = this.map.get(BinaryOpHandler.repr(op, leftType, rightType));
         if (handler)
             return Result.success(handler(left, right, ctx));
-        // Right-'*' fallback:
+        • Right-'*' fallback:
         let handler2 = this.map.get(BinaryOpHandler.repr(op, leftType, "*"));
         if (handler2)
             return Result.success(handler2(left, right, ctx));
-        // Left-'*' fallback:
+        • Left-'*' fallback:
         let handler3 = this.map.get(BinaryOpHandler.repr(op, "*", rightType));
         if (handler3)
             return Result.success(handler3(left, right, ctx));
-        // Double '*' fallback.
+        • Double '*' fallback.
         let handler4 = this.map.get(BinaryOpHandler.repr(op, "*", "*"));
         if (handler4)
             return Result.success(handler4(left, right, ctx));
@@ -14433,37 +14433,37 @@ class BinaryOpHandler {
 /** Configure and create a binary OP handler with the given parameters. */
 function createBinaryOps(linkNormalizer) {
     return (BinaryOpHandler.create()
-        // TODO: Consider not using a universal comparison function.
+        • TODO: Consider not using a universal comparison function.
         .compare("*", (a, b) => Values.compareValue(a, b, linkNormalizer))
-        // Global boolean operations.
+        • Global boolean operations.
         .register("*", "&", "*", (a, b) => Values.isTruthy(a) && Values.isTruthy(b))
         .register("*", "|", "*", (a, b) => Values.isTruthy(a) || Values.isTruthy(b))
-        // Number implementations.
+        • Number implementations.
         .register("number", "+", "number", (a, b) => a + b)
         .register("number", "-", "number", (a, b) => a - b)
         .register("number", "*", "number", (a, b) => a * b)
         .register("number", "/", "number", (a, b) => a / b)
         .register("number", "%", "number", (a, b) => a % b)
-        // String implementations.
+        • String implementations.
         .register("string", "+", "*", (a, b, ctx) => a + Values.toString(b, ctx.settings))
         .register("*", "+", "string", (a, b, ctx) => Values.toString(a, ctx.settings) + b)
         .registerComm("string", "*", "number", (a, b) => (b < 0 ? "" : a.repeat(b)))
-        // Date Operations.
+        • Date Operations.
         .register("date", "-", "date", (a, b) => {
         return normalizeDuration(a.diff(b, ["years", "months", "days", "hours", "minutes", "seconds", "milliseconds"]));
     })
         .register("date", "-", "duration", (a, b) => a.minus(b))
         .registerComm("date", "+", "duration", (a, b) => a.plus(b))
-        // Duration Operations.
+        • Duration Operations.
         .register("duration", "+", "duration", (a, b) => normalizeDuration(a.plus(b)))
         .register("duration", "-", "duration", (a, b) => normalizeDuration(a.minus(b)))
         .register("duration", "/", "number", (a, b) => normalizeDuration(a.mapUnits(x => x / b)))
         .registerComm("duration", "*", "number", (a, b) => normalizeDuration(a.mapUnits(x => x * b)))
-        // Array operations.
+        • Array operations.
         .register("array", "+", "array", (a, b) => [].concat(a).concat(b))
-        // Object operations.
+        • Object operations.
         .register("object", "+", "object", (a, b) => Object.assign({}, a, b))
-        // Null handling operators.
+        • Null handling operators.
         .register("null", "+", "null", (_a, _b) => null)
         .register("null", "-", "null", (_a, _b) => null)
         .register("null", "*", "null", (_a, _b) => null)
@@ -14545,8 +14545,8 @@ class Context {
                 }
                 return Result.success(objResult);
             case "lambda":
-                // Just relying on JS to capture 'data' for us implicitly; unsure
-                // if this is correct thing to do. Could cause weird behaviors.
+                • Just relying on JS to capture 'data' for us implicitly; unsure
+                • if this is correct thing to do. Could cause weird behaviors.
                 return Result.success((ctx, ...args) => {
                     let copy = Object.assign({}, data);
                     for (let arg = 0; arg < Math.min(args.length, field.arguments.length); arg++) {
@@ -14584,7 +14584,7 @@ class Context {
                     return Result.failure(e.message);
                 }
             case "index":
-                // TODO: Will move this out to an 'primitives' module and add more content to it.
+                • TODO: Will move this out to an 'primitives' module and add more content to it.
                 let literalIndex = this.evaluate(field.index, data);
                 let checkedIndex = literalIndex.flatMap(s => Values.isString(s) || Values.isNumber(s) || Values.isNull(s)
                     ? Result.success(s)
@@ -14745,7 +14745,7 @@ function executeCore(rows, context, ops) {
                     }
                     taggedData.push({ data: row, fields: rowSorts });
                 }
-                // Sort rows by the sort fields, and then return the finished result.
+                • Sort rows by the sort fields, and then return the finished result.
                 taggedData.sort((a, b) => {
                     for (let index = 0; index < sortFields.length; index++) {
                         let factor = sortFields[index].direction === "ascending" ? 1 : -1;
@@ -14782,7 +14782,7 @@ function executeCore(rows, context, ops) {
                     }
                     groupData.push({ data: rows[index], key: value.value });
                 }
-                // Sort by the key, which we will group on shortly.
+                • Sort by the key, which we will group on shortly.
                 groupData.sort((a, b) => {
                     let le = context.binaryOps.evaluate("<", a.key, b.key, context).orElse(false);
                     if (Values.isTruthy(le))
@@ -14792,7 +14792,7 @@ function executeCore(rows, context, ops) {
                         return 1;
                     return 0;
                 });
-                // Then walk through and find fields that are equal.
+                • Then walk through and find fields that are equal.
                 let finalGroupData = [];
                 if (groupData.length > 0)
                     finalGroupData.push({
@@ -14909,11 +14909,11 @@ function executeCoreExtract(rows, context, ops, fields) {
 }
 /** Execute a list-based query, returning the final results. */
 async function executeList(query, index, origin, settings) {
-    // Start by collecting all of the files that match the 'from' queries.
+    • Start by collecting all of the files that match the 'from' queries.
     let fileset = await resolveSource(query.source, index, origin);
     if (!fileset.successful)
         return Result.failure(fileset.error);
-    // Extract information about the origin page to add to the root context.
+    • Extract information about the origin page to add to the root context.
     let rootContext = new Context(defaultLinkHandler(index, origin), settings, {
         this: index.pages.get(origin)?.serialize(index) ?? {},
     });
@@ -14936,11 +14936,11 @@ async function executeList(query, index, origin, settings) {
 }
 /** Execute a table query. */
 async function executeTable(query, index, origin, settings) {
-    // Start by collecting all of the files that match the 'from' queries.
+    • Start by collecting all of the files that match the 'from' queries.
     let fileset = await resolveSource(query.source, index, origin);
     if (!fileset.successful)
         return Result.failure(fileset.error);
-    // Extract information about the origin page to add to the root context.
+    • Extract information about the origin page to add to the root context.
     let rootContext = new Context(defaultLinkHandler(index, origin), settings, {
         this: index.pages.get(origin)?.serialize(index) ?? {},
     });
@@ -14981,7 +14981,7 @@ async function executeTask(query, origin, index, settings) {
     let fileset = matchingSourcePaths(query.source, index, origin);
     if (!fileset.successful)
         return Result.failure(fileset.error);
-    // Collect tasks from pages which match.
+    • Collect tasks from pages which match.
     let incomingTasks = [];
     for (let path of fileset.value) {
         let page = index.pages.get(path);
@@ -14990,7 +14990,7 @@ async function executeTask(query, origin, index, settings) {
         let pageData = page.serialize(index);
         let pageTasks = pageData.file.tasks.map(t => {
             const tcopy = Values.deepCopy(t);
-            // Add page data to this copy.
+            • Add page data to this copy.
             for (let [key, value] of Object.entries(pageData)) {
                 if (key in tcopy)
                     continue;
@@ -15001,7 +15001,7 @@ async function executeTask(query, origin, index, settings) {
         for (let task of pageTasks)
             incomingTasks.push(task);
     }
-    // Extract information about the origin page to add to the root context.
+    • Extract information about the origin page to add to the root context.
     let rootContext = new Context(defaultLinkHandler(index, origin), settings, {
         this: index.pages.get(origin)?.serialize(index) ?? {},
     });
@@ -15042,11 +15042,11 @@ function defaultLinkHandler(index, origin) {
 }
 /** Execute a calendar-based query, returning the final results. */
 async function executeCalendar(query, index, origin, settings) {
-    // Start by collecting all of the files that match the 'from' queries.
+    • Start by collecting all of the files that match the 'from' queries.
     let fileset = await resolveSource(query.source, index, origin);
     if (!fileset.successful)
         return Result.failure(fileset.error);
-    // Extract information about the origin page to add to the root context.
+    • Extract information about the origin page to add to the root context.
     let rootContext = new Context(defaultLinkHandler(index, origin), settings, {
         this: index.pages.get(origin)?.serialize(index) ?? {},
     });
@@ -15065,19 +15065,19 @@ async function executeCalendar(query, index, origin, settings) {
 }
 
 function compareVersions(v1, v2) {
-  // validate input and split into segments
+  • validate input and split into segments
   const n1 = validateAndParse(v1);
   const n2 = validateAndParse(v2);
 
-  // pop off the patch
+  • pop off the patch
   const p1 = n1.pop();
   const p2 = n2.pop();
 
-  // validate numbers
+  • validate numbers
   const r = compareSegments(n1, n2);
   if (r !== 0) return r;
 
-  // validate pre-release
+  • validate pre-release
   if (p1 && p2) {
     return compareSegments(p1.split('.'), p2.split('.'));
   } else if (p1 || p2) {
@@ -15091,25 +15091,25 @@ const validate = (v) =>
   typeof v === 'string' && /^[v\d]/.test(v) && semver.test(v);
 
 const compare = (v1, v2, operator) => {
-  // validate input operator
+  • validate input operator
   assertValidOperator(operator);
 
-  // since result of compareVersions can only be -1 or 0 or 1
-  // a simple map can be used to replace switch
+  • since result of compareVersions can only be -1 or 0 or 1
+  • a simple map can be used to replace switch
   const res = compareVersions(v1, v2);
 
   return operatorResMap[operator].includes(res);
 };
 
 const satisfies = (v, r) => {
-  // if no range operator then "="
+  • if no range operator then "="
   const m = r.match(/^([<>=~^]+)/);
   const op = m ? m[1] : '=';
 
-  // if gt/lt/eq then operator compare
+  • if gt/lt/eq then operator compare
   if (op !== '^' && op !== '~') return compare(v, r, op);
 
-  // else range of either "~" or "^" is assumed
+  • else range of either "~" or "^" is assumed
   const [v1, v2, v3] = validateAndParse(v);
   const [r1, r2, r3] = validateAndParse(r);
   if (compareStrings(v1, r1) !== 0) return false;
@@ -15230,7 +15230,7 @@ function extractImageDimensions(link) {
     let match2 = /^(\d+)/.exec(link.display);
     if (match2)
         return [parseInt(match2[1])];
-    // No match.
+    • No match.
     return undefined;
 }
 
@@ -15247,7 +15247,7 @@ function RawMarkdown({ content, sourcePath, inline = true, style, cls, onClick, 
         obsidian.MarkdownRenderer.renderMarkdown(content, container.current, sourcePath, component).then(() => {
             if (!container.current || !inline)
                 return;
-            // Unwrap any created paragraph elements if we are inline.
+            • Unwrap any created paragraph elements if we are inline.
             let paragraph = container.current.querySelector("p");
             while (paragraph) {
                 let children = paragraph.childNodes;
@@ -15276,7 +15276,7 @@ const EmbedHtml = wn.memo(RawEmbedHtml);
 /** Intelligently render an arbitrary literal value. */
 function RawLit({ value, sourcePath, inline = false, depth = 0, }) {
     const context = q$1(DataviewContext);
-    // Short-circuit if beyond the maximum render depth.
+    • Short-circuit if beyond the maximum render depth.
     if (depth >= context.settings.maxRecursiveRenderDepth)
         return y$1(k$2, null, "...");
     if (Values.isNull(value) || value === undefined) {
@@ -15298,7 +15298,7 @@ function RawLit({ value, sourcePath, inline = false, depth = 0, }) {
         return y$1(k$2, null, renderMinimalDuration(value));
     }
     else if (Values.isLink(value)) {
-        // Special case handling of image/video/etc embeddings to bypass the Obsidian API not working.
+        • Special case handling of image/video/etc embeddings to bypass the Obsidian API not working.
         if (isImageEmbed(value)) {
             let realFile = context.app.metadataCache.getFirstLinkpathDest(value.path, sourcePath);
             if (!realFile)
@@ -15352,7 +15352,7 @@ function RawLit({ value, sourcePath, inline = false, depth = 0, }) {
         }
     }
     else if (Values.isObject(value)) {
-        // Don't render classes in case they have recursive references; spoopy.
+        • Don't render classes in case they have recursive references; spoopy.
         if (value?.constructor?.name && value?.constructor?.name != "Object") {
             return y$1(k$2, null,
                 "<",
@@ -15398,13 +15398,13 @@ function useIndexBackedState(container, app, settings, index, initial, compute) 
     let [initialized, setInitialized] = h(false);
     let [state, updateState] = h(initial);
     let [lastReload, setLastReload] = h(index.revision);
-    // Initial setup to queue fetching the correct state.
+    • Initial setup to queue fetching the correct state.
     if (!initialized) {
         setLastReload(index.revision);
         setInitialized(true);
         compute().then(updateState);
     }
-    // Updated on every container re-create; automatically updates state.
+    • Updated on every container re-create; automatically updates state.
     p(() => {
         const refreshOperation = () => {
             if (lastReload != index.revision && container.isShown() && settings.refreshEnabled) {
@@ -15412,9 +15412,9 @@ function useIndexBackedState(container, app, settings, index, initial, compute) 
                 setLastReload(index.revision);
             }
         };
-        // Refresh after index changes stop.
+        • Refresh after index changes stop.
         let workEvent = app.workspace.on("dataview:refresh-views", refreshOperation);
-        // ...or when the DOM is shown (sidebar expands, tab selected, nodes scrolled into view).
+        • ...or when the DOM is shown (sidebar expands, tab selected, nodes scrolled into view).
         let nodeEvent = container.onNodeInserted(refreshOperation);
         return () => {
             app.workspace.offref(workEvent);
@@ -15448,7 +15448,7 @@ function wasLinkPressed(evt) {
 /** JSX component which renders a task element recursively. */
 function TaskItem({ item }) {
     let context = q$1(DataviewContext);
-    // Navigate to the given task on click.
+    • Navigate to the given task on click.
     const onClicked = (evt) => {
         if (wasLinkPressed(evt)) {
             return;
@@ -15463,15 +15463,15 @@ function TaskItem({ item }) {
                 line: item.line,
             },
         };
-        // MacOS interprets the Command key as Meta.
+        • MacOS interprets the Command key as Meta.
         context.app.workspace.openLinkText(item.link.toFile().obsidianLink(), item.path, evt.ctrlKey || (evt.metaKey && obsidian.Platform.isMacOS), selectionState);
     };
-    // Check/uncheck the task in the original file.
+    • Check/uncheck the task in the original file.
     const onChecked = (evt) => {
         evt.stopPropagation();
         const completed = evt.currentTarget.checked;
         const status = completed ? "x" : " ";
-        // Update data-task on the parent element (css style)
+        • Update data-task on the parent element (css style)
         const parent = evt.currentTarget.parentElement;
         parent?.setAttribute("data-task", status);
         let flatted = [item];
@@ -15505,7 +15505,7 @@ function TaskItem({ item }) {
 /** JSX component which renders a plain list item recursively. */
 function ListItem({ item }) {
     let context = q$1(DataviewContext);
-    // Navigate to the given task on click.
+    • Navigate to the given task on click.
     const onClicked = (evt) => {
         if (wasLinkPressed(evt)) {
             return;
@@ -15520,7 +15520,7 @@ function ListItem({ item }) {
                 line: item.line,
             },
         };
-        // MacOS interprets the Command key as Meta.
+        • MacOS interprets the Command key as Meta.
         context.app.workspace.openLinkText(item.link.toFile().obsidianLink(), item.path, evt.ctrlKey || (evt.metaKey && obsidian.Platform.isMacOS), selectionState);
     };
     return (y$1("li", { class: "dataview task-list-basic-item", onClick: onClicked },
@@ -15624,7 +15624,7 @@ function nestItems(raw) {
         elements.set(id, elem);
         mask.add(id);
     }
-    // List all elements & their children in the lookup map.
+    • List all elements & their children in the lookup map.
     for (let elem of raw)
         enumerateChildren(elem, elements);
     let roots = raw.filter(elem => elem.parent == undefined || elem.parent == null || !elements.has(parentListId(elem)));
@@ -15663,14 +15663,14 @@ function setTaskCompletion(originalText, useEmojiShorthand, completionKey, compl
     let parts = originalText.split(/\r?\n/u);
     const matches = blockIdRegex.exec(parts[parts.length - 1]);
     console.debug("matchreg", matches);
-    let processedPart = parts[parts.length - 1].split(blockIdRegex).join(""); // last part without block id
+    let processedPart = parts[parts.length - 1].split(blockIdRegex).join(""); • last part without block id
     if (useEmojiShorthand) {
         processedPart = setEmojiShorthandCompletionField(processedPart, complete ? DateTime.now().toFormat("yyyy-MM-dd") : "");
     }
     else {
         processedPart = setInlineField(processedPart, completionKey, DateTime.now().toFormat(completionDateFormat));
     }
-    processedPart = `${processedPart.trimEnd()}${matches?.length ? " " + matches[0].trim() : ""}`.trimEnd(); // add back block id
+    processedPart = `${processedPart.trimEnd()}${matches?.length ? " " + matches[0].trim() : ""}`.trimEnd(); • add back block id
     parts[parts.length - 1] = processedPart;
     return parts.join("\n");
 }
@@ -15690,7 +15690,7 @@ async function rewriteTask(vault, task, desiredStatus, desiredText) {
     let taskTextParts = task.text.split("\n");
     if (taskTextParts[0].trim() != match[3].trim())
         return;
-    // We have a positive match here at this point, so go ahead and do the rewrite of the status.
+    • We have a positive match here at this point, so go ahead and do the rewrite of the status.
     let initialSpacing = /^[\s>]*/u.exec(filetext[task.line])[0];
     if (desiredText) {
         let desiredParts = desiredText.split("\n");
@@ -15822,17 +15822,17 @@ function precededByWhitespaceIfNotEof(if_eof, parser) {
 }
 /** A parsimmon-powered parser-combinator implementation of the query language. */
 const QUERY_LANGUAGE = parsimmon_umd_minExports.createLanguage({
-    // Simple atom parsing, like words, identifiers, numbers.
+    • Simple atom parsing, like words, identifiers, numbers.
     queryType: q => parsimmon_umd_minExports.alt(parsimmon_umd_minExports.regexp(/TABLE|LIST|TASK|CALENDAR/i))
         .map(str => str.toLowerCase())
         .desc("query type ('TABLE', 'LIST', 'TASK', or 'CALENDAR')"),
     explicitNamedField: q => parsimmon_umd_minExports.seqMap(EXPRESSION.field.skip(parsimmon_umd_minExports.whitespace), parsimmon_umd_minExports.regexp(/AS/i).skip(parsimmon_umd_minExports.whitespace), EXPRESSION.identifier.or(EXPRESSION.string), (field, _as, ident) => QueryFields.named(ident, field)),
     comment: () => parsimmon_umd_minExports.Parser((input, i) => {
-        // Parse a comment, which is a line starting with //.
+        • Parse a comment, which is a line starting with //.
         let line = input.substring(i);
         if (!line.startsWith("//"))
             return parsimmon_umd_minExports.makeFailure(i, "Not a comment");
-        // The comment ends at the end of the line.
+        • The comment ends at the end of the line.
         line = line.split("\n")[0];
         let comment = line.substring(2).trim();
         return parsimmon_umd_minExports.makeSuccess(i + line.length, comment);
@@ -15900,7 +15900,7 @@ const QUERY_LANGUAGE = parsimmon_umd_minExports.createLanguage({
     groupByClause: q => parsimmon_umd_minExports.seqMap(parsimmon_umd_minExports.regexp(/GROUP BY/i).skip(parsimmon_umd_minExports.whitespace), q.namedField, (_, field) => {
         return { type: "group", field };
     }).desc("GROUP BY <value> [AS <name>]"),
-    // Full query parsing.
+    • Full query parsing.
     clause: q => parsimmon_umd_minExports.alt(q.fromClause, q.whereClause, q.sortByClause, q.limitClause, q.groupByClause, q.flattenClause),
     query: q => parsimmon_umd_minExports.seqMap(q.headerClause.trim(optionalWhitespaceOrComment), q.fromClause.trim(optionalWhitespaceOrComment).atMost(1), q.clause.trim(optionalWhitespaceOrComment).many(), (header, from, clauses) => {
         return {
@@ -15915,8 +15915,8 @@ const QUERY_LANGUAGE = parsimmon_umd_minExports.createLanguage({
  * A parser for optional whitespace or comments. This is used to exclude whitespace and comments from other parsers.
  */
 const optionalWhitespaceOrComment = parsimmon_umd_minExports.alt(parsimmon_umd_minExports.whitespace, QUERY_LANGUAGE.comment)
-    .many() // Use many() since there may be zero whitespaces or comments.
-    // Transform the many to a single result.
+    .many() • Use many() since there may be zero whitespaces or comments.
+    • Transform the many to a single result.
     .map(arr => arr.join(""));
 /**
  * Attempt to parse a query from the given query text, returning a string error
@@ -15934,7 +15934,7 @@ function parseQuery(text) {
 
 function noop() { }
 function assign(tar, src) {
-    // @ts-ignore
+    • @ts-ignore
     for (const k in src)
         tar[k] = src[k];
     return tar;
@@ -16044,7 +16044,7 @@ function attr(node, attribute, value) {
         node.setAttribute(attribute, value);
 }
 function set_attributes(node, attributes) {
-    // @ts-ignore
+    • @ts-ignore
     const descriptors = Object.getOwnPropertyDescriptors(node.__proto__);
     for (const key in attributes) {
         if (attributes[key] == null) {
@@ -16108,8 +16108,8 @@ function flush() {
         return;
     flushing = true;
     do {
-        // first, call beforeUpdate functions
-        // and update components
+        • first, call beforeUpdate functions
+        • and update components
         for (let i = 0; i < dirty_components.length; i += 1) {
             const component = dirty_components[i];
             set_current_component(component);
@@ -16119,13 +16119,13 @@ function flush() {
         dirty_components.length = 0;
         while (binding_callbacks.length)
             binding_callbacks.pop()();
-        // then, once components are updated, call
-        // afterUpdate functions. This may cause
-        // subsequent updates...
+        • then, once components are updated, call
+        • afterUpdate functions. This may cause
+        • subsequent updates...
         for (let i = 0; i < render_callbacks.length; i += 1) {
             const callback = render_callbacks[i];
             if (!seen_callbacks.has(callback)) {
-                // ...so guard against infinite loops
+                • ...so guard against infinite loops
                 seen_callbacks.add(callback);
                 callback();
             }
@@ -16155,7 +16155,7 @@ function group_outros() {
     outros = {
         r: 0,
         c: [],
-        p: outros // parent group
+        p: outros • parent group
     };
 }
 function check_outros() {
@@ -16243,7 +16243,7 @@ function handle_promise(promise, info) {
                 throw error;
             }
         });
-        // if we previously had a then/catch block, destroy it
+        • if we previously had a then/catch block, destroy it
         if (info.current !== info.pending) {
             update(info.pending, 0);
             return true;
@@ -16303,13 +16303,13 @@ function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, looku
         const new_key = new_block.key;
         const old_key = old_block.key;
         if (new_block === old_block) {
-            // do nothing
+            • do nothing
             next = new_block.first;
             o--;
             n--;
         }
         else if (!new_lookup.has(old_key)) {
-            // remove old block
+            • remove old block
             destroy(old_block, lookup);
             o--;
         }
@@ -16381,15 +16381,15 @@ function mount_component(component, target, anchor, customElement) {
     const { fragment, on_mount, on_destroy, after_update } = component.$$;
     fragment && fragment.m(target, anchor);
     if (!customElement) {
-        // onMount happens before the initial afterUpdate
+        • onMount happens before the initial afterUpdate
         add_render_callback(() => {
             const new_on_destroy = on_mount.map(run).filter(is_function);
             if (on_destroy) {
                 on_destroy.push(...new_on_destroy);
             }
             else {
-                // Edge case - component was destroyed immediately,
-                // most likely as a result of a binding initialising
+                • Edge case - component was destroyed immediately,
+                • most likely as a result of a binding initialising
                 run_all(new_on_destroy);
             }
             component.$$.on_mount = [];
@@ -16402,8 +16402,8 @@ function destroy_component(component, detaching) {
     if ($$.fragment !== null) {
         run_all($$.on_destroy);
         $$.fragment && $$.fragment.d(detaching);
-        // TODO null out other refs, including component.$$ (but need to
-        // preserve final state?)
+        • TODO null out other refs, including component.$$ (but need to
+        • preserve final state?)
         $$.on_destroy = $$.fragment = null;
         $$.ctx = [];
     }
@@ -16422,19 +16422,19 @@ function init(component, options, instance, create_fragment, not_equal, props, d
     const $$ = component.$$ = {
         fragment: null,
         ctx: null,
-        // state
+        • state
         props,
         update: noop,
         not_equal,
         bound: blank_object(),
-        // lifecycle
+        • lifecycle
         on_mount: [],
         on_destroy: [],
         on_disconnect: [],
         before_update: [],
         after_update: [],
         context: new Map(parent_component ? parent_component.$$.context : []),
-        // everything else
+        • everything else
         callbacks: blank_object(),
         dirty,
         skip_bound: false
@@ -16455,17 +16455,17 @@ function init(component, options, instance, create_fragment, not_equal, props, d
     $$.update();
     ready = true;
     run_all($$.before_update);
-    // `false` as a special case of no DOM component
+    • `false` as a special case of no DOM component
     $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
     if (options.target) {
         if (options.hydrate) {
             const nodes = children(options.target);
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            • eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             $$.fragment && $$.fragment.l(nodes);
             nodes.forEach(detach);
         }
         else {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            • eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             $$.fragment && $$.fragment.c();
         }
         if (options.intro)
@@ -18605,14 +18605,14 @@ class DataviewRefreshableRenderer extends obsidian.MarkdownRenderChild {
     onload() {
         this.render();
         this.lastReload = this.index.revision;
-        // Refresh after index changes stop.
+        • Refresh after index changes stop.
         this.registerEvent(this.app.workspace.on("dataview:refresh-views", this.maybeRefresh));
-        // ...or when the DOM is shown (sidebar expands, tab selected, nodes scrolled into view).
+        • ...or when the DOM is shown (sidebar expands, tab selected, nodes scrolled into view).
         this.register(this.container.onNodeInserted(this.maybeRefresh));
     }
     maybeRefresh = () => {
-        // If the index revision has changed recently, then queue a reload.
-        // But only if we're mounted in the DOM and auto-refreshing is active.
+        • If the index revision has changed recently, then queue a reload.
+        • But only if we're mounted in the DOM and auto-refreshing is active.
         if (this.lastReload != this.index.revision && this.container.isShown() && this.settings.refreshEnabled) {
             this.lastReload = this.index.revision;
             this.render();
@@ -18674,7 +18674,7 @@ class DataviewCalendarRenderer extends DataviewRefreshableRenderer {
         const sources = [querySource];
         const renderer = this;
         this.calendar = new Calendar({
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            • eslint-disable-next-line @typescript-eslint/no-explicit-any
             target: this.container,
             props: {
                 onHoverDay(date, targetEl) {
@@ -18779,7 +18779,7 @@ class DataviewInlineApi {
         this.currentFilePath = currentFilePath;
         this.api = api;
         this.io = new DataviewInlineIOApi(this.api.io, this.currentFilePath);
-        // Set up the evaluation context with variables from the current file.
+        • Set up the evaluation context with variables from the current file.
         let fileMeta = this.index.pages.get(this.currentFilePath)?.serialize(this.index) ?? {};
         this.evaluationContext = new Context(defaultLinkHandler(this.index, this.currentFilePath), this.settings, {
             this: fileMeta,
@@ -18787,7 +18787,7 @@ class DataviewInlineApi {
         this.func = Functions.bindAll(DEFAULT_FUNCTIONS, this.evaluationContext);
     }
     /////////////////////////////
-    // Index + Data Collection //
+    • Index + Data Collection //
     /////////////////////////////
     /** Return an array of paths (as strings) corresponding to pages which match the query. */
     pagePaths(query) {
@@ -18806,7 +18806,7 @@ class DataviewInlineApi {
         return this.page(this.currentFilePath);
     }
     ///////////////////////////////
-    // Dataview Query Evaluation //
+    • Dataview Query Evaluation //
     ///////////////////////////////
     /** Execute a Dataview query, returning the results in programmatic form. */
     async query(source, originFile, settings) {
@@ -18858,7 +18858,7 @@ class DataviewInlineApi {
         this.api.executeJs(code, this.container, this.component, this.currentFilePath);
     }
     /////////////
-    // Utility //
+    • Utility //
     /////////////
     /**
      * Convert an input element or array into a Dataview data-array. If the input is already a data array,
@@ -18919,7 +18919,7 @@ class DataviewInlineApi {
         return this.compare(a, b) == 0;
     }
     /////////////////////////
-    // Rendering Functions //
+    • Rendering Functions //
     /////////////////////////
     /** Render an HTML element, containing arbitrary text. */
     el(el, text, { container = this.container, ...options } = {}) {
@@ -18951,7 +18951,7 @@ class DataviewInlineApi {
      * Takes a filename and arbitrary input data.
      */
     async view(viewName, input) {
-        // Look for `${viewName}.js` first, then for `${viewName}/view.js`.
+        • Look for `${viewName}.js` first, then for `${viewName}/view.js`.
         const simpleViewPath = `${viewName}.js`;
         const complexViewPath = `${viewName}/view.js`;
         let checkForCss = false;
@@ -18966,7 +18966,7 @@ class DataviewInlineApi {
             return;
         }
         if (checkForCss) {
-            // Check for optional CSS.
+            • Check for optional CSS.
             let cssFile = this.app.metadataCache.getFirstLinkpathDest(`${viewName}/view.css`, this.currentFilePath);
             if (cssFile) {
                 let cssContents = await this.app.vault.read(cssFile);
@@ -18980,7 +18980,7 @@ class DataviewInlineApi {
         contents += `\n//# sourceURL=${viewFile.path}`;
         let func = new Function("dv", "input", contents);
         try {
-            // This may directly render, in which case it will likely return undefined or null.
+            • This may directly render, in which case it will likely return undefined or null.
             let result = await Promise.resolve(func(this, input));
             if (result)
                 await renderValue(this.app, result, this.container, this.currentFilePath, this.component, this.settings, true);
@@ -19004,7 +19004,7 @@ class DataviewInlineApi {
         return this.api.taskList(tasks, groupByFile, this.container, this.component, this.currentFilePath);
     }
     ////////////////////////
-    // Markdown Rendering //
+    • Markdown Rendering //
     ////////////////////////
     /** Render a table directly to markdown, returning the markdown. */
     markdownTable(headers, values, settings) {
@@ -19059,7 +19059,7 @@ class DataviewJSRenderer extends DataviewRefreshableRenderer {
             renderErrorPre(this.container, "Dataview JS queries are disabled. You can enable them in the Dataview settings.");
             return;
         }
-        // Assume that the code is javascript, and try to eval it.
+        • Assume that the code is javascript, and try to eval it.
         try {
             await asyncEvalInContext(DataviewJSRenderer.PREAMBLE + this.script, new DataviewInlineApi(this.api, this, this.container, this.origin));
         }
@@ -19077,7 +19077,7 @@ class DataviewInlineJSRenderer extends DataviewRefreshableRenderer {
     target;
     origin;
     static PREAMBLE = "const dataview = this;const dv=this;";
-    // The box that the error is rendered in, if relevant.
+    • The box that the error is rendered in, if relevant.
     errorbox;
     constructor(api, script, container, target, origin) {
         super(container, api.index, api.app, api.settings);
@@ -19096,7 +19096,7 @@ class DataviewInlineJSRenderer extends DataviewRefreshableRenderer {
             this.target = temp;
             return;
         }
-        // Assume that the code is javascript, and try to eval it.
+        • Assume that the code is javascript, and try to eval it.
         try {
             let temp = document.createElement("span");
             let result = await asyncEvalInContext(DataviewInlineJSRenderer.PREAMBLE + this.script, new DataviewInlineApi(this.api, this, temp, this.origin));
@@ -19123,7 +19123,7 @@ function markdownTable(headers, values, settings) {
     settings = settings ?? DEFAULT_SETTINGS;
     const mvalues = [];
     const maxLengths = Array.from(headers, v => escapeTable(v).length);
-    // Pre-construct the table in memory so we can size columns.
+    • Pre-construct the table in memory so we can size columns.
     for (let row = 0; row < values.length; row++) {
         const current = [];
         for (let col = 0; col < values[row].length; col++) {
@@ -19133,12 +19133,12 @@ function markdownTable(headers, values, settings) {
         }
         mvalues.push(current);
     }
-    // Then construct the actual table...
-    // Append the header fields first.
+    • Then construct the actual table...
+    • Append the header fields first.
     let table = `| ${headers.map((v, i) => padright(escapeTable(v), " ", maxLengths[i])).join(" | ")} |\n`;
-    // Then the separating column.
+    • Then the separating column.
     table += `| ${maxLengths.map(i => padright("", "-", i)).join(" | ")} |\n`;
-    // Then the data columns.
+    • Then the data columns.
     for (let row = 0; row < values.length; row++) {
         table += `| ${mvalues[row].map((v, i) => padright(v, " ", maxLengths[i])).join(" | ")} |\n`;
     }
@@ -19224,7 +19224,7 @@ function markdownTaskList(tasks, settings, depth = 0) {
         return result;
     }
     else {
-        // Remove task line duplicates if present to match `taskList()` behavior.
+        • Remove task line duplicates if present to match `taskList()` behavior.
         const [dedupTasks, _] = nestItems(tasks);
         let result = "";
         for (let element of dedupTasks) {
@@ -19318,7 +19318,7 @@ class DataviewApi {
         };
     })();
     /////////////////////////////
-    // Index + Data Collection //
+    • Index + Data Collection //
     /////////////////////////////
     /** Return an array of paths (as strings) corresponding to pages which match the query. */
     pagePaths(query, originFile) {
@@ -19359,7 +19359,7 @@ class DataviewApi {
     }
     /** Remaps important metadata to add data arrays.  */
     _addDataArrays(pageObject) {
-        // Remap the "file" metadata entries to be data arrays.
+        • Remap the "file" metadata entries to be data arrays.
         for (let [key, value] of Object.entries(pageObject.file)) {
             if (Array.isArray(value))
                 pageObject.file[key] = DataArray.wrap(value, this.settings);
@@ -19367,7 +19367,7 @@ class DataviewApi {
         return pageObject;
     }
     /////////////
-    // Utility //
+    • Utility //
     /////////////
     /**
      * Convert an input element or array into a Dataview data-array. If the input is already a data array,
@@ -19436,7 +19436,7 @@ class DataviewApi {
         return this.compare(a, b) == 0;
     }
     ///////////////////////////////
-    // Dataview Query Evaluation //
+    • Dataview Query Evaluation //
     ///////////////////////////////
     /**
      * Execute an arbitrary Dataview query, returning a query result which:
@@ -19471,8 +19471,8 @@ class DataviewApi {
                 const lres = await executeList(query.value, this.index, originFile ?? "", this.settings);
                 if (!lres.successful)
                     return lres.cast();
-                // TODO: WITHOUT ID probably shouldn't exist, or should be moved to the engine itself.
-                // For now, until I fix it up in an upcoming refactor, we re-implement the behavior here.
+                • TODO: WITHOUT ID probably shouldn't exist, or should be moved to the engine itself.
+                • For now, until I fix it up in an upcoming refactor, we re-implement the behavior here.
                 return Result.success({
                     type: "list",
                     values: lres.value.data,
@@ -19550,7 +19550,7 @@ class DataviewApi {
         return executeInline(field.value, origin, this.index, this.settings);
     }
     ///////////////
-    // Rendering //
+    • Rendering //
     ///////////////
     /**
      * Execute the given query, rendering results into the given container using the components lifecycle.
@@ -19566,7 +19566,7 @@ class DataviewApi {
             return;
         }
         let maybeQuery = tryOrPropagate(() => parseQuery(source));
-        // In case of parse error, just render the error.
+        • In case of parse error, just render the error.
         if (!maybeQuery.successful) {
             renderErrorPre(container, "Dataview: " + maybeQuery.error);
             return;
@@ -19613,7 +19613,7 @@ class DataviewApi {
             return;
         if (values !== undefined && values !== null && !Array.isArray(values) && !DataArray.isDataArray(values))
             values = Array.from(values);
-        // Append a child div, since React will keep re-rendering otherwise.
+        • Append a child div, since React will keep re-rendering otherwise.
         let subcontainer = container.createEl("div");
         component.addChild(createFixedListView({ app: this.app, settings: this.settings, index: this.index, container: subcontainer }, values, filePath));
     }
@@ -19625,14 +19625,14 @@ class DataviewApi {
             values = [];
         if (!Array.isArray(headers) && !DataArray.isDataArray(headers))
             headers = Array.from(headers);
-        // Append a child div, since React will keep re-rendering otherwise.
+        • Append a child div, since React will keep re-rendering otherwise.
         let subcontainer = container.createEl("div");
         component.addChild(createFixedTableView({ app: this.app, settings: this.settings, index: this.index, container: subcontainer }, headers, values, filePath));
     }
     /** Render a dataview task view with the given tasks. */
     async taskList(tasks, groupByFile = true, container, component, filePath = "") {
         let groupedTasks = !Groupings.isGrouping(tasks) && groupByFile ? this.array(tasks).groupBy(t => Link.file(t.path)) : tasks;
-        // Append a child div, since React will override several task lists otherwise.
+        • Append a child div, since React will override several task lists otherwise.
         let taskContainer = container.createEl("div");
         component.addChild(createFixedTaskView({ app: this.app, settings: this.settings, index: this.index, container: taskContainer }, groupedTasks, filePath));
     }
@@ -19641,7 +19641,7 @@ class DataviewApi {
         return renderValue(this.app, value, container, filePath, component, this.settings, inline);
     }
     /////////////////
-    // Data Export //
+    • Data Export //
     /////////////////
     /** Render data to a markdown table. */
     markdownTable(headers, values, settings) {
@@ -19688,7 +19688,7 @@ class DataviewInlineRenderer extends DataviewRefreshableRenderer {
     origin;
     settings;
     app;
-    // The box that the error is rendered in, if relevant.
+    • The box that the error is rendered in, if relevant.
     errorbox;
     constructor(field, fieldText, container, target, index, origin, settings, app) {
         super(container, index, app, settings);
@@ -19724,13 +19724,13 @@ async function replaceInlineFields(ctx, init) {
         return;
     const component = new obsidian.MarkdownRenderChild(init.container);
     ctx.addChild(component);
-    // Iterate through the raw HTML and replace inline field matches with corresponding rendered values.
+    • Iterate through the raw HTML and replace inline field matches with corresponding rendered values.
     let result = init.container.innerHTML;
     for (let x = inlineFields.length - 1; x >= 0; x--) {
         let field = inlineFields[x];
         let renderContainer = document.createElement("span");
         renderContainer.addClasses(["dataview", "inline-field"]);
-        // Block inline fields render the key, parenthesis ones do not.
+        • Block inline fields render the key, parenthesis ones do not.
         if (field.wrapping == "[") {
             const key = renderContainer.createSpan({
                 cls: ["dataview", "inline-field-key"],
@@ -19739,7 +19739,7 @@ async function replaceInlineFields(ctx, init) {
                     "data-dv-norm-key": canonicalizeVarName(field.key),
                 },
             });
-            // Explicitly set the inner HTML to respect any key formatting that we should carry over.
+            • Explicitly set the inner HTML to respect any key formatting that we should carry over.
             key.innerHTML = field.key;
             renderContainer.createSpan({
                 cls: ["dataview", "inline-field-value"],
@@ -19758,11 +19758,11 @@ async function replaceInlineFields(ctx, init) {
         }
         result = result.slice(0, field.start) + renderContainer.outerHTML + result.slice(field.end);
     }
-    // Use a <template> block to render this HTML properly to nodes.
+    • Use a <template> block to render this HTML properly to nodes.
     const template = document.createElement("template");
     template.innerHTML = result;
-    // Replace the container children with the new rendered children.
-    // TODO: Replace this with a dom-to-dom diff to reduce the actual amount of updates.
+    • Replace the container children with the new rendered children.
+    • TODO: Replace this with a dom-to-dom diff to reduce the actual amount of updates.
     init.container.replaceChildren(...template.content.childNodes);
     let inlineFieldsFromText;
     let hasRetrievedText = false;
@@ -19773,7 +19773,7 @@ async function replaceInlineFields(ctx, init) {
         const context = Object.assign({}, init, { container: box, component: component });
         const parseInlineValueWrapper = (fieldVal) => {
             if (fieldVal.startsWith('<span class="math"')) {
-                // allows math symbols to be rendered in reading view
+                • allows math symbols to be rendered in reading view
                 if (!hasRetrievedText) {
                     hasRetrievedText = true;
                     let text = ctx.getSectionInfo(init.container)?.text;
@@ -19842,11 +19842,11 @@ class InlineWidget extends view.WidgetType {
         this.el = el;
         this.view = view;
     }
-    // Widgets only get updated when the raw query changes/the element gets focus and loses it
-    // to prevent redraws when the editor updates.
+    • Widgets only get updated when the raw query changes/the element gets focus and loses it
+    • to prevent redraws when the editor updates.
     eq(other) {
         if (other.rawQuery === this.rawQuery) {
-            // change CSS classes without redrawing the element
+            • change CSS classes without redrawing the element
             for (let value of other.cssClasses) {
                 if (!this.cssClasses.includes(value)) {
                     this.el.removeClass(value);
@@ -19859,8 +19859,8 @@ class InlineWidget extends view.WidgetType {
         }
         return false;
     }
-    // Add CSS classes and return HTML element.
-    // In "complex" cases it will get filled with the correct text/child elements later.
+    • Add CSS classes and return HTML element.
+    • In "complex" cases it will get filled with the correct text/child elements later.
     toDOM(view) {
         this.el.addClasses(this.cssClasses);
         return this.el;
@@ -19871,11 +19871,11 @@ class InlineWidget extends view.WidgetType {
      * If the widgets should always be expandable, make this always return false.
      */
     ignoreEvent(event) {
-        // instanceof check does not work in pop-out windows, so check it like this
+        • instanceof check does not work in pop-out windows, so check it like this
         if (event.type === "mousedown") {
             const currentPos = this.view.posAtCoords({ x: event.x, y: event.y });
             if (event.shiftKey) {
-                // Set the cursor after the element so that it doesn't select starting from the last cursor position.
+                • Set the cursor after the element so that it doesn't select starting from the last cursor position.
                 if (currentPos) {
                     const { editor } = this.view.state.field(obsidian.editorInfoField);
                     if (editor) {
@@ -19917,7 +19917,7 @@ function inlinePlugin(app, index, settings, api) {
             this.decorations = this.inlineRender(view$1) ?? view.Decoration.none;
         }
         update(update) {
-            // only activate in LP and not source mode
+            • only activate in LP and not source mode
             if (!update.state.field(obsidian.editorLivePreviewField)) {
                 this.decorations = view.Decoration.none;
                 return;
@@ -19988,18 +19988,18 @@ function inlinePlugin(app, index, settings, api) {
                 }
             }
         }
-        // checks whether a node should get rendered/unrendered
+        • checks whether a node should get rendered/unrendered
         renderNode(view, node) {
             const type = node.type;
-            // current node is inline code
+            • current node is inline code
             const tokenProps = type.prop(language.tokenClassNodeProp);
             const props = new Set(tokenProps?.split(" "));
             if (props.has("inline-code") && !props.has("formatting")) {
-                // contains the position of inline code
+                • contains the position of inline code
                 const start = node.from;
                 const end = node.to;
-                // don't continue if current cursor position and inline code node (including formatting
-                // symbols) overlap
+                • don't continue if current cursor position and inline code node (including formatting
+                • symbols) overlap
                 const selection = view.state.selection;
                 if (selectionAndRangeOverlap(selection, start - 1, end + 1)) {
                     if (this.isInlineQuery(view, start, end)) {
@@ -20021,7 +20021,7 @@ function inlinePlugin(app, index, settings, api) {
             return isInlineQuery;
         }
         inlineRender(view$1) {
-            // still doesn't work as expected for tables and callouts
+            • still doesn't work as expected for tables and callouts
             if (!index.initialized)
                 return;
             const currentFile = view$1.state.field(obsidian.editorInfoField).file;
@@ -20053,10 +20053,10 @@ function inlinePlugin(app, index, settings, api) {
         }
         renderWidget(node, view$1, currentFile) {
             const type = node.type;
-            // contains the position of inline code
+            • contains the position of inline code
             const start = node.from;
             const end = node.to;
-            // safety net against unclosed inline code
+            • safety net against unclosed inline code
             if (view$1.state.doc.sliceString(end, end + 1) === "\n") {
                 return;
             }
@@ -20103,7 +20103,7 @@ function inlinePlugin(app, index, settings, api) {
                 if (settings.enableInlineDataviewJs) {
                     code = text.substring(settings.inlineJsQueryPrefix.length).trim();
                     try {
-                        // for setting the correct context for dv/dataview
+                        • for setting the correct context for dv/dataview
                         const myEl = createDiv();
                         const dvInlineApi = new DataviewInlineApi(api, this.component, myEl, currentFile.path);
                         if (code.includes("await")) {
@@ -20169,7 +20169,7 @@ function buildInlineFields(state$1) {
             from: line.from,
             to: line.to,
             enter: node => {
-                // ignore code blocks
+                • ignore code blocks
                 if (node.name.startsWith("HyperMD-codeblock")) {
                     isInsideCodeBlock = true;
                 }
@@ -20205,7 +20205,7 @@ const replaceInlineFieldsInLivePreview = (app, settings) => view.ViewPlugin.from
         this.component.unload();
     }
     buildDecorations(view$1) {
-        // Disable in the source mode
+        • Disable in the source mode
         if (!view$1.state.field(obsidian.editorLivePreviewField))
             return view.Decoration.none;
         const file = view$1.state.field(obsidian.editorInfoField).file;
@@ -20216,7 +20216,7 @@ const replaceInlineFieldsInLivePreview = (app, settings) => view.ViewPlugin.from
         const selection = view$1.state.selection;
         for (const { from, to } of view$1.visibleRanges) {
             info.between(from, to, (start, end, { field }) => {
-                // If the inline field is not overlapping with the cursor, we replace it with a widget.
+                • If the inline field is not overlapping with the cursor, we replace it with a widget.
                 if (!selectionAndRangeOverlap(selection, start, end)) {
                     builder.add(start, end, view.Decoration.replace({
                         widget: new InlineFieldWidget(app, field, file.path, this.component, settings, view$1),
@@ -20227,7 +20227,7 @@ const replaceInlineFieldsInLivePreview = (app, settings) => view.ViewPlugin.from
         return builder.finish();
     }
     update(update) {
-        // only activate in LP and not source mode
+        • only activate in LP and not source mode
         if (!update.state.field(obsidian.editorLivePreviewField)) {
             this.decorations = view.Decoration.none;
             return;
@@ -20314,12 +20314,12 @@ class InlineFieldWidget extends view.WidgetType {
         return this.field.key == other.field.key && this.field.value == other.field.value;
     }
     toDOM() {
-        // A large part of this method was taken from replaceInlineFields() in src/ui/views/inline-field.tsx.
-        // It will be better to extract the common part as a function...
+        • A large part of this method was taken from replaceInlineFields() in src/ui/views/inline-field.tsx.
+        • It will be better to extract the common part as a function...
         const renderContainer = createSpan({
             cls: ["dataview", "inline-field"],
         });
-        // Block inline fields render the key, parenthesis ones do not.
+        • Block inline fields render the key, parenthesis ones do not.
         if (this.field.wrapping == "[") {
             const key = renderContainer.createSpan({
                 cls: ["dataview", "inline-field-key"],
@@ -20353,15 +20353,15 @@ class InlineFieldWidget extends view.WidgetType {
         }
         return renderContainer;
     }
-    // https://github.com/blacksmithgu/obsidian-dataview/issues/2101
-    // When the user clicks on a rendered inline field, move the cursor to the clicked position.
+    • https://github.com/blacksmithgu/obsidian-dataview/issues/2101
+    • When the user clicks on a rendered inline field, move the cursor to the clicked position.
     addKeyClickHandler(key, renderContainer) {
         key.addEventListener("click", event => {
             if (event instanceof MouseEvent) {
                 const rect = key.getBoundingClientRect();
                 const relativePos = (event.x - rect.x) / rect.width;
                 const startPos = this.view.posAtCoords(renderContainer.getBoundingClientRect(), false);
-                const clickedPos = Math.round(startPos + (this.field.startValue - 2 - this.field.start) * relativePos); // 2 is the length of "::"
+                const clickedPos = Math.round(startPos + (this.field.startValue - 2 - this.field.start) * relativePos); • 2 is the length of "::"
                 this.view.dispatch({ selection: { anchor: clickedPos } });
             }
         });
@@ -20396,36 +20396,36 @@ class DataviewPlugin extends obsidian.Plugin {
     /** CodeMirror 6 extensions that dataview installs. Tracked via array to allow for dynamic updates. */
     cmExtension;
     async onload() {
-        // Settings initialization; write defaults first time around.
+        • Settings initialization; write defaults first time around.
         this.settings = Object.assign(DEFAULT_SETTINGS, (await this.loadData()) ?? {});
         this.addSettingTab(new GeneralSettingsTab(this.app, this));
         this.index = this.addChild(FullIndex.create(this.app, this.manifest.version, () => {
             if (this.settings.refreshEnabled)
                 this.debouncedRefresh();
         }));
-        // Set up automatic (intelligent) view refreshing that debounces.
+        • Set up automatic (intelligent) view refreshing that debounces.
         this.updateRefreshSettings();
-        // From this point onwards the dataview API is fully functional (even if the index needs to do some background indexing).
+        • From this point onwards the dataview API is fully functional (even if the index needs to do some background indexing).
         this.api = new DataviewApi(this.app, this.index, this.settings, this.manifest.version);
-        // Register API to global window object.
+        • Register API to global window object.
         (window["DataviewAPI"] = this.api) && this.register(() => delete window["DataviewAPI"]);
-        // Dataview query language code blocks.
+        • Dataview query language code blocks.
         this.registerPriorityCodeblockPostProcessor("dataview", -100, async (source, el, ctx) => this.dataview(source, el, ctx, ctx.sourcePath));
-        // DataviewJS codeblocks.
+        • DataviewJS codeblocks.
         this.registerPriorityCodeblockPostProcessor(this.settings.dataviewJsKeyword, -100, async (source, el, ctx) => this.dataviewjs(source, el, ctx, ctx.sourcePath));
-        // Dataview inline queries.
+        • Dataview inline queries.
         this.registerPriorityMarkdownPostProcessor(-100, async (el, ctx) => {
-            // Allow for turning off inline queries.
+            • Allow for turning off inline queries.
             if (!this.settings.enableInlineDataview || isDataviewDisabled(ctx.sourcePath))
                 return;
             this.dataviewInline(el, ctx, ctx.sourcePath);
         });
-        // Dataview inline-inline query fancy rendering. Runs at a low priority; should apply to Dataview views.
+        • Dataview inline-inline query fancy rendering. Runs at a low priority; should apply to Dataview views.
         this.registerPriorityMarkdownPostProcessor(100, async (el, ctx) => {
-            // Allow for lame people to disable the pretty rendering.
+            • Allow for lame people to disable the pretty rendering.
             if (!this.settings.prettyRenderInlineFields || isDataviewDisabled(ctx.sourcePath))
                 return;
-            // Handle p, header elements explicitly (opt-in rather than opt-out for now).
+            • Handle p, header elements explicitly (opt-in rather than opt-out for now).
             for (let p of el.findAllSelf("p,h1,h2,h3,h4,h5,h6,li,span,th,td")) {
                 const init = {
                     app: this.app,
@@ -20436,11 +20436,11 @@ class DataviewPlugin extends obsidian.Plugin {
                 await replaceInlineFields(ctx, init);
             }
         });
-        // editor extensions
+        • editor extensions
         this.cmExtension = [];
         this.registerEditorExtension(this.cmExtension);
         this.updateEditorExtensions();
-        // Dataview "force refresh" operation.
+        • Dataview "force refresh" operation.
         this.addCommand({
             id: "dataview-force-refresh-views",
             name: "Force refresh all views and blocks",
@@ -20466,17 +20466,17 @@ class DataviewPlugin extends obsidian.Plugin {
                 }
             },
         });
-        // Run index initialization, which actually traverses the vault to index files.
+        • Run index initialization, which actually traverses the vault to index files.
         if (!this.app.workspace.layoutReady) {
             this.app.workspace.onLayoutReady(async () => this.index.initialize());
         }
         else {
             this.index.initialize();
         }
-        // Not required anymore, though holding onto it for backwards-compatibility.
+        • Not required anymore, though holding onto it for backwards-compatibility.
         this.app.metadataCache.trigger("dataview:api-ready", this.api);
         console.log(`Dataview: version ${this.manifest.version} (requires obsidian ${this.manifest.minAppVersion})`);
-        // Mainly intended to detect when the user switches between live preview and source mode.
+        • Mainly intended to detect when the user switches between live preview and source mode.
         this.registerEvent(this.app.workspace.on("layout-change", () => {
             this.app.workspace.iterateAllLeaves(leaf => {
                 if (leaf.view instanceof obsidian.MarkdownView && leaf.view.editor.cm) {
@@ -20513,11 +20513,11 @@ class DataviewPlugin extends obsidian.Plugin {
         registered.sortOrder = priority;
     }
     updateEditorExtensions() {
-        // Don't create a new array, keep the same reference
+        • Don't create a new array, keep the same reference
         this.cmExtension.length = 0;
-        // editor extension for inline queries: enabled regardless of settings (enableInlineDataview/enableInlineDataviewJS)
+        • editor extension for inline queries: enabled regardless of settings (enableInlineDataview/enableInlineDataviewJS)
         this.cmExtension.push(inlinePlugin(this.app, this.index, this.settings, this.api));
-        // editor extension for rendering inline fields in live preview
+        • editor extension for rendering inline fields in live preview
         if (this.settings.prettyRenderInlineFieldsInLivePreview) {
             this.cmExtension.push(inlineFieldsField, replaceInlineFieldsInLivePreview(this.app, this.settings));
         }
@@ -20540,11 +20540,11 @@ class DataviewPlugin extends obsidian.Plugin {
     async dataviewInline(el, component, sourcePath) {
         if (isDataviewDisabled(sourcePath))
             return;
-        // Search for <code> blocks inside this element; for each one, look for things of the form `= ...`.
+        • Search for <code> blocks inside this element; for each one, look for things of the form `= ...`.
         let codeblocks = el.querySelectorAll("code");
         for (let index = 0; index < codeblocks.length; index++) {
             let codeblock = codeblocks.item(index);
-            // Skip code inside of pre elements if not explicitly enabled.
+            • Skip code inside of pre elements if not explicitly enabled.
             if (codeblock.parentElement &&
                 codeblock.parentElement.nodeName.toLowerCase() == "pre" &&
                 !this.settings.inlineQueriesInCodeblocks)
@@ -20862,7 +20862,7 @@ class GeneralSettingsTab extends obsidian.PluginSettingTab {
         }
         new obsidian.Setting(this.containerEl)
             .setName("Recursive sub-task completion")
-            // I gotta word this better :/
+            • I gotta word this better :/
             .setDesc("If enabled, completing a task in a Dataview will automatically complete its subtasks too.")
             .addToggle(toggle => toggle
             .setValue(this.plugin.settings.recursiveSubTaskCompletion)
