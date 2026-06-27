@@ -4,137 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "a5d4cd532385ba73",
+        "id": "40c1fa270e88f114",
         "type": "tabs",
         "children": [
           {
-            "id": "5ac7394b11e63e93",
+            "id": "d39c46a45a2bd164",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "журналы/лофер эрик/26.12.31.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "26.12.31"
-            }
-          },
-          {
-            "id": "688bb008d6ef7b33",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "словарь/хтонь/шаны.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "шаны"
-            }
-          },
-          {
-            "id": "5e2b5d927130d5a7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "словарь/предметы/гримуар ~ далекие земли.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "гримуар ~ далекие земли"
-            }
-          },
-          {
-            "id": "8c96357688b0b384",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "метамагия.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "метамагия"
-            }
-          },
-          {
-            "id": "fcb7a1bc15ee8603",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "блокнот.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "блокнот"
-            }
-          },
-          {
-            "id": "24fd24e972b60ae8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "словарь/заклинания/телепортация.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "телепортация"
-            }
-          },
-          {
-            "id": "8f9b52657c7c7eac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "документы/конкатенация.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "конкатенация"
-            }
-          },
-          {
-            "id": "ed1624846e094189",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "амплификаторы.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "амплификаторы"
-            }
-          },
-          {
-            "id": "ada69af7add84e00",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "журналы/лофер эрик/26.12.23.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "26.12.23"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 8
+        ]
       }
     ],
     "direction": "vertical"
@@ -207,13 +90,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "журналы/лофер эрик/26.12.23.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 26.12.23"
+              "title": "Outline"
             }
           },
           {
@@ -295,8 +177,10 @@
       "calendarium:Open Calendarium": false
     }
   },
-  "active": "ada69af7add84e00",
+  "active": "d39c46a45a2bd164",
   "lastOpenFiles": [
+    "журналы/лофер эрик/26.12.23.md",
+    "словарь/заклинания/геас.md",
     "блокнот.md",
     "документы/конкатенация.md",
     "todo & notes/27.01.07.md",
@@ -322,8 +206,6 @@
     "журналы/лофер эрик/27.01.06.md",
     "журналы/лофер эрик/26.12.13.md",
     "журналы/файерфлай/26.12.14.md",
-    "журналы/коул джонатан/26.12.14.md",
-    "словарь/хтонь/ноденс.md",
     "ктулху.base",
     "документы/документ, дело оборотня.jpg",
     "амарна.txt",
