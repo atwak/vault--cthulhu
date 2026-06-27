@@ -11,10 +11,17 @@
             "id": "d39c46a45a2bd164",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "canvas",
+              "state": {
+                "file": "Untitled.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 0,
+                  "zoom": -1
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Untitled"
             }
           }
         ]
@@ -90,12 +97,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "метамагия.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of метамагия"
             }
           },
           {
@@ -151,13 +159,14 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "конкатенация.md"
+                "file": "Untitled.canvas"
               },
               "icon": "lucide-info",
-              "title": "File properties for конкатенация"
+              "title": "File properties for Untitled"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -167,18 +176,25 @@
     "hiddenItems": {
       "random-note:Open random note": false,
       "audio-recorder:Start/stop recording": false,
-      "switcher:Open quick switcher": false,
+      "switcher:Open quick switcher": true,
       "canvas:Create new canvas": false,
-      "command-palette:Open command palette": false,
+      "command-palette:Open command palette": true,
       "bases:Create new base": false,
-      "big-calendar:Big Calendar": false,
       "obsidian-kanban:Create new board": false,
       "obsidian-excalidraw-plugin:New drawing": false,
-      "calendarium:Open Calendarium": false
+      "pandoc-extended-markdown:Open list panel": false,
+      "calendarium:Open Calendarium": false,
+      "big-calendar:Big Calendar": false
     }
   },
   "active": "d39c46a45a2bd164",
   "lastOpenFiles": [
+    "Excalidraw/Drawing 2026-06-27 15.58.35.excalidraw.md",
+    "Untitled.canvas",
+    "Excalidraw/Drawing 2026-06-27 15.57.27.excalidraw.md",
+    "амплификаторы.md",
+    "Excalidraw",
+    "метамагия.md",
     "журналы/лофер эрик/26.12.23.md",
     "словарь/заклинания/геас.md",
     "блокнот.md",
@@ -190,8 +206,6 @@
     "todo & notes/27.01.04.md",
     "Untitled.md",
     "bits and pieces.md",
-    "амплификаторы.md",
-    "метамагия.md",
     "учить.md",
     "журналы/лофер эрик/27.01.05.md",
     "речь для черного стола.md",
@@ -203,9 +217,6 @@
     "словарь/персоны/гриффит роджерс.md",
     "документы/пьеса, амарна.md",
     "словарь/заклинания/камень-кожа.md",
-    "журналы/лофер эрик/27.01.06.md",
-    "журналы/лофер эрик/26.12.13.md",
-    "журналы/файерфлай/26.12.14.md",
     "ктулху.base",
     "документы/документ, дело оборотня.jpg",
     "амарна.txt",
@@ -214,7 +225,6 @@
     "Clippings/Untitled",
     "Clippings",
     "~$l the kings men.doc",
-    "Untitled.canvas",
     "инвентарь/книги, свитки, документы",
     "словарь/предметы"
   ]

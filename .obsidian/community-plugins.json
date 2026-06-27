@@ -1,8 +1,7 @@
 [
-  "definition-list",
   "calendarium",
-  "dataview",
   "big-calendar",
   "obsidian-kanban",
-  "obsidian-excalidraw-plugin"
+  "obsidian-excalidraw-plugin",
+  "pandoc-extended-markdown"
 ]

@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"059a0170abf29aa2","x":-315,"y":-60,"width":161,"height":50,"type":"text","text":"понедельник"},
+		{"id":"f2b640eb0ad96bd9","x":-154,"y":-60,"width":125,"height":50,"type":"text","text":"вторник"},
+		{"id":"8c20e9d47c717717","x":-29,"y":-60,"width":109,"height":50,"type":"text","text":"среда"},
+		{"id":"e88ffcad3df76c81","x":80,"y":-60,"width":120,"height":50,"type":"text","text":"четверг"},
+		{"id":"00d3940d1cf46505","x":-165,"y":-10,"width":147,"height":50,"type":"text","text":"суббота"},
+		{"id":"ae07b1702b650fc7","x":-292,"y":-10,"width":127,"height":50,"type":"text","text":"пятница"},
+		{"id":"f9ff08e7e3c34e92","x":-14,"y":-10,"width":189,"height":50,"type":"text","text":"воскресенье"},
+		{"id":"796983d79e94732e","x":-139,"y":-110,"width":125,"height":50,"type":"text","text":"седмица"}
+	],
+	"edges":[
+		{"id":"44eb0677d82a1319","fromNode":"796983d79e94732e","fromSide":"bottom","toNode":"059a0170abf29aa2","toSide":"top"},
+		{"id":"3ccda2ed35a98747","fromNode":"796983d79e94732e","fromSide":"bottom","toNode":"f2b640eb0ad96bd9","toSide":"top"},
+		{"id":"9e79b96f616e8af8","fromNode":"796983d79e94732e","fromSide":"bottom","toNode":"8c20e9d47c717717","toSide":"top"},
+		{"id":"22eb6c07840584cd","fromNode":"e88ffcad3df76c81","fromSide":"top","toNode":"796983d79e94732e","toSide":"bottom"},
+		{"id":"e5b1b8c5393c5e05","fromNode":"ae07b1702b650fc7","fromSide":"top","toNode":"796983d79e94732e","toSide":"bottom"},
+		{"id":"c8973cc9e7704e38","fromNode":"00d3940d1cf46505","fromSide":"top","toNode":"796983d79e94732e","toSide":"bottom"},
+		{"id":"5b3471116ebf8234","fromNode":"f9ff08e7e3c34e92","fromSide":"top","toNode":"796983d79e94732e","toSide":"bottom"}
+	]
+}
