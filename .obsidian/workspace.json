@@ -183,8 +183,8 @@
       "obsidian-kanban:Create new board": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "pandoc-extended-markdown:Open list panel": false,
-      "calendarium:Open Calendarium": false,
-      "big-calendar:Big Calendar": false
+      "big-calendar:Big Calendar": false,
+      "calendarium:Open Calendarium": false
     }
   },
   "active": "d39c46a45a2bd164",
