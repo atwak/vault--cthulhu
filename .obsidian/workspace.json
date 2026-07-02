@@ -4,24 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "40c1fa270e88f114",
+        "id": "0e5ade8f2e29ce36",
         "type": "tabs",
         "children": [
           {
-            "id": "d39c46a45a2bd164",
+            "id": "03d5ed9b930d2806",
             "type": "leaf",
             "state": {
-              "type": "canvas",
-              "state": {
-                "file": "Untitled.canvas",
-                "viewState": {
-                  "x": 0,
-                  "y": 0,
-                  "zoom": -1
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "Untitled"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -158,11 +151,9 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {
-                "file": "Untitled.canvas"
-              },
+              "state": {},
               "icon": "lucide-info",
-              "title": "File properties for Untitled"
+              "title": "File properties"
             }
           }
         ],
@@ -187,36 +178,37 @@
       "calendarium:Open Calendarium": false
     }
   },
-  "active": "d39c46a45a2bd164",
+  "active": "03d5ed9b930d2806",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2026-06-27 15.58.35.excalidraw.md",
-    "Untitled.canvas",
-    "Excalidraw/Drawing 2026-06-27 15.57.27.excalidraw.md",
+    "полка/hyperborean notes.md",
+    "полка/hyperborean notes, разбор.md",
+    "полка/hyperborean, marry ann.md",
+    "журналы/лофер эрик/26.12.16.md",
+    "журналы/файерфлай/26.12.16.md",
+    "журналы/лофер эрик/26.12.13.md",
+    "словарь/персоны/марав.md",
+    "словарь/салемские ведьмы.md",
+    "словарь/персоны/тхия.md",
+    "словарь/заклинания/портал, открытие, ведьминское.md",
+    "словарь/заклинания/экзистенциальные соли.md",
+    "словарь/заклинания/знание языков.md",
+    "словарь/заклинания/барьер саамаа.md",
+    "словарь/золотой город.md",
+    "словарь/предметы/стеклянные шарики.md",
     "амплификаторы.md",
+    "блокнот.md",
+    "_.md",
+    "bits and pieces.md",
+    "bestselling books.md",
+    "Untitled.canvas",
+    "Excalidraw/Drawing 2026-06-27 15.58.35.excalidraw.md",
+    "Excalidraw/Drawing 2026-06-27 15.57.27.excalidraw.md",
     "Excalidraw",
     "метамагия.md",
     "журналы/лофер эрик/26.12.23.md",
     "словарь/заклинания/геас.md",
-    "блокнот.md",
     "документы/конкатенация.md",
-    "todo & notes/27.01.07.md",
-    "вопросы.md",
-    "журналы/лофер эрик/27.01.01.md",
-    "журналы/лофер эрик/26.12.31.md",
-    "todo & notes/27.01.04.md",
-    "Untitled.md",
-    "bits and pieces.md",
-    "учить.md",
-    "журналы/лофер эрик/27.01.05.md",
-    "речь для черного стола.md",
     "todo & notes",
-    "словарь/заклинания/защита от иных.md",
-    "документы/файрфлай, дневник келлара.md",
-    "словарь/заклинания/знак древних.md",
-    "словарь/заклинания/ритуал общего сна.md",
-    "словарь/персоны/гриффит роджерс.md",
-    "документы/пьеса, амарна.md",
-    "словарь/заклинания/камень-кожа.md",
     "ктулху.base",
     "документы/документ, дело оборотня.jpg",
     "амарна.txt",
