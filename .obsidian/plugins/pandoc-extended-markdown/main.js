@@ -221952,12 +221952,11 @@ function normalizeExistingDefinitionLists(element, context, config, renderContex
   normalizeDefinitionListsFromDom(element);
 }
 function normalizeDefinitionListsFromSource(element, context, config, renderContext, fullSourceText) {
-  var _a4;
-  const sourceText = fullSourceText != null ? fullSourceText : (_a4 = getSourceSectionInfo(element, context)) == null ? void 0 : _a4.text;
+  const sectionInfo = fullSourceText ? null : getSourceSectionInfo(element, context);
+  const sourceText = fullSourceText != null ? fullSourceText : sectionInfo == null ? void 0 : sectionInfo.text;
   if (!sourceText) {
     return false;
   }
-  const sectionInfo = getSourceSectionInfo(element, context);
   const blocks = findPandocDefinitionListBlocks(sourceText);
   if (blocks.length === 0) {
     return true;
@@ -221997,9 +221996,7 @@ function containsCompleteDefinitionBlocks(element, blocks) {
 }
 function containsCompleteDefinitionBlockText(element, block) {
   var _a4;
-  const normalizedText = normalizeCandidateText((_a4 = element.textContent) != null ? _a4 : "");
-  const requiredTexts = [...block.termTexts, ...block.definitionTexts].map(normalizeCandidateText).filter((text) => text.length > 0);
-  return requiredTexts.every((text) => normalizedText.includes(text));
+  return containsRequiredDefinitionBlockText((_a4 = element.textContent) != null ? _a4 : "", block);
 }
 function normalizeDefinitionListsFromDom(element) {
   const lists = getDefinitionLists(element);
@@ -222018,7 +222015,7 @@ function normalizeDefinitionListsFromDom(element) {
 function getSourceSectionInfo(element, context) {
   var _a4, _b2;
   const section2 = getMarkdownSection(element);
-  return (_b2 = (_a4 = safeGetContextSectionInfo(context, element)) != null ? _a4 : safeGetContextSectionInfo(context, section2)) != null ? _b2 : getSectionInfo(section2);
+  return (_b2 = (_a4 = safeGetContextSectionInfo(context, element)) != null ? _a4 : safeGetContextSectionInfo(context, section2)) != null ? _b2 : safeGetDomSectionInfo(section2);
 }
 function safeGetContextSectionInfo(context, element) {
   if (!element || typeof context.getSectionInfo !== "function") {
@@ -222029,6 +222026,12 @@ function safeGetContextSectionInfo(context, element) {
   } catch (e) {
     return null;
   }
+}
+function safeGetDomSectionInfo(section2) {
+  if (!section2 || typeof getSectionInfo !== "function") {
+    return null;
+  }
+  return getSectionInfo(section2);
 }
 function getReplacementRoot(element) {
   var _a4;
@@ -222052,6 +222055,13 @@ function getDefinitionLists(element) {
 function replaceDefinitionListContent(root, replacementNodes, block, usedCandidates) {
   const candidates = getDefinitionListBlockCandidates(root, block, usedCandidates);
   if (candidates.length === 0) {
+    return;
+  }
+  if (!containsCompleteDefinitionBlockCandidateText(candidates, block)) {
+    return;
+  }
+  if (isCanonicalDefinitionBlockCandidate(candidates, block)) {
+    candidates.forEach((candidate) => usedCandidates.add(candidate));
     return;
   }
   if (candidates[0] === root) {
@@ -222097,6 +222107,59 @@ function getDefinitionListBlockCandidates(root, block, usedCandidates) {
   }
   return group;
 }
+function containsCompleteDefinitionBlockCandidateText(candidates, block) {
+  return containsRequiredDefinitionBlockText(
+    candidates.map((candidate) => {
+      var _a4;
+      return (_a4 = candidate.textContent) != null ? _a4 : "";
+    }).join("\n"),
+    block
+  );
+}
+function containsRequiredDefinitionBlockText(text, block) {
+  const normalizedText = normalizeCandidateText(text);
+  return getRequiredDefinitionBlockTexts(block).every((requiredText) => normalizedText.includes(requiredText));
+}
+function getRequiredDefinitionBlockTexts(block) {
+  return [...block.termTexts, ...block.definitionTexts].map(normalizeCandidateText).filter((text) => text.length > 0);
+}
+function isCanonicalDefinitionBlockCandidate(candidates, block) {
+  if (candidates.length !== 1) {
+    return false;
+  }
+  const list = getSingleDefinitionList(candidates[0]);
+  if (!list || hasRawDefinitionMarkerText(candidates[0])) {
+    return false;
+  }
+  return getDefinitionListSequence(list).join("\n") === getDefinitionBlockSequence(block).join("\n");
+}
+function getSingleDefinitionList(candidate) {
+  const lists = Array.from(candidate.querySelectorAll(`dl.${CSS_CLASSES.DEFINITION_LIST}`));
+  if (candidate.matches(`dl.${CSS_CLASSES.DEFINITION_LIST}`)) {
+    lists.unshift(candidate);
+  }
+  const uniqueLists = Array.from(new Set(lists));
+  return uniqueLists.length === 1 ? uniqueLists[0] : null;
+}
+function hasRawDefinitionMarkerText(candidate) {
+  return Array.from(candidate.querySelectorAll("p, li")).some((element) => /^[:~]\s+\S/.test(normalizeCandidateText(getTextWithLineBreaks2(element))));
+}
+function getDefinitionListSequence(list) {
+  return Array.from(list.children).filter((child) => child.tagName === "DT" || child.tagName === "DD").map((child) => {
+    var _a4;
+    return normalizeCandidateText((_a4 = child.textContent) != null ? _a4 : "");
+  });
+}
+function getDefinitionBlockSequence(block) {
+  const sequence = [];
+  block.items.forEach((item) => {
+    sequence.push(normalizeCandidateText(item.term));
+    item.definitions.forEach((definition) => {
+      sequence.push(normalizeCandidateText(definition.plainText));
+    });
+  });
+  return sequence;
+}
 function getDefinitionCandidateElements(root, block) {
   const candidates = getDefinitionListCandidates(root, block);
   getDefinitionMarkerCandidates(root, block).forEach((candidate) => {
@@ -222116,11 +222179,11 @@ function getDefinitionListCandidates(root, block) {
 function getDefinitionMarkerCandidates(root, block) {
   const candidates = [];
   root.querySelectorAll(".el-p, p, li").forEach((element) => {
-    var _a4;
     if (element.querySelector(`dl.${CSS_CLASSES.DEFINITION_LIST}`)) {
       return;
     }
-    if (matchesDefinitionMarkerText((_a4 = element.textContent) != null ? _a4 : "", block.definitionTexts)) {
+    const text = getTextWithLineBreaks2(element);
+    if (matchesDefinitionMarkerText(text, block.definitionTexts) || matchesRawDefinitionParagraphText(text, block)) {
       addUniqueCandidate(candidates, getDefinitionListBlockCandidate(element, root));
     }
   });
@@ -222165,6 +222228,16 @@ function matchesDefinitionMarkerText(text, definitionTexts) {
   }
   const content = normalizeCandidateText(markerMatch[1]);
   return definitionTexts.some((definition) => content === normalizeCandidateText(definition));
+}
+function matchesRawDefinitionParagraphText(text, block) {
+  const lines = text.split("\n").map(normalizeCandidateText).filter((line) => line.length > 0);
+  const hasTerm = block.termTexts.some(
+    (term) => lines.includes(normalizeCandidateText(term))
+  );
+  const hasDefinition = lines.some(
+    (line) => matchesDefinitionMarkerText(line, block.definitionTexts)
+  );
+  return hasTerm && hasDefinition;
 }
 function normalizeCandidateText(text) {
   return text.replace(/\s+/g, " ").trim();
@@ -222284,8 +222357,11 @@ function getObsidianApp() {
 }
 
 // src/reading-mode/pipeline/processors/definitionListNormalizationProcessor.ts
+var DEFINITION_LIST_SELECTOR = "dl.pem-definition-list";
 var DOM_SETTLED_FRAME_COUNT = 2;
 var DOM_SETTLED_FALLBACK_MS = 500;
+var MIN_HEIGHT_CSS_PROPERTY = "min-height";
+var rootControllers = /* @__PURE__ */ new WeakMap();
 var DefinitionListNormalizationProcessor = class {
   constructor() {
     this.name = "definition-list-normalization";
@@ -222296,24 +222372,29 @@ var DefinitionListNormalizationProcessor = class {
     return context.config.enableDefinitionLists !== false;
   }
   process(context) {
-    runAfterDomSettles(context.element, () => {
-      const definitionRoot = getDefinitionListNormalizationRoot(context.element);
-      if (context.app) {
-        normalizeExistingDefinitionLists(
-          definitionRoot,
-          context.postProcessorContext,
-          context.config,
-          context.renderContext
-        );
-        void normalizeDefinitionListsWithFullSource(definitionRoot, context);
-        return;
-      }
+    const definitionRoot = getDefinitionListNormalizationRoot(context.element);
+    if (!context.app) {
       normalizeExistingDefinitionLists(
         definitionRoot,
         context.postProcessorContext,
         context.config,
         context.renderContext
       );
+      runAfterDomSettles(definitionRoot, () => {
+        normalizeExistingDefinitionLists(
+          definitionRoot,
+          context.postProcessorContext,
+          context.config,
+          context.renderContext
+        );
+      });
+      return;
+    }
+    const observationRoot = getDefinitionListObservationRoot(definitionRoot);
+    const controller = getDefinitionListReconciliationController(observationRoot, context);
+    void controller.reconcile();
+    runAfterDomSettles(observationRoot, () => {
+      void controller.reconcile();
     });
   }
 };
@@ -222369,16 +222450,191 @@ function runAfterDomSettles(root, callback2) {
 function getDefinitionListNormalizationRoot(element) {
   return element.closest(".markdown-preview-section") || element.closest(".el-p") || element;
 }
-async function normalizeDefinitionListsWithFullSource(definitionRoot, context) {
+function getDefinitionListObservationRoot(element) {
+  return element.closest(".markdown-embed") || element;
+}
+function getDefinitionListReconciliationController(root, context) {
+  const existing = rootControllers.get(root);
+  if (existing) {
+    existing.updateContext(context);
+    return existing;
+  }
+  const controller = new DefinitionListReconciliationController(root, context);
+  rootControllers.set(root, controller);
+  controller.start();
+  return controller;
+}
+var DefinitionListReconciliationController = class {
+  constructor(root, context) {
+    this.root = root;
+    this.observer = null;
+    this.connectionObserver = null;
+    this.observedRoot = null;
+    this.scheduled = false;
+    this.running = false;
+    this.pending = false;
+    this.context = context;
+  }
+  updateContext(context) {
+    this.context = context;
+  }
+  start() {
+    if (typeof MutationObserver === "undefined") {
+      this.registerLifecycle();
+      return;
+    }
+    this.observeCurrentRoot();
+    this.observeConnectionIfDetached();
+    this.registerLifecycle();
+  }
+  schedule() {
+    if (this.scheduled) {
+      return;
+    }
+    this.scheduled = true;
+    queueDefinitionListReconciliation(() => void this.reconcile());
+  }
+  stop() {
+    var _a4, _b2;
+    (_a4 = this.observer) == null ? void 0 : _a4.disconnect();
+    (_b2 = this.connectionObserver) == null ? void 0 : _b2.disconnect();
+    this.observer = null;
+    this.connectionObserver = null;
+    this.observedRoot = null;
+    this.scheduled = false;
+  }
+  async reconcile() {
+    this.scheduled = false;
+    if (this.running) {
+      this.pending = true;
+      return;
+    }
+    this.running = true;
+    try {
+      this.observeCurrentRoot();
+      await normalizeDefinitionRoot(this.root, this.context);
+      this.observeCurrentRoot();
+      this.observeConnectionIfDetached();
+    } finally {
+      this.running = false;
+      if (this.pending) {
+        this.pending = false;
+        this.schedule();
+      }
+    }
+  }
+  registerLifecycle() {
+    if (typeof this.context.postProcessorContext.addChild !== "function") {
+      return;
+    }
+    this.context.postProcessorContext.addChild(createObserverRenderChild(this.root, () => {
+      this.stop();
+      rootControllers.delete(this.root);
+    }));
+  }
+  observeCurrentRoot() {
+    var _a4;
+    if (!this.observer || this.observedRoot !== this.resolveObservationRoot()) {
+      (_a4 = this.observer) == null ? void 0 : _a4.disconnect();
+      this.observedRoot = this.resolveObservationRoot();
+      this.observer = new MutationObserver(() => this.schedule());
+      this.observer.observe(this.observedRoot, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
+  }
+  observeConnectionIfDetached() {
+    if (this.root.closest(".markdown-preview-section") || this.connectionObserver) {
+      return;
+    }
+    this.connectionObserver = new MutationObserver(() => {
+      var _a4;
+      if (!this.root.closest(".markdown-preview-section")) {
+        return;
+      }
+      (_a4 = this.connectionObserver) == null ? void 0 : _a4.disconnect();
+      this.connectionObserver = null;
+      this.observeCurrentRoot();
+      this.schedule();
+    });
+    this.connectionObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+  resolveObservationRoot() {
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.root.closest(".markdown-embed")) != null ? _a4 : this.root.closest(".markdown-preview-section")) != null ? _b2 : this.root;
+  }
+};
+async function normalizeDefinitionRoot(definitionRoot, context) {
+  const roots = getCurrentDefinitionRoots(definitionRoot);
+  roots.forEach((root) => normalizeExistingDefinitionLists(
+    root,
+    context.postProcessorContext,
+    context.config,
+    context.renderContext
+  ));
+  releaseEmbeddedPreviewMinimumHeight(definitionRoot);
+  if (!context.app) {
+    return;
+  }
   const fullSourceText = await readFullSourceText(context.sourcePath, context.app);
+  if (!fullSourceText) {
+    return;
+  }
   context.fullSource = fullSourceText;
-  normalizeExistingDefinitionLists(
-    definitionRoot,
+  getCurrentDefinitionRoots(definitionRoot).forEach((root) => normalizeExistingDefinitionLists(
+    root,
     context.postProcessorContext,
     context.config,
     context.renderContext,
     fullSourceText
-  );
+  ));
+  releaseEmbeddedPreviewMinimumHeight(definitionRoot);
+}
+function getCurrentDefinitionRoots(root) {
+  if (root.classList.contains("markdown-embed")) {
+    const embedSections = Array.from(root.querySelectorAll(".markdown-preview-section"));
+    return embedSections.length > 0 ? embedSections : [root];
+  }
+  if (root.classList.contains("markdown-preview-section")) {
+    return [root];
+  }
+  const currentSection = root.closest(".markdown-preview-section");
+  if (currentSection) {
+    return [currentSection];
+  }
+  const nestedSections = Array.from(root.querySelectorAll(".markdown-preview-section"));
+  return nestedSections.length > 0 ? nestedSections : [root];
+}
+function queueDefinitionListReconciliation(callback2) {
+  if (typeof window.requestAnimationFrame === "function") {
+    window.requestAnimationFrame(callback2);
+    return;
+  }
+  window.setTimeout(callback2, 0);
+}
+function releaseEmbeddedPreviewMinimumHeight(root) {
+  const embed = root.classList.contains("markdown-embed") ? root : root.closest(".markdown-embed");
+  if (!embed) {
+    return;
+  }
+  const sections = Array.from(embed.querySelectorAll(".markdown-preview-section")).filter((section2) => section2.querySelector(DEFINITION_LIST_SELECTOR));
+  sections.forEach((section2) => {
+    section2.setCssProps({ [MIN_HEIGHT_CSS_PROPERTY]: "0px" });
+  });
+}
+function createObserverRenderChild(containerEl, onunload) {
+  return {
+    containerEl,
+    load: () => void 0,
+    onload: () => void 0,
+    unload: onunload,
+    onunload
+  };
 }
 
 // src/editor-extensions/pandocValidator.ts
