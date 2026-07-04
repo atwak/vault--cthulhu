@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "0e5ade8f2e29ce36",
+        "id": "4cec4f23fc7be5ff",
         "type": "tabs",
         "children": [
           {
-            "id": "03d5ed9b930d2806",
+            "id": "0a61436a7aa136ea",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "словарь/персоны/персонажи игроков/лофер эрик.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "лофер эрик"
             }
           }
         ]
@@ -151,9 +155,11 @@
             "type": "leaf",
             "state": {
               "type": "file-properties",
-              "state": {},
+              "state": {
+                "file": "словарь/персоны/персонажи игроков/лофер эрик.md"
+              },
               "icon": "lucide-info",
-              "title": "File properties"
+              "title": "File properties for лофер эрик"
             }
           }
         ],
@@ -178,8 +184,9 @@
       "calendarium:Open Calendarium": false
     }
   },
-  "active": "03d5ed9b930d2806",
+  "active": "0a61436a7aa136ea",
   "lastOpenFiles": [
+    "словарь/заклинания/свечи связи.md",
     "полка/hyperborean notes.md",
     "полка/hyperborean notes, разбор.md",
     "полка/hyperborean, marry ann.md",
@@ -207,7 +214,6 @@
     "метамагия.md",
     "журналы/лофер эрик/26.12.23.md",
     "словарь/заклинания/геас.md",
-    "документы/конкатенация.md",
     "todo & notes",
     "ктулху.base",
     "документы/документ, дело оборотня.jpg",
