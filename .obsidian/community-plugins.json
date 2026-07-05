@@ -1,7 +1,6 @@
 [
-  "calendarium",
-  "big-calendar",
   "obsidian-kanban",
   "obsidian-excalidraw-plugin",
-  "pandoc-extended-markdown"
+  "pandoc-extended-markdown",
+  "obsidian-tasks-plugin"
 ]
