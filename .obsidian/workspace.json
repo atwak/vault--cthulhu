@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "журналы/лофер эрик/27.01.07.md",
+                "file": "todo & notes/27.01.08.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "27.01.07"
+              "title": "27.01.08"
             }
           }
         ]
@@ -94,13 +94,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "журналы/лофер эрик/27.01.07.md",
+                "file": "todo & notes/27.01.08.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 27.01.07"
+              "title": "Outline of 27.01.08"
             }
           },
           {
@@ -183,11 +183,12 @@
   },
   "active": "0a61436a7aa136ea",
   "lastOpenFiles": [
+    "словарь/предметы/гримуар ~ кодекс расходящихся часов.md",
+    "todo & notes/27.01.08.md",
+    "журналы/лофер эрик/27.01.07.md",
     "todo & notes/27.01.07.md",
     "личность.md",
-    "журналы/лофер эрик/27.01.07.md",
     "словарь/персоны/райс маркус.md",
-    "todo & notes/Untitled.md",
     "словарь/заклинания/семь свечей.md",
     "инвентарь.md",
     "журналы/лофер эрик/27.01.06.md",
@@ -209,7 +210,6 @@
     "todo & notes/блокнот.md",
     "Untitled.canvas",
     "документы/тетради зисл.md",
-    "словарь/заклинания/геас.md",
     "Excalidraw",
     "todo & notes",
     "ктулху.base",
