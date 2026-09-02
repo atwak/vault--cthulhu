@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "словарь/персоны/персонажи игроков/лофер эрик.md",
+                "file": "журналы/эмбер/&02 – призыв.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "лофер эрик"
+              "title": "&02 – призыв"
             }
           }
         ]
@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "амигд",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -76,7 +76,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -96,7 +97,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "словарь/персоны/персонажи игроков/лофер эрик.md",
+                "file": "журналы/эмбер/&02 – призыв.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -185,8 +186,12 @@
   },
   "active": "0a61436a7aa136ea",
   "lastOpenFiles": [
-    "todo & notes/27.01.08.md",
+    "полка/таймлайн.md",
+    "полка/сезон 4, таймлайн.md",
+    "полка/лор.md",
     "словарь/предметы/гримуар ~ кодекс расходящихся часов.md",
+    "словарь/персоны/персонажи игроков/лофер эрик.md",
+    "todo & notes/27.01.08.md",
     "журналы/лофер эрик/27.01.07.md",
     "todo & notes/27.01.07.md",
     "личность.md",
@@ -207,11 +212,7 @@
     "_.md",
     "bits and pieces.md",
     "todo & notes/книги.md",
-    "todo & notes/метамагия.md",
-    "todo & notes/вопросы.md",
-    "todo & notes/блокнот.md",
     "Untitled.canvas",
-    "документы/тетради зисл.md",
     "Excalidraw",
     "todo & notes",
     "ктулху.base",
